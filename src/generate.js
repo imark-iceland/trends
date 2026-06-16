@@ -697,10 +697,10 @@ async function main() {
 
   const html = buildHTML(data, archiveWeeks);
 
-  await fs.mkdir(path.join(ROOT, "public"), { recursive: true });
-  await fs.writeFile(path.join(ROOT, "public/index.html"), html, "utf-8");
+  await fs.mkdir(path.join(ROOT, "docs"), { recursive: true });
+  await fs.writeFile(path.join(ROOT, "docs/index.html"), html, "utf-8");
 
-  console.log("✅ public/index.html generated");
+  console.log("✅ docs/index.html generated");
   console.log(`   ${data.items.length} items | Week ${data.weekId}`);
 }
 

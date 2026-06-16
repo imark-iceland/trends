@@ -15,7 +15,7 @@ imark-trends/
 ├── data/
 │   ├── latest.json           # Síðasta vika (lesið af dashboard)
 │   └── weeks/                # Skjalasafn – ein JSON-skrá á viku
-├── public/
+├── docs/
 │   └── index.html            # Myndaður dashboard (settur inn á imark.is)
 ├── src/
 │   ├── fetch.js              # Sækir RSS, gefur stig, eyðir tvítekningum, kallar á Claude
@@ -93,7 +93,7 @@ Eftir fyrstu keyrslu mun `https://<notandanafn>.github.io/imark-trends/` vera vi
 </script>
 ```
 
-Til að virkja sjálfvirka hæðarjöfnun, bættu þessum línum við neðst í `public/index.html` á undan `</body>`:
+Til að virkja sjálfvirka hæðarjöfnun, bættu þessum línum við neðst í `docs/index.html` á undan `</body>`:
 
 ```html
 <script>
@@ -105,7 +105,7 @@ Til að virkja sjálfvirka hæðarjöfnun, bættu þessum línum við neðst í 
 
 Ef þú vilt sameina dashboard við Squarespace sniðmát:
 
-1. Opnaðu `public/index.html`
+1. Opnaðu `docs/index.html`
 2. Límdu allt efni í Custom Code Block í Squarespace
 3. Uppfærðu handvirkt eftir hverja keyrslu (eða sjálfvirkt með webhook)
 
