@@ -1,37 +1,58 @@
 {
   "weekId": "2026-W25",
-  "generatedAt": "2026-06-16T10:59:17.078Z",
+  "generatedAt": "2026-06-16T16:10:04.290Z",
   "items": [
     {
       "title": "Core views on AI safety: When, why, what, and how",
       "link": "https://www.anthropic.com/news/core-views-on-ai-safety",
       "source": "Anthropic",
+      "primaryCategory": "AI & markaðssetning",
       "category": "AI & markaðssetning",
-      "pubDate": "2026-06-16T10:59:05.174Z",
-      "summary": "AI progress may lead to transformative AI systems in the next decade, but we do not yet understand how to make such systems safe and aligned with human values. In response, we are pursuing a variety of research directions aimed at better understanding, evaluating, and aligning AI systems.",
+      "pubDate": "2026-06-16T16:09:51.139Z",
+      "summary": "AI progress may lead to transformative AI systems in the next decade, but we do not yet understand how to make such systems safe and aligned with human values. In response, we are pursuing a variety of research directions aimed at better understanding, evaluating, and aligning AI…",
       "tags": [
         "AI"
       ],
-      "score": 1.9
+      "score": 1.9999999999999998,
+      "secondaryCategory": null
+    },
+    {
+      "title": "KFC partner with JKR for major global brand identity overhaul",
+      "link": "https://www.designweek.co.uk/kfc-partner-with-jkr-for-major-global-brand-identity-overhaul/",
+      "source": "Design Week",
+      "primaryCategory": "Branding & auðkenni",
+      "category": "Branding & auðkenni",
+      "secondaryCategory": null,
+      "pubDate": "2026-06-16T07:00:17.000Z",
+      "summary": "KFC has launched its next global chapter, introducing a refreshed brand identity alongside menu innovations and modernised restaurant designs. Developed in close partnership with global branding agency JKR, the project is a complete visual overhaul spanning packaging, digital…",
+      "tags": [
+        "Branding",
+        "Sköpun"
+      ],
+      "score": 2.3000000000000003
     },
     {
       "title": "News sites are the new newspapers: People are abandoning them for social media",
       "link": "https://www.niemanlab.org/2026/06/news-sites-are-the-new-newspapers-people-are-abandoning-them-for-social-media/",
       "source": "Nieman Lab",
+      "primaryCategory": "Miðlar & pallborð",
       "category": "Miðlar & pallborð",
+      "secondaryCategory": null,
       "pubDate": "2026-06-15T23:02:44.000Z",
-      "summary": "News sites are rapidly becoming the newspapers of the digital age. And you know what happened to newspapers. Worldwide, people in all age groups are ditching news sites and publishers’ apps in favor of social media and video networks. In fact, 18- to 34-year-olds are abandoning content on…",
+      "summary": "News sites are rapidly becoming the newspapers of the digital age. And you know what happened to newspapers. Worldwide, people in all age groups are ditching news sites and publishers’ apps in favor of social media and video networks. In fact, 18- to 34-year-olds are abandoning…",
       "tags": [
         "Miðlar",
         "Social"
       ],
-      "score": 2.45
+      "score": 2.1
     },
     {
       "title": "Base44 is one of the most-viewed brands on YouTube. Here’s a look at its ad strategy",
       "link": "\r\n                https://www.marketingbrew.com/stories/base44-app-advertising-strategy-youtube-smart-tvs-superbowl?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
       "source": "Marketing Brew",
+      "primaryCategory": "Auglýsingar & sköpun",
       "category": "Auglýsingar & sköpun",
+      "secondaryCategory": null,
       "pubDate": "2026-06-15T18:45:41.000Z",
       "summary": "We chatted with Omer Shai, CMO of parent company Wix, about how the vibe-coding platform is looking to win over users in a crowded category.",
       "tags": [
@@ -43,89 +64,98 @@
       "score": 2.4
     },
     {
-      "title": "KFC Rebrands to Help Lead ‘Chicken’s Next Chapter’",
-      "link": "https://www.adweek.com/creativity/kfc-rebrands-to-help-lead-chickens-next-chapter/",
-      "source": "Adweek",
-      "category": "Auglýsingar & sköpun",
-      "pubDate": "2026-06-15T07:00:00.000Z",
-      "summary": "Amid intensifying competition, KFC has updated its brand identity, menu, and restaurant design.",
-      "tags": [
-        "Branding"
-      ],
-      "score": 1.8
-    },
-    {
       "title": "Supporting Europe’s work in ensuring a trustworthy AI ecosystem",
       "link": "https://openai.com/index/supporting-eu-trustworthy-ai-ecosystem",
       "source": "OpenAI News",
+      "primaryCategory": "AI & markaðssetning",
       "category": "AI & markaðssetning",
+      "secondaryCategory": null,
       "pubDate": "2026-06-11T00:00:00.000Z",
       "summary": "OpenAI supports the EU Code of Practice on AI content transparency, advancing provenance standards and tools to help people understand AI-generated content.",
       "tags": [
         "AI"
       ],
-      "score": 1.8
-    },
-    {
-      "title": "Disney is mostly sold out of ad inventory through Game 5 of NBA Finals",
-      "link": "\r\n                https://www.marketingbrew.com/stories/disney-nba-finals-ads?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
-      "source": "Marketing Brew",
-      "category": "Auglýsingar & sköpun",
-      "pubDate": "2026-06-10T19:55:56.000Z",
-      "summary": "Tonight’s Game 4 of the series between the Knicks and the Spurs has been sold out for weeks, a Disney Advertising exec said.",
-      "tags": [
-        "Auglýsingar"
-      ],
-      "score": 1.9
-    },
-    {
-      "title": "New York now requires disclosure of AI performers in ads. How will that change transparency in advertising?",
-      "link": "\r\n                https://www.marketingbrew.com/stories/new-york-ai-performers-disclosure-advertising-transparency-effects?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
-      "source": "Marketing Brew",
-      "category": "Auglýsingar & sköpun",
-      "pubDate": "2026-06-10T13:17:16.000Z",
-      "summary": "Marketers expect New York is a first mover and that disclosure may be a common practice soon. “My hope is that this is a table-setter that increases transparency,” one exec told us.",
-      "tags": [
-        "AI",
-        "Auglýsingar"
-      ],
-      "score": 1.9
+      "score": 1.7999999999999998
     },
     {
       "title": "Why AT&T gave $1.2 million to first-time feature filmmakers",
       "link": "\r\n                https://www.marketingbrew.com/stories/att-untold-stories-tribeca-festival-brand-strategy-supporting-filmmakers?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
       "source": "Marketing Brew",
+      "primaryCategory": "Auglýsingar & sköpun",
       "category": "Auglýsingar & sköpun",
+      "secondaryCategory": null,
       "pubDate": "2026-06-10T10:00:00.000Z",
       "summary": "The telecom company’s annual Untold Stories event at Tribeca Festival is designed to fund a marketable film project—and also get the brand in front of new audiences, one exec told us.",
       "tags": [
         "Branding",
+        "Sköpun",
         "Neytendur"
       ],
-      "score": 1.9
+      "score": 1.9999999999999998
     },
     {
-      "title": "How soccer creators are helping to make the World Cup more than a moment",
-      "link": "\r\n                https://www.marketingbrew.com/stories/soccer-creators-influencers-world-cup?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
-      "source": "Marketing Brew",
-      "category": "Auglýsingar & sköpun",
-      "pubDate": "2026-06-09T11:00:00.000Z",
-      "summary": "Leagues like La Liga in Spain and Bundesliga in Germany are eager to hook American fans, and they’re using influencers to do it.",
-      "tags": [],
-      "score": 1.9
-    },
-    {
-      "title": "‘The human touch’: Inside Etsy’s life-by-numbers brand campaign",
-      "link": "\r\n                https://www.marketingbrew.com/stories/etsy-life-by-numbers-brand-campaign-celebrate-being-human?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
-      "source": "Marketing Brew",
-      "category": "Auglýsingar & sköpun",
-      "pubDate": "2026-06-08T15:38:09.000Z",
-      "summary": "“As more of life becomes automated and impersonal, people are increasingly looking for things that feel more personal, expressive, and human,” the brand’s CMO told us.",
+      "title": "Deuce Studio designs sleep-focused identity for herbal tea start-up Cydno",
+      "link": "https://www.designweek.co.uk/deuce-studio-designs-sleep-focused-identity-for-herbal-tea-start-up-cydno/",
+      "source": "Design Week",
+      "primaryCategory": "Branding & auðkenni",
+      "category": "Branding & auðkenni",
+      "secondaryCategory": null,
+      "pubDate": "2026-06-10T06:00:02.000Z",
+      "summary": "London-based design agency Deuce Studio has created the brand strategy, visual identity, and packaging for the premium herbal tea start-up. The project seeks to position the product as an antidote to overstimulated daily routines. The studio built the brand foundation around the…",
       "tags": [
         "Branding",
+        "Sköpun",
+        "Stefna"
+      ],
+      "score": 2.3000000000000003
+    },
+    {
+      "title": "The Rise of ‘Blanding’: Why Brands Must Stop Designing for Machines",
+      "link": "https://www.designweek.co.uk/the-rise-of-blanding-why-brands-must-stop-designing-for-machines/",
+      "source": "Design Week",
+      "primaryCategory": "Branding & auðkenni",
+      "category": "Branding & auðkenni",
+      "secondaryCategory": null,
+      "pubDate": "2026-06-05T08:00:19.000Z",
+      "summary": "Branding today is losing its personality. In the race to work seamlessly across digital platforms, many brands are resorting to safe sans-serifs, carefully crafted neutrality, and systems built for global scalability and algorithms. This is the rise of ‘blanding’ – clean,…",
+      "tags": [
+        "Branding",
+        "Miðlar",
         "Sköpun"
       ],
+      "score": 2.1
+    },
+    {
+      "title": "These 16 new journalism jobs could help publishers “future-proof” their newsrooms",
+      "link": "https://www.niemanlab.org/2026/06/these-16-new-journalism-jobs-are-designed-to-help-publishers-future-proof-their-newsrooms/",
+      "source": "Nieman Lab",
+      "primaryCategory": "Miðlar & pallborð",
+      "category": "Miðlar & pallborð",
+      "secondaryCategory": null,
+      "pubDate": "2026-06-03T18:12:49.000Z",
+      "summary": "Ten years ago, the phrase “chatbots with specific character voices” would not have appeared in a journalism job posting. But here we are in 2026, and The Economist — hiring for a senior AI engineer for its AI Lab — mentions that “fine-tuning [AI] models for style or persona” is a…",
+      "tags": [
+        "AI",
+        "Miðlar"
+      ],
       "score": 1.9
+    },
+    {
+      "title": "En pointe: Why brands are embracing the aesthetics of ballet",
+      "link": "\r\n                https://www.marketingbrew.com/stories/brands-en-pointe-why-ballet-aesthetics-and-performance-arts-are-appealing-to-audiences?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
+      "source": "Marketing Brew",
+      "primaryCategory": "Auglýsingar & sköpun",
+      "category": "Auglýsingar & sköpun",
+      "secondaryCategory": null,
+      "pubDate": "2026-06-03T11:00:00.000Z",
+      "summary": "Timothée Chalamet may have sneered at ballet's popularity during his Oscar run—but advertising would beg to differ. Ballet aesthetics have appeared in campaigns from brands like NikeSkims x LISA and Lulu and Georgia, which could be a response to AI and digital life.",
+      "tags": [
+        "AI",
+        "Branding",
+        "Sköpun",
+        "Auglýsingar"
+      ],
+      "score": 2.4
     }
   ],
   "disclaimer": "Yfirlit unnið sjálfvirkt úr RSS-straumum opinberra heimilda. Tenglar vísa á upprunalegar heimildir."

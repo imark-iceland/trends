@@ -1,6 +1,6 @@
 /**
  * ÍMARK Trends – Weekly Fetch
- * Sources: RSS feeds + Anthropic sitemap/OG scraping.
+ * Category-balanced editorial selection.
  * No API key or paid services required.
  *
  * Run: node src/fetch.js
@@ -14,26 +14,63 @@ import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
-const config = JSON.parse(await fs.readFile(path.join(ROOT, "config/sources.json"), "utf-8"));
 
-const parser = new Parser({ timeout: 12000 });
-const DAYS_BACK = config.settings?.fetchDaysBack ?? 14;
-const MAX_ITEMS = config.settings?.maxItemsPerWeek ?? 10;
+const DAYS_BACK = 14;
+const TOTAL_ITEMS = 10;
+const MAX_PER_CATEGORY = 3;
 const CUTOFF = Date.now() - DAYS_BACK * 86400000;
 const UA = "Mozilla/5.0 (compatible; ImarkBot/1.0; +https://imark.is)";
 
-// ─── RSS sources ─────────────────────────────────────────────────────────────
+// ─── Category targets ────────────────────────────────────────────────────────
+// quota: ideal number of articles per week
+// max:   hard cap per category
+
+const CATEGORIES = {
+  "AI & markaðssetning":    { quota: 2, max: MAX_PER_CATEGORY },
+  "Branding & auðkenni":    { quota: 2, max: MAX_PER_CATEGORY },
+  "Auglýsingar & sköpun":   { quota: 2, max: MAX_PER_CATEGORY },
+  "Miðlar & pallborð":      { quota: 2, max: MAX_PER_CATEGORY },
+  "Neytendahegðun":         { quota: 1, max: MAX_PER_CATEGORY },
+  "PR & orðspor":           { quota: 1, max: 2 },
+};
+
+// ─── Sources ─────────────────────────────────────────────────────────────────
 
 const RSS_SOURCES = [
-  { name: "Marketing Brew",    url: "https://www.marketingbrew.com/feed.xml",              category: "Auglýsingar & sköpun",   weight: 1.4 },
-  { name: "Adweek",            url: "https://www.adweek.com/feed/",                        category: "Auglýsingar & sköpun",   weight: 1.3 },
-  { name: "Think with Google", url: "https://feeds.feedburner.com/blogspot/AMob",          category: "AI & markaðssetning",     weight: 1.3 },
-  { name: "Google AI Blog",    url: "https://blog.google/technology/ai/rss/",              category: "AI & markaðssetning",     weight: 1.4 },
-  { name: "OpenAI News",       url: "https://openai.com/blog/rss.xml",                     category: "AI & markaðssetning",     weight: 1.3 },
-  { name: "Nieman Lab",        url: "https://www.niemanlab.org/feed/",                     category: "Miðlar & pallborð",       weight: 1.2 },
-  { name: "Meta Newsroom",     url: "https://about.fb.com/news/feed/",                     category: "Miðlar & pallborð",       weight: 1.1 },
-  { name: "YouTube Blog",      url: "https://blog.youtube/rss/",                           category: "Miðlar & pallborð",       weight: 1.0 },
+  // AI & Marketing
+  { name: "OpenAI News",       url: "https://openai.com/blog/rss.xml",                    category: "AI & markaðssetning",  weight: 1.4 },
+  { name: "Google AI Blog",    url: "https://blog.google/technology/ai/rss/",             category: "AI & markaðssetning",  weight: 1.3 },
+  { name: "Think with Google", url: "https://feeds.feedburner.com/blogspot/AMob",         category: "AI & markaðssetning",  weight: 1.3 },
+
+  // Branding & Identity
+  { name: "Brand New",         url: "https://www.underconsideration.com/brandnew/atom.xml", category: "Branding & auðkenni", weight: 1.5 },
+  { name: "Design Week",       url: "https://www.designweek.co.uk/feed/",                 category: "Branding & auðkenni",  weight: 1.3 },
+  { name: "Creative Review",   url: "https://www.creativereview.co.uk/feed/",             category: "Branding & auðkenni",  weight: 1.3 },
+
+  // Advertising & Creative
+  { name: "Marketing Brew",    url: "https://www.marketingbrew.com/feed.xml",             category: "Auglýsingar & sköpun", weight: 1.4 },
+  { name: "Adweek",            url: "https://www.adweek.com/feed/",                       category: "Auglýsingar & sköpun", weight: 1.3 },
+  { name: "Digiday",           url: "https://digiday.com/feed/",                          category: "Auglýsingar & sköpun", weight: 1.2 },
+
+  // Media & Platforms
+  { name: "Nieman Lab",        url: "https://www.niemanlab.org/feed/",                    category: "Miðlar & pallborð",    weight: 1.3 },
+  { name: "Meta Newsroom",     url: "https://about.fb.com/news/feed/",                    category: "Miðlar & pallborð",    weight: 1.1 },
+  { name: "YouTube Blog",      url: "https://blog.youtube/rss/",                          category: "Miðlar & pallborð",    weight: 1.0 },
 ];
+
+// Sources that contribute to secondary categories via keyword detection
+// (their primary category is above, but they can fill others)
+const SECONDARY_CATEGORY_KEYWORDS = {
+  "Neytendahegðun": [
+    "consumer behaviour", "consumer research", "consumer trust", "customer loyalty",
+    "shopper", "buyer behaviour", "purchase intent", "consumer survey",
+    "consumer trend", "customer experience", "consumer insight",
+  ],
+  "PR & orðspor": [
+    "public relations", "reputation management", "crisis communications",
+    "media relations", "earned media", "press release", "corporate communications",
+  ],
+};
 
 // ─── Utilities ────────────────────────────────────────────────────────────────
 
@@ -57,7 +94,7 @@ function cleanText(raw = "") {
   return decodeEntities(raw).replace(/<[^>]+>/g, "").replace(/\s+/g, " ").trim();
 }
 
-function excerpt(text, maxLen = 300) {
+function excerpt(text, maxLen = 280) {
   const clean = cleanText(text);
   if (clean.length <= maxLen) return clean;
   const cut = clean.lastIndexOf(" ", maxLen);
@@ -78,14 +115,14 @@ function titleSimilarity(a, b) {
 function detectTags(title, snippet) {
   const text = `${title} ${snippet}`.toLowerCase();
   const map = {
-    AI:          ["artificial intelligence", " ai ", "generative", "llm", "gpt", "machine learning", "openai", "claude", "gemini", "chatgpt"],
-    Branding:    ["brand", "branding", "identity", "positioning", "rebrand"],
-    Miðlar:      ["media", "platform", "streaming", "publishing", "newsletter", "journalism", "news site", "publisher"],
-    PR:          ["public relations", "reputation", "crisis comms", "press release"],
-    Sköpun:      ["creative", "campaign", "copywriting", "art direction"],
+    AI:          [" ai ", "artificial intelligence", "generative", "llm", "gpt", "machine learning", "openai", "claude", "gemini", "chatgpt"],
+    Branding:    ["brand", "branding", "identity", "positioning", "rebrand", "logo", "visual identity"],
+    Miðlar:      ["media", "platform", "streaming", "publishing", "newsletter", "journalism", "news site"],
+    PR:          ["public relations", "reputation", "crisis", "communications", "press release"],
+    Sköpun:      ["creative", "design", "campaign", "copywriting", "art direction"],
     Stefna:      ["strategy", "strategic", "growth", "transformation", "forecast"],
-    Neytendur:   ["consumer", "audience", "customer", "loyalty", "behaviour"],
-    Auglýsingar: ["advertising", " ads ", "programmatic", "paid media", "ad revenue", "media buying", "ad platform"],
+    Neytendur:   ["consumer", "audience", "customer", "loyalty", "behaviour", "retail"],
+    Auglýsingar: ["advertising", " ads ", "programmatic", "paid media", "ad revenue", "media buying"],
     Social:      ["social media", "instagram", "tiktok", "linkedin", "youtube", "facebook", "threads"],
   };
   return Object.entries(map)
@@ -93,36 +130,48 @@ function detectTags(title, snippet) {
     .map(([tag]) => tag);
 }
 
-// ─── Relevance scoring ────────────────────────────────────────────────────────
-
-const MARKETING_KW = [
-  "brand", "marketing", "advertising", "media", "campaign", "agency",
-  "consumer", "audience", "creative", "strategy", "digital", "content",
-  "social media", "pr ", "public relations", "publisher", "journalism",
-  "ad ", "ads ", "generative ai", "artificial intelligence", "openai",
-  "markaðs", "auglýs", "miðl", "neytend", "search", "analytics",
-  "measurement", "platform", "influencer", "creator", "engagement",
-];
+// Detect if an article belongs to a secondary category based on content
+function detectSecondaryCategory(title, snippet) {
+  const text = normalise(`${title} ${snippet}`);
+  for (const [cat, keywords] of Object.entries(SECONDARY_CATEGORY_KEYWORDS)) {
+    if (keywords.some(k => text.includes(k.toLowerCase()))) return cat;
+  }
+  return null;
+}
 
 const BLOCK_KW = [
-  "election", "military", "war crimes", "attack", "police", "murder",
-  "crime", "court", "weather", "sport", "football", "basketball",
-  "olympic", "G7", "NATO", "Zelensky", "Putin", "knattspyrna",
-  "lögregla", "slys", "veður", "handknattleikur", "kosning", "þing ",
+  "election", "military", "war crimes", " war ", "attack", "murder", "police",
+  "crime", "court ruling", "weather", " sport ", "football", "basketball",
+  "olympic", "G7", "NATO", "Zelensky", "knattspyrna", "lögregla", "slys",
+  "veður", "handknattleikur", "kosning", "þingræður",
 ];
 
-function scoreItem(title, snippet, weight) {
+function isRelevant(title, snippet) {
   const text = normalise(`${title} ${snippet}`);
-  if (BLOCK_KW.some(kw => text.includes(kw.toLowerCase()))) return 0;
-  if (snippet.length < 60) return 0;
+  if (snippet.length < 60) return false;
+  return !BLOCK_KW.some(kw => text.includes(kw.toLowerCase()));
+}
+
+function scoreItem(title, snippet, weight) {
+  if (!isRelevant(title, snippet)) return 0;
+  const text = normalise(`${title} ${snippet}`);
+  const BOOST_KW = [
+    "brand", "marketing", "advertising", "media", "campaign", "agency",
+    "consumer", "audience", "creative", "strategy", "digital", "content",
+    "social media", "pr ", "publisher", "journalism", "ad ", "ai ",
+    "generative", "identity", "design", "insight", "trend", "measurement",
+    "influencer", "creator", "engagement", "platform", "search",
+  ];
   let score = weight;
-  for (const kw of MARKETING_KW) {
-    if (text.includes(kw.toLowerCase())) score += 0.25;
+  for (const kw of BOOST_KW) {
+    if (text.includes(kw)) score += 0.2;
   }
   return score;
 }
 
 // ─── RSS fetch ────────────────────────────────────────────────────────────────
+
+const parser = new Parser({ timeout: 12000 });
 
 async function fetchRSS(source) {
   try {
@@ -135,15 +184,19 @@ async function fetchRSS(source) {
       .map(item => {
         const title = cleanText(item.title);
         const snippet = excerpt(item.contentSnippet ?? item.content ?? item.summary ?? "");
+        const score = scoreItem(title, snippet, source.weight);
+        const secondaryCat = detectSecondaryCategory(title, snippet);
         return {
           title,
           link: item.link,
           source: source.name,
+          primaryCategory: source.category,
           category: source.category,
+          secondaryCategory: secondaryCat,
           pubDate: item.isoDate ?? item.pubDate,
           summary: snippet,
           tags: detectTags(title, snippet),
-          score: scoreItem(title, snippet, source.weight),
+          score,
         };
       })
       .filter(item => item.score > 0);
@@ -151,82 +204,68 @@ async function fetchRSS(source) {
     console.log(`  ✓ ${source.name.padEnd(22)} ${items.length} items`);
     return items;
   } catch (err) {
-    console.warn(`  ✗ ${source.name.padEnd(22)} ${err.message.split("\n")[0].slice(0, 55)}`);
+    console.warn(`  ✗ ${source.name.padEnd(22)} ${err.message.split("\n")[0].slice(0, 50)}`);
     return [];
   }
 }
 
 // ─── Anthropic sitemap scraper ────────────────────────────────────────────────
 
-function extractMeta(html, property) {
-  const m = html.match(new RegExp(`<meta[^>]+(?:property|name)=["']${property}["'][^>]+content=["']([^"']+)["']`, "i"))
-           ?? html.match(new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']${property}["']`, "i"));
+function extractMeta(html, prop) {
+  const m = html.match(new RegExp(`<meta[^>]+(?:property|name)=["']${prop}["'][^>]+content=["']([^"']+)["']`, "i"))
+           ?? html.match(new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']${prop}["']`, "i"));
   return m ? decodeEntities(m[1]).trim() : "";
 }
 
-async function fetchAnthropicSitemap() {
-  const SOURCE = { name: "Anthropic", category: "AI & markaðssetning", weight: 1.4 };
+async function fetchAnthropic() {
+  const SOURCE = { name: "Anthropic", primaryCategory: "AI & markaðssetning", category: "AI & markaðssetning", weight: 1.4 };
   try {
     const sitemapRes = await fetch("https://www.anthropic.com/sitemap.xml", {
-      headers: { "User-Agent": UA },
-      signal: AbortSignal.timeout(12000),
+      headers: { "User-Agent": UA }, signal: AbortSignal.timeout(12000),
     });
     const xml = await sitemapRes.text();
-
-    // Extract /news/ URLs with lastmod within window
     const urlBlocks = xml.match(/<url>[\s\S]*?<\/url>/g) ?? [];
     const recentUrls = urlBlocks
-      .map(block => {
-        const loc = (block.match(/<loc>([^<]+)<\/loc>/) ?? [])[1] ?? "";
-        const lastmod = (block.match(/<lastmod>([^<]+)<\/lastmod>/) ?? [])[1] ?? "";
-        return { loc, lastmod };
-      })
+      .map(block => ({
+        loc: (block.match(/<loc>([^<]+)<\/loc>/) ?? [])[1] ?? "",
+        lastmod: (block.match(/<lastmod>([^<]+)<\/lastmod>/) ?? [])[1] ?? "",
+      }))
       .filter(({ loc, lastmod }) => {
         if (!loc.includes("/news/") || loc.endsWith("/news/")) return false;
-        if (!lastmod) return true; // include if no date
-        return new Date(lastmod).getTime() > CUTOFF;
+        return !lastmod || new Date(lastmod).getTime() > CUTOFF;
       })
-      .slice(0, 15); // cap to avoid too many requests
+      .slice(0, 12);
 
-    console.log(`  Anthropic sitemap: ${recentUrls.length} recent news URLs`);
-
-    // Fetch OG metadata for each article
     const articles = [];
     for (const { loc } of recentUrls) {
       try {
-        const r = await fetch(loc, {
-          headers: { "User-Agent": UA },
-          signal: AbortSignal.timeout(8000),
-        });
+        const r = await fetch(loc, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(8000) });
         const html = await r.text();
         const title = extractMeta(html, "og:title") || extractMeta(html, "twitter:title");
         const description = extractMeta(html, "og:description") || extractMeta(html, "twitter:description");
-        const pubDate = extractMeta(html, "article:published_time") || extractMeta(html, "og:article:published_time");
-
+        const pubDate = extractMeta(html, "article:published_time");
         if (!title || !description) continue;
         const snippet = excerpt(description);
         const score = scoreItem(title, snippet, SOURCE.weight);
         if (score === 0) continue;
-
         articles.push({
           title: cleanText(title),
           link: loc,
           source: SOURCE.name,
+          primaryCategory: SOURCE.primaryCategory,
           category: SOURCE.category,
           pubDate: pubDate || new Date().toISOString(),
           summary: snippet,
           tags: detectTags(title, snippet),
           score,
+          secondaryCategory: detectSecondaryCategory(title, snippet),
         });
-      } catch {
-        // skip individual page failures silently
-      }
+      } catch { /* skip */ }
     }
-
     console.log(`  ✓ ${"Anthropic".padEnd(22)} ${articles.length} items`);
     return articles;
   } catch (err) {
-    console.warn(`  ✗ ${"Anthropic".padEnd(22)} ${err.message.slice(0, 55)}`);
+    console.warn(`  ✗ ${"Anthropic".padEnd(22)} ${err.message.slice(0, 50)}`);
     return [];
   }
 }
@@ -241,30 +280,91 @@ function deduplicate(items) {
   return kept;
 }
 
+// ─── Category-balanced selection ─────────────────────────────────────────────
+
+function selectBalanced(allItems) {
+  // Build per-category pools (sorted by score)
+  const pools = {};
+  for (const cat of Object.keys(CATEGORIES)) pools[cat] = [];
+
+  for (const item of allItems) {
+    // Primary bucket
+    if (pools[item.primaryCategory]) {
+      pools[item.primaryCategory].push({ ...item, category: item.primaryCategory });
+    }
+    // Secondary bucket (if different and the item might fill a gap)
+    if (item.secondaryCategory && item.secondaryCategory !== item.primaryCategory && pools[item.secondaryCategory]) {
+      pools[item.secondaryCategory].push({ ...item, category: item.secondaryCategory });
+    }
+  }
+
+  for (const cat of Object.keys(pools)) {
+    pools[cat].sort((a, b) => b.score - a.score);
+  }
+
+  const selected = [];
+  const usedLinks = new Set();
+  const catCounts = {};
+  for (const cat of Object.keys(CATEGORIES)) catCounts[cat] = 0;
+
+  // Pass 1: fill each category up to quota
+  for (const [cat, { quota, max }] of Object.entries(CATEGORIES)) {
+    for (const item of pools[cat]) {
+      if (catCounts[cat] >= quota) break;
+      if (catCounts[cat] >= max) break;
+      if (usedLinks.has(item.link)) continue;
+      selected.push(item);
+      usedLinks.add(item.link);
+      catCounts[cat]++;
+    }
+  }
+
+  // Pass 2: fill remaining slots up to TOTAL_ITEMS from best remaining items
+  if (selected.length < TOTAL_ITEMS) {
+    const remaining = allItems
+      .filter(item => !usedLinks.has(item.link))
+      .sort((a, b) => b.score - a.score);
+
+    for (const item of remaining) {
+      if (selected.length >= TOTAL_ITEMS) break;
+      const cat = item.primaryCategory;
+      if (!catCounts[cat]) catCounts[cat] = 0;
+      if (catCounts[cat] >= MAX_PER_CATEGORY) continue;
+      selected.push({ ...item, category: cat });
+      usedLinks.add(item.link);
+      catCounts[cat]++;
+    }
+  }
+
+  // Final sort by date
+  selected.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+
+  return { selected, catCounts };
+}
+
 // ─── Main ─────────────────────────────────────────────────────────────────────
 
 async function main() {
   console.log("🔍 ÍMARK Trends – Weekly Fetch\n");
 
-  // Fetch all RSS in parallel, then Anthropic sequentially (many page requests)
   const [rssResults, anthropicItems] = await Promise.all([
     Promise.all(RSS_SOURCES.map(fetchRSS)),
-    fetchAnthropicSitemap(),
+    fetchAnthropic(),
   ]);
 
-  let items = [...rssResults.flat(), ...anthropicItems];
-  console.log(`\n  ${items.length} relevant items total`);
+  let allItems = deduplicate([...rssResults.flat(), ...anthropicItems]);
+  console.log(`\n  ${allItems.length} unique relevant items`);
 
-  // Score-sort → deduplicate → pick top N → re-sort by date
-  items.sort((a, b) => b.score - a.score);
-  items = deduplicate(items);
-  const selected = items.slice(0, MAX_ITEMS);
-  selected.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
+  const { selected, catCounts } = selectBalanced(allItems);
 
-  console.log(`  ${selected.length} items selected\n`);
+  console.log(`\n  Category breakdown:`);
+  for (const [cat, count] of Object.entries(catCounts)) {
+    if (count > 0) console.log(`    ${cat.padEnd(28)} ${count}`);
+  }
+  console.log(`\n  ${selected.length} total items selected`);
 
   if (selected.length === 0) {
-    console.error("❌ No relevant articles found. Existing data not overwritten.");
+    console.error("\n❌ No articles found. Existing data not overwritten.");
     process.exit(1);
   }
 
@@ -281,7 +381,7 @@ async function main() {
   await fs.writeFile(path.join(ROOT, "data/latest.json"), JSON.stringify(output, null, 2));
   await fs.writeFile(path.join(ROOT, `data/weeks/${weekId}.json`), JSON.stringify(output, null, 2));
 
-  console.log(`✅ ${selected.length} articles saved → data/latest.json`);
+  console.log(`\n✅ Saved → data/latest.json`);
 }
 
 main().catch(err => { console.error("Fatal:", err); process.exit(1); });
