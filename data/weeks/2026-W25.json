@@ -1,23 +1,21 @@
 {
   "weekId": "2026-W25",
-  "generatedAt": "2026-06-16T10:19:40.877Z",
-  "editorsNote": "",
+  "generatedAt": "2026-06-16T10:39:28.044Z",
   "items": [
     {
-      "title": "Nexxen Plugs Into Claude and Google’s AI Protocols as Agencies Look to Automate Media Buying",
-      "link": "https://www.adweek.com/media/nexxen-plugs-into-claude-and-googles-ai-protocols-as-agencies-look-to-automate-media-buying/",
-      "source": "Adweek",
-      "category": "Auglýsingar & sköpun",
+      "title": "WPP forecasts AI search ads to become fastest growing channel in advertising",
+      "link": "https://digiday.com/media-buying/wpp-forecasts-ai-search-ads-to-become-fastest-growing-channel-in-advertising/?utm_campaign=digidaydis&utm_medium=rss&utm_source=general-rss",
+      "source": "Digiday",
+      "category": "Miðlar & pallborð",
       "language": "en",
-      "pubDate": "2026-06-16T06:00:00.000Z",
-      "summary": "As agencies build in-house AI systems for streamlined media buys, Nexxen is betting that being interoperable is the new competitive advantage in adtech.",
-      "insight": "",
+      "pubDate": "2026-06-16T04:01:00.000Z",
+      "summary": "Twin projections from holdco WPP and Madison & Wall, peg rising search spend amid a resilient ad economy, which is still expected to grow despite headwinds.",
       "tags": [
         "AI",
-        "Miðlar",
-        "PR"
+        "Stefna",
+        "Auglýsingar"
       ],
-      "score": 2.1
+      "score": 2.3
     },
     {
       "title": "News sites are the new newspapers: People are abandoning them for social media",
@@ -26,43 +24,26 @@
       "category": "Miðlar & pallborð",
       "language": "en",
       "pubDate": "2026-06-15T23:02:44.000Z",
-      "summary": "News sites are rapidly becoming the newspapers of the digital age. And you know what happened to newspapers. Worldwide, people in all age groups are ditching news sites and publishers’ apps in favor of social media and video networks. In fact, 18- to 34-year-olds are abandoning content on publishers’ platforms even more quickly than they’re...",
-      "insight": "",
+      "summary": "News sites are rapidly becoming the newspapers of the digital age. And you know what happened to newspapers. Worldwide, people in all age groups are ditching news sites and publishers’ apps in favor of social media and video networks. In fact, 18- to 34-year-olds are abandoning…",
       "tags": [
         "Miðlar",
         "Social"
       ],
-      "score": 2.5
+      "score": 2.3
     },
     {
-      "title": "Ticker: CBS News Names Trevor Phillips New Senior Global Affairs Correspondent",
-      "link": "https://www.adweek.com/tvnewser/ticker-cbs-news-names-trevor-phillips-new-senior-global-affairs-correspondent/",
-      "source": "Adweek",
-      "category": "Auglýsingar & sköpun",
+      "title": "How CMOs can make the case for creative investment",
+      "link": "https://digiday.com/sponsored/how-cmos-can-make-the-case-for-creative-investment/?utm_campaign=digidaydis&utm_medium=rss&utm_source=general-rss",
+      "source": "Digiday",
+      "category": "Miðlar & pallborð",
       "language": "en",
-      "pubDate": "2026-06-15T18:31:52.000Z",
-      "summary": "60 Minutes producer Michael Gavshon announced he will be leaving.",
-      "insight": "",
-      "tags": [
-        "AI",
-        "PR"
-      ],
-      "score": 1.8
-    },
-    {
-      "title": "EA Launches Its First Ad Platform, Letting Brands Buy Games Like TV—Minus the Distracted Viewers",
-      "link": "https://www.adweek.com/media/ea-launches-its-first-ad-platform-letting-brands-buy-games-like-tvminus-the-distracted-viewers/",
-      "source": "Adweek",
-      "category": "Auglýsingar & sköpun",
-      "language": "en",
-      "pubDate": "2026-06-15T09:18:53.000Z",
-      "summary": "The gaming giant will now be able to sell stadium boards and scoreboards in FC, Madden, and College Football as targeted media.",
-      "insight": "",
+      "pubDate": "2026-06-15T20:17:26.000Z",
+      "summary": "Ilaria Pasquinelli, Chief Marketing Officer, LIONS Brands that invest in creative marketing outperform the competition and grow. That is a bold claim, but there is proof to back up these claims. Global brand consultancy Interbrand analyzed data from 50 businesses that won the…",
       "tags": [
         "Branding",
-        "Miðlar"
+        "Sköpun"
       ],
-      "score": 1.9000000000000001
+      "score": 2.3
     },
     {
       "title": "Introducing the OpenAI Partner Network",
@@ -72,10 +53,8 @@
       "language": "en",
       "pubDate": "2026-06-14T17:00:00.000Z",
       "summary": "OpenAI launches the Partner Network, investing $150M to help global partners accelerate enterprise AI adoption, deployment, and transformation.",
-      "insight": "",
       "tags": [
         "AI",
-        "PR",
         "Stefna"
       ],
       "score": 2
@@ -88,10 +67,8 @@
       "language": "en",
       "pubDate": "2026-06-12T10:00:00.000Z",
       "summary": "OpenAI introduces three Academy courses that help people build practical AI skills, create repeatable workflows, and apply agents in everyday work.",
-      "insight": "",
       "tags": [
-        "AI",
-        "PR"
+        "AI"
       ],
       "score": 2
     },
@@ -103,10 +80,8 @@
       "language": "en",
       "pubDate": "2026-06-12T00:00:00.000Z",
       "summary": "Preply uses OpenAI to launch AI-generated lesson summaries, providing personalised feedback and language learning exercises.",
-      "insight": "",
       "tags": [
-        "AI",
-        "PR"
+        "AI"
       ],
       "score": 2
     },
@@ -118,10 +93,9 @@
       "language": "en",
       "pubDate": "2026-06-11T00:00:00.000Z",
       "summary": "OpenAI supports the EU Code of Practice on AI content transparency, advancing provenance standards and tools to help people understand AI-generated content.",
-      "insight": "",
       "tags": [
         "AI",
-        "PR"
+        "Neytendur"
       ],
       "score": 2.3
     },
@@ -133,10 +107,8 @@
       "language": "en",
       "pubDate": "2026-06-11T00:00:00.000Z",
       "summary": "OpenAI plans to acquire Ona to expand Codex with secure, persistent cloud environments, enabling long-running AI agents across enterprise workflows.",
-      "insight": "",
       "tags": [
-        "AI",
-        "PR"
+        "AI"
       ],
       "score": 2
     },
@@ -148,15 +120,25 @@
       "language": "en",
       "pubDate": "2026-06-11T00:00:00.000Z",
       "summary": "Learn how BBVA scaled ChatGPT Enterprise to 100,000 employees and partnered with OpenAI to accelerate AI-powered banking transformation worldwide.",
-      "insight": "",
       "tags": [
         "AI",
-        "PR",
         "Stefna"
+      ],
+      "score": 2
+    },
+    {
+      "title": "Access OpenAI models and Codex through your Oracle cloud commitment",
+      "link": "https://openai.com/index/openai-on-oracle-cloud",
+      "source": "OpenAI Blog",
+      "category": "AI & markaðssetning",
+      "language": "en",
+      "pubDate": "2026-06-10T20:00:00.000Z",
+      "summary": "Access OpenAI models and Codex through Oracle Cloud, using existing commitments to build and deploy AI with enterprise security and governance.",
+      "tags": [
+        "AI"
       ],
       "score": 2
     }
   ],
-  "disclaimer": "Yfirlit unnið með aðstoð gervigreindar. Tenglar vísa á upprunalegar heimildir.",
-  "note": "AI enrichment (summaries in Icelandic, insights) runs via GitHub Actions."
+  "disclaimer": "Yfirlit unnið sjálfvirkt úr RSS-straumum. Tenglar vísa á upprunalegar heimildir."
 }

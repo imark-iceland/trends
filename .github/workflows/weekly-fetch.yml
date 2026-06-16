@@ -1,11 +1,8 @@
 name: ÍMARK Weekly Trends Fetch
 
 on:
-  # Run every Monday at 07:00 UTC (matches Iceland timezone, no DST)
   schedule:
     - cron: "0 7 * * 1"
-
-  # Allow manual trigger from GitHub Actions UI
   workflow_dispatch:
 
 permissions:
@@ -14,13 +11,12 @@ permissions:
 jobs:
   fetch-and-publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 10
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
         with:
-          # Fetch full history so we can commit back
           fetch-depth: 0
 
       - name: Set up Node.js
@@ -33,24 +29,15 @@ jobs:
         run: npm ci
 
       - name: Fetch weekly trends
-        env:
-          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
-        run: npm run fetch
+        run: node src/fetch.js
 
       - name: Generate dashboard HTML
-        run: npm run generate
+        run: node src/generate.js
 
-      - name: Commit updated data and dashboard
+      - name: Commit and push
         run: |
           git config user.name "ÍMARK Trends Bot"
           git config user.email "trends-bot@imark.is"
           git add data/ docs/
           git diff --staged --quiet || git commit -m "chore: weekly trends update $(date +'%Y-W%V')"
           git push
-
-      - name: Upload dashboard artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: dashboard-${{ github.run_id }}
-          path: public/
-          retention-days: 90

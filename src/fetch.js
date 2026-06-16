@@ -1,15 +1,12 @@
 /**
- * ÍMARK Trends – Weekly Fetch Script
- * Fetches RSS feeds, scores relevance, deduplicates, generates AI summaries,
- * and saves weekly JSON archives.
+ * ÍMARK Trends – Weekly Fetch
+ * Fetches RSS feeds, scores relevance, deduplicates, saves JSON.
+ * No API key or paid services required.
  *
  * Run: node src/fetch.js
- * Env: ANTHROPIC_API_KEY required
  */
 
-import Anthropic from "@anthropic-ai/sdk";
 import Parser from "rss-parser";
-import fetch from "node-fetch";
 import fs from "fs/promises";
 import path from "path";
 import { fileURLToPath } from "url";
@@ -21,13 +18,12 @@ const config = JSON.parse(
   await fs.readFile(path.join(ROOT, "config/sources.json"), "utf-8")
 );
 
-const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
-const parser = new Parser({
-  customFields: { item: ["media:content", "enclosure"] },
-  timeout: 10000,
-});
+const parser = new Parser({ timeout: 10000 });
+const DAYS_BACK = config.settings.fetchDaysBack ?? 14;
+const MAX_ITEMS = config.settings.maxItemsPerWeek ?? 10;
+const CUTOFF = Date.now() - DAYS_BACK * 86400000;
 
-// ─── Helpers ────────────────────────────────────────────────────────────────
+// ─── Utilities ───────────────────────────────────────────────────────────────
 
 function getWeekId(date = new Date()) {
   const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
@@ -37,240 +33,184 @@ function getWeekId(date = new Date()) {
   return `${d.getUTCFullYear()}-W${String(week).padStart(2, "0")}`;
 }
 
-function normaliseText(str) {
-  return str?.toLowerCase().replace(/[^a-záðéíóúýþæö\s]/g, " ").replace(/\s+/g, " ").trim() ?? "";
+function decodeEntities(str = "") {
+  return str
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)))
+    .replace(/&amp;/g, "&")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&rsquo;|&apos;/g, "'")
+    .replace(/&ldquo;|&rdquo;|&quot;/g, '"')
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">");
+}
+
+function cleanText(raw = "") {
+  return decodeEntities(raw)
+    .replace(/<[^>]+>/g, "")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function excerpt(text, maxLen = 280) {
+  const clean = cleanText(text);
+  if (clean.length <= maxLen) return clean;
+  const cut = clean.lastIndexOf(" ", maxLen);
+  return clean.slice(0, cut > 0 ? cut : maxLen) + "…";
+}
+
+function normalise(str = "") {
+  return str.toLowerCase().replace(/[^a-z0-9\s]/g, " ").replace(/\s+/g, " ").trim();
 }
 
 function titleSimilarity(a, b) {
-  const wa = new Set(normaliseText(a).split(" ").filter((w) => w.length > 3));
-  const wb = new Set(normaliseText(b).split(" ").filter((w) => w.length > 3));
+  const wa = new Set(normalise(a).split(" ").filter((w) => w.length > 3));
+  const wb = new Set(normalise(b).split(" ").filter((w) => w.length > 3));
   if (!wa.size || !wb.size) return 0;
-  const intersection = [...wa].filter((w) => wb.has(w)).length;
-  return intersection / Math.max(wa.size, wb.size);
-}
-
-function scoreRelevance(item, source) {
-  const text = normaliseText(`${item.title} ${item.contentSnippet ?? ""}`);
-  let score = source.weight ?? 1.0;
-
-  for (const kw of config.relevanceKeywords.high) {
-    if (text.includes(kw.toLowerCase())) score += 0.3;
-  }
-  for (const kw of config.relevanceKeywords.medium) {
-    if (text.includes(kw.toLowerCase())) score += 0.1;
-  }
-
-  // Recency boost — newer is slightly better within the week
-  const ageHours = (Date.now() - new Date(item.isoDate ?? item.pubDate).getTime()) / 3600000;
-  score += Math.max(0, (168 - ageHours) / 168) * 0.5;
-
-  // Blocked keyword penalty
-  for (const kw of config.blockedKeywords) {
-    if (text.includes(kw.toLowerCase())) score = 0;
-  }
-
-  return score;
-}
-
-function isDomainBlocked(url) {
-  try {
-    const host = new URL(url).hostname.replace(/^www\./, "");
-    return config.blockedDomains.includes(host);
-  } catch {
-    return true;
-  }
+  return [...wa].filter((w) => wb.has(w)).length / Math.max(wa.size, wb.size);
 }
 
 function detectTags(title, snippet) {
   const text = `${title} ${snippet}`.toLowerCase();
-  const tagMap = {
-    AI: ["ai", "artificial intelligence", "generative", "llm", "gpt", "machine learning", "claude", "openai", "gemini"],
-    Branding: ["brand", "branding", "identity", "positioning", "logo"],
-    Miðlar: ["media", "platform", "streaming", "publishing", "newsletter", "podcast"],
-    PR: ["pr", "public relations", "reputation", "crisis", "communications", "press"],
-    Sköpun: ["creative", "design", "campaign", "copy", "visual", "art direction"],
-    Stefna: ["strategy", "strategic", "growth", "transformation", "leadership"],
-    Neytendur: ["consumer", "audience", "behaviour", "customer", "loyalty", "trust"],
-    Auglýsingar: ["advertising", "ads", "programmatic", "media buy", "paid", "display", "cpc", "cpm"],
-    Social: ["social media", "instagram", "tiktok", "linkedin", "youtube", "x.com", "twitter", "facebook"],
+  const map = {
+    AI: ["artificial intelligence", " ai ", "generative", "llm", "gpt", "machine learning", "openai", "claude", "gemini", "chatgpt"],
+    Branding: ["brand", "branding", "identity", "positioning", "rebrand"],
+    Miðlar: ["media", "platform", "streaming", "publishing", "newsletter", "journalism", "news site", "publisher"],
+    PR: ["public relations", "reputation", "crisis comms", "press release", "communications"],
+    Sköpun: ["creative", "campaign", "copywriting", "art direction", "design"],
+    Stefna: ["strategy", "strategic", "growth", "transformation", "forecast"],
+    Neytendur: ["consumer", "audience", "customer", "loyalty", "behaviour", "trust"],
+    Auglýsingar: ["advertising", " ads ", "programmatic", "paid media", "ad revenue", "ad platform", "media buying"],
+    Social: ["social media", "instagram", "tiktok", "linkedin", "youtube", "twitter", "facebook"],
   };
-
-  return Object.entries(tagMap)
-    .filter(([, keywords]) => keywords.some((k) => text.includes(k)))
+  return Object.entries(map)
+    .filter(([, kws]) => kws.some((k) => text.includes(k)))
     .map(([tag]) => tag);
 }
 
-// ─── Fetch feeds ────────────────────────────────────────────────────────────
+// ─── Relevance scoring ───────────────────────────────────────────────────────
+
+const MARKETING_KEYWORDS = [
+  "brand", "marketing", "advertising", "media", "campaign", "agency",
+  "consumer", "audience", "creative", "strategy", "digital", "content",
+  "social media", "pr", "public relations", "publisher", "journalism",
+  "ad ", "ads ", "generative ai", "artificial intelligence", "openai",
+  "markaðs", "auglýs", "miðl", "neytend",
+];
+
+const IRRELEVANT_KEYWORDS = [
+  "election", "military", "war", "attack", "police", "crime", "court",
+  "weather", "sport", "football", "basketball", "olympic",
+  "G7", "NATO", "Zelensky", "Putin", "þing", "kosning", "lögregla",
+  "slys", "veður", "knattspyrna", "handknattleikur",
+];
+
+function scoreItem(title, snippet, sourceWeight) {
+  const text = normalise(`${title} ${snippet}`);
+
+  // Hard disqualify on irrelevant topics
+  for (const kw of IRRELEVANT_KEYWORDS) {
+    if (text.includes(kw.toLowerCase())) return 0;
+  }
+
+  // Hard disqualify if too short (ticker/stub posts)
+  if (snippet.length < 60) return 0;
+
+  let score = sourceWeight;
+  for (const kw of MARKETING_KEYWORDS) {
+    if (text.includes(kw.toLowerCase())) score += 0.3;
+  }
+  return score;
+}
+
+// ─── Fetch sources ───────────────────────────────────────────────────────────
 
 async function fetchSource(source) {
   try {
     const feed = await parser.parseURL(source.url);
-    const cutoff = Date.now() - config.settings.fetchDaysBack * 86400000;
-
-    return feed.items
+    const items = feed.items
       .filter((item) => {
         const pub = new Date(item.isoDate ?? item.pubDate ?? 0).getTime();
-        return pub > cutoff && item.link && !isDomainBlocked(item.link);
+        return pub > CUTOFF && item.link && item.title;
       })
-      .map((item) => ({
-        title: item.title?.trim(),
-        link: item.link,
-        source: source.name,
-        category: source.category,
-        language: source.language,
-        pubDate: item.isoDate ?? item.pubDate,
-        snippet: item.contentSnippet?.slice(0, 400) ?? "",
-        score: scoreRelevance(item, source),
-        tags: detectTags(item.title ?? "", item.contentSnippet ?? ""),
-      }));
+      .map((item) => {
+        const title = cleanText(item.title);
+        const snippet = excerpt(item.contentSnippet ?? item.content ?? item.summary ?? "");
+        const score = scoreItem(title, snippet, source.weight ?? 1.0);
+        return {
+          title,
+          link: item.link,
+          source: source.name,
+          category: source.category,
+          language: source.language,
+          pubDate: item.isoDate ?? item.pubDate,
+          summary: snippet,
+          tags: detectTags(title, snippet),
+          score,
+        };
+      })
+      .filter((item) => item.score > 0);
+
+    console.log(`  ✓ ${source.name}: ${items.length} relevant items`);
+    return items;
   } catch (err) {
-    console.warn(`⚠️  ${source.name}: ${err.message}`);
+    console.warn(`  ✗ ${source.name}: ${err.message.split("\n")[0]}`);
     return [];
   }
 }
 
-// ─── Deduplication ──────────────────────────────────────────────────────────
+// ─── Deduplicate ─────────────────────────────────────────────────────────────
 
 function deduplicate(items) {
   const kept = [];
   for (const item of items) {
-    const duplicate = kept.some(
-      (k) => titleSimilarity(k.title, item.title) >= config.settings.deduplicationThreshold
-    );
-    if (!duplicate) kept.push(item);
+    const dupe = kept.some((k) => titleSimilarity(k.title, item.title) >= 0.65);
+    if (!dupe) kept.push(item);
   }
   return kept;
 }
 
-// ─── AI enrichment ──────────────────────────────────────────────────────────
-
-async function enrichItem(item) {
-  const summaryLang = item.language === "is" ? "Icelandic" : "English";
-  const prompt = `You are an editor at ÍMARK, the Icelandic marketing industry association. Your audience is marketing professionals, brand managers, media people, PR consultants and agency leaders in Iceland.
-
-Article title: "${item.title}"
-Source: ${item.source}
-Source language: ${summaryLang}
-Snippet: ${item.snippet}
-
-Rules:
-- Never change or translate the article title — it must stay exactly as published.
-- Never invent or infer facts not present in the snippet above.
-- Only summarise what is actually stated in the snippet.
-
-Write a JSON object with exactly these two keys:
-- "summary": 2–3 sentences written in ${summaryLang} (same language as the source). Factual, concise, no hype. Only include information present in the snippet.
-- "insight": 1–2 sentences in Icelandic only. Explain why this specific development matters for marketing professionals in Iceland. Be direct and slightly opinionated. Do not repeat the summary.
-
-Respond with only the raw JSON object. No markdown, no code fences, no extra text.`;
-
-  try {
-    const msg = await anthropic.messages.create({
-      model: config.settings.ai.model,
-      max_tokens: config.settings.ai.summaryMaxTokens,
-      messages: [{ role: "user", content: prompt }],
-    });
-
-    const json = JSON.parse(msg.content[0].text);
-    return { ...item, summary: json.summary, insight: json.insight };
-  } catch (err) {
-    console.warn(`⚠️  AI enrichment failed for "${item.title}": ${err.message}`);
-    return { ...item, summary: item.snippet, insight: "" };
-  }
-}
-
-// ─── Editor's note ──────────────────────────────────────────────────────────
-
-async function generateEditorsNote(items) {
-  const headlines = items.map((i, n) => `${n + 1}. ${i.title} (${i.source})`).join("\n");
-
-  const prompt = `You are the editor of ÍMARK's weekly marketing intelligence digest for Icelandic marketing professionals, agencies and brand managers.
-
-This week's selected stories:
-${headlines}
-
-Write a short editor's note in Icelandic as 4–5 bullet points (using – as bullet). Each bullet should name a key signal or trend from this week's content. Be sharp, slightly opinionated, and useful. No fluff. Think: what would a senior marketing strategist say are the real takeaways this week?
-
-Respond with only the bullet points, one per line, starting each with –`;
-
-  try {
-    const msg = await anthropic.messages.create({
-      model: config.settings.ai.model,
-      max_tokens: config.settings.ai.editorNoteMaxTokens,
-      messages: [{ role: "user", content: prompt }],
-    });
-    return msg.content[0].text.trim();
-  } catch (err) {
-    console.warn(`⚠️  Editor's note failed: ${err.message}`);
-    return "– Ekki tókst að búa til ritstjóranótu þessa viku.";
-  }
-}
-
-// ─── Main ───────────────────────────────────────────────────────────────────
+// ─── Main ────────────────────────────────────────────────────────────────────
 
 async function main() {
   console.log("🔍 ÍMARK Trends – Weekly Fetch\n");
 
-  // 1. Fetch all sources in parallel
-  console.log(`Fetching ${config.sources.length} sources…`);
   const results = await Promise.all(config.sources.map(fetchSource));
-  let allItems = results.flat();
-  console.log(`  → ${allItems.length} raw items found`);
+  let items = results.flat();
+  console.log(`\n  ${items.length} relevant items across all sources`);
 
-  // 2. Sort by score, deduplicate
-  allItems.sort((a, b) => b.score - a.score);
-  allItems = deduplicate(allItems);
-  console.log(`  → ${allItems.length} items after deduplication`);
+  // Score-sort → deduplicate → re-sort by date
+  items.sort((a, b) => b.score - a.score);
+  items = deduplicate(items);
 
-  // 3. Take top N
-  const topItems = allItems.slice(0, config.settings.maxItemsPerWeek);
-  console.log(`  → ${topItems.length} items selected for this week`);
+  const selected = items.slice(0, MAX_ITEMS);
+  selected.sort((a, b) => new Date(b.pubDate) - new Date(a.pubDate));
 
-  if (topItems.length < config.settings.minItemsPerWeek) {
-    console.warn(`⚠️  Only ${topItems.length} items – less than minimum ${config.settings.minItemsPerWeek}`);
+  console.log(`  ${selected.length} items selected\n`);
+
+  if (selected.length === 0) {
+    console.error("❌ No relevant articles found. Aborting — existing data not overwritten.");
+    process.exit(1);
   }
 
-  // 4. Enrich with AI summaries (sequentially to avoid rate limits)
-  console.log("\nGenerating AI summaries…");
-  const enriched = [];
-  for (const [i, item] of topItems.entries()) {
-    process.stdout.write(`  [${i + 1}/${topItems.length}] ${item.title?.slice(0, 60)}…\r`);
-    enriched.push(await enrichItem(item));
-  }
-  console.log("\n  → Summaries done");
-
-  // 5. Editor's note
-  console.log("\nGenerating editor's note…");
-  const editorsNote = await generateEditorsNote(enriched);
-
-  // 6. Build output object
   const weekId = getWeekId();
   const output = {
     weekId,
     generatedAt: new Date().toISOString(),
-    editorsNote,
-    items: enriched,
-    disclaimer:
-      "Yfirlit unnið með aðstoð gervigreindar. Tenglar vísa á upprunalegar heimildir.",
+    items: selected,
+    disclaimer: "Yfirlit unnið sjálfvirkt úr RSS-straumum. Tenglar vísa á upprunalegar heimildir.",
   };
 
-  // 7. Save
-  const weeksDir = path.join(ROOT, "data/weeks");
-  await fs.mkdir(weeksDir, { recursive: true });
-  await fs.mkdir(path.join(ROOT, "public"), { recursive: true });
+  await fs.mkdir(path.join(ROOT, "data/weeks"), { recursive: true });
+  await fs.mkdir(path.join(ROOT, "docs"), { recursive: true });
 
-  const weekFile = path.join(weeksDir, `${weekId}.json`);
-  const latestFile = path.join(ROOT, "data/latest.json");
+  await fs.writeFile(path.join(ROOT, "data/latest.json"), JSON.stringify(output, null, 2));
+  await fs.writeFile(path.join(ROOT, `data/weeks/${weekId}.json`), JSON.stringify(output, null, 2));
 
-  await fs.writeFile(weekFile, JSON.stringify(output, null, 2), "utf-8");
-  await fs.writeFile(latestFile, JSON.stringify(output, null, 2), "utf-8");
-
-  console.log(`\n✅ Saved: data/weeks/${weekId}.json`);
-  console.log("✅ Saved: data/latest.json");
-  console.log("\nRun `npm run generate` to build the dashboard HTML.");
+  console.log(`✅ ${selected.length} articles saved → data/latest.json`);
+  console.log(`✅ Archive → data/weeks/${weekId}.json`);
 }
 
 main().catch((err) => {
-  console.error("Fatal error:", err);
+  console.error("Fatal:", err);
   process.exit(1);
 });
