@@ -1,144 +1,132 @@
 {
   "weekId": "2026-W25",
-  "generatedAt": "2026-06-16T10:39:28.044Z",
+  "generatedAt": "2026-06-16T10:59:17.078Z",
   "items": [
     {
-      "title": "WPP forecasts AI search ads to become fastest growing channel in advertising",
-      "link": "https://digiday.com/media-buying/wpp-forecasts-ai-search-ads-to-become-fastest-growing-channel-in-advertising/?utm_campaign=digidaydis&utm_medium=rss&utm_source=general-rss",
-      "source": "Digiday",
-      "category": "Miðlar & pallborð",
-      "language": "en",
-      "pubDate": "2026-06-16T04:01:00.000Z",
-      "summary": "Twin projections from holdco WPP and Madison & Wall, peg rising search spend amid a resilient ad economy, which is still expected to grow despite headwinds.",
+      "title": "Core views on AI safety: When, why, what, and how",
+      "link": "https://www.anthropic.com/news/core-views-on-ai-safety",
+      "source": "Anthropic",
+      "category": "AI & markaðssetning",
+      "pubDate": "2026-06-16T10:59:05.174Z",
+      "summary": "AI progress may lead to transformative AI systems in the next decade, but we do not yet understand how to make such systems safe and aligned with human values. In response, we are pursuing a variety of research directions aimed at better understanding, evaluating, and aligning AI systems.",
       "tags": [
-        "AI",
-        "Stefna",
-        "Auglýsingar"
+        "AI"
       ],
-      "score": 2.3
+      "score": 1.9
     },
     {
       "title": "News sites are the new newspapers: People are abandoning them for social media",
       "link": "https://www.niemanlab.org/2026/06/news-sites-are-the-new-newspapers-people-are-abandoning-them-for-social-media/",
       "source": "Nieman Lab",
       "category": "Miðlar & pallborð",
-      "language": "en",
       "pubDate": "2026-06-15T23:02:44.000Z",
-      "summary": "News sites are rapidly becoming the newspapers of the digital age. And you know what happened to newspapers. Worldwide, people in all age groups are ditching news sites and publishers’ apps in favor of social media and video networks. In fact, 18- to 34-year-olds are abandoning…",
+      "summary": "News sites are rapidly becoming the newspapers of the digital age. And you know what happened to newspapers. Worldwide, people in all age groups are ditching news sites and publishers’ apps in favor of social media and video networks. In fact, 18- to 34-year-olds are abandoning content on…",
       "tags": [
         "Miðlar",
         "Social"
       ],
-      "score": 2.3
+      "score": 2.45
     },
     {
-      "title": "How CMOs can make the case for creative investment",
-      "link": "https://digiday.com/sponsored/how-cmos-can-make-the-case-for-creative-investment/?utm_campaign=digidaydis&utm_medium=rss&utm_source=general-rss",
-      "source": "Digiday",
-      "category": "Miðlar & pallborð",
-      "language": "en",
-      "pubDate": "2026-06-15T20:17:26.000Z",
-      "summary": "Ilaria Pasquinelli, Chief Marketing Officer, LIONS Brands that invest in creative marketing outperform the competition and grow. That is a bold claim, but there is proof to back up these claims. Global brand consultancy Interbrand analyzed data from 50 businesses that won the…",
+      "title": "Base44 is one of the most-viewed brands on YouTube. Here’s a look at its ad strategy",
+      "link": "\r\n                https://www.marketingbrew.com/stories/base44-app-advertising-strategy-youtube-smart-tvs-superbowl?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
+      "source": "Marketing Brew",
+      "category": "Auglýsingar & sköpun",
+      "pubDate": "2026-06-15T18:45:41.000Z",
+      "summary": "We chatted with Omer Shai, CMO of parent company Wix, about how the vibe-coding platform is looking to win over users in a crowded category.",
       "tags": [
         "Branding",
-        "Sköpun"
+        "Miðlar",
+        "Stefna",
+        "Social"
       ],
-      "score": 2.3
+      "score": 2.4
     },
     {
-      "title": "Introducing the OpenAI Partner Network",
-      "link": "https://openai.com/index/introducing-openai-partner-network",
-      "source": "OpenAI Blog",
-      "category": "AI & markaðssetning",
-      "language": "en",
-      "pubDate": "2026-06-14T17:00:00.000Z",
-      "summary": "OpenAI launches the Partner Network, investing $150M to help global partners accelerate enterprise AI adoption, deployment, and transformation.",
+      "title": "KFC Rebrands to Help Lead ‘Chicken’s Next Chapter’",
+      "link": "https://www.adweek.com/creativity/kfc-rebrands-to-help-lead-chickens-next-chapter/",
+      "source": "Adweek",
+      "category": "Auglýsingar & sköpun",
+      "pubDate": "2026-06-15T07:00:00.000Z",
+      "summary": "Amid intensifying competition, KFC has updated its brand identity, menu, and restaurant design.",
       "tags": [
-        "AI",
-        "Stefna"
+        "Branding"
       ],
-      "score": 2
-    },
-    {
-      "title": "New OpenAI Academy courses for the next era of work",
-      "link": "https://openai.com/index/academy-courses-applying-ai-at-work",
-      "source": "OpenAI Blog",
-      "category": "AI & markaðssetning",
-      "language": "en",
-      "pubDate": "2026-06-12T10:00:00.000Z",
-      "summary": "OpenAI introduces three Academy courses that help people build practical AI skills, create repeatable workflows, and apply agents in everyday work.",
-      "tags": [
-        "AI"
-      ],
-      "score": 2
-    },
-    {
-      "title": "How Preply combines AI and human tutors to personalize learning",
-      "link": "https://openai.com/index/preply",
-      "source": "OpenAI Blog",
-      "category": "AI & markaðssetning",
-      "language": "en",
-      "pubDate": "2026-06-12T00:00:00.000Z",
-      "summary": "Preply uses OpenAI to launch AI-generated lesson summaries, providing personalised feedback and language learning exercises.",
-      "tags": [
-        "AI"
-      ],
-      "score": 2
+      "score": 1.8
     },
     {
       "title": "Supporting Europe’s work in ensuring a trustworthy AI ecosystem",
       "link": "https://openai.com/index/supporting-eu-trustworthy-ai-ecosystem",
-      "source": "OpenAI Blog",
+      "source": "OpenAI News",
       "category": "AI & markaðssetning",
-      "language": "en",
       "pubDate": "2026-06-11T00:00:00.000Z",
       "summary": "OpenAI supports the EU Code of Practice on AI content transparency, advancing provenance standards and tools to help people understand AI-generated content.",
       "tags": [
+        "AI"
+      ],
+      "score": 1.8
+    },
+    {
+      "title": "Disney is mostly sold out of ad inventory through Game 5 of NBA Finals",
+      "link": "\r\n                https://www.marketingbrew.com/stories/disney-nba-finals-ads?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
+      "source": "Marketing Brew",
+      "category": "Auglýsingar & sköpun",
+      "pubDate": "2026-06-10T19:55:56.000Z",
+      "summary": "Tonight’s Game 4 of the series between the Knicks and the Spurs has been sold out for weeks, a Disney Advertising exec said.",
+      "tags": [
+        "Auglýsingar"
+      ],
+      "score": 1.9
+    },
+    {
+      "title": "New York now requires disclosure of AI performers in ads. How will that change transparency in advertising?",
+      "link": "\r\n                https://www.marketingbrew.com/stories/new-york-ai-performers-disclosure-advertising-transparency-effects?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
+      "source": "Marketing Brew",
+      "category": "Auglýsingar & sköpun",
+      "pubDate": "2026-06-10T13:17:16.000Z",
+      "summary": "Marketers expect New York is a first mover and that disclosure may be a common practice soon. “My hope is that this is a table-setter that increases transparency,” one exec told us.",
+      "tags": [
         "AI",
+        "Auglýsingar"
+      ],
+      "score": 1.9
+    },
+    {
+      "title": "Why AT&T gave $1.2 million to first-time feature filmmakers",
+      "link": "\r\n                https://www.marketingbrew.com/stories/att-untold-stories-tribeca-festival-brand-strategy-supporting-filmmakers?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
+      "source": "Marketing Brew",
+      "category": "Auglýsingar & sköpun",
+      "pubDate": "2026-06-10T10:00:00.000Z",
+      "summary": "The telecom company’s annual Untold Stories event at Tribeca Festival is designed to fund a marketable film project—and also get the brand in front of new audiences, one exec told us.",
+      "tags": [
+        "Branding",
         "Neytendur"
       ],
-      "score": 2.3
+      "score": 1.9
     },
     {
-      "title": "OpenAI to acquire Ona",
-      "link": "https://openai.com/index/openai-to-acquire-ona",
-      "source": "OpenAI Blog",
-      "category": "AI & markaðssetning",
-      "language": "en",
-      "pubDate": "2026-06-11T00:00:00.000Z",
-      "summary": "OpenAI plans to acquire Ona to expand Codex with secure, persistent cloud environments, enabling long-running AI agents across enterprise workflows.",
-      "tags": [
-        "AI"
-      ],
-      "score": 2
+      "title": "How soccer creators are helping to make the World Cup more than a moment",
+      "link": "\r\n                https://www.marketingbrew.com/stories/soccer-creators-influencers-world-cup?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
+      "source": "Marketing Brew",
+      "category": "Auglýsingar & sköpun",
+      "pubDate": "2026-06-09T11:00:00.000Z",
+      "summary": "Leagues like La Liga in Spain and Bundesliga in Germany are eager to hook American fans, and they’re using influencers to do it.",
+      "tags": [],
+      "score": 1.9
     },
     {
-      "title": "BBVA puts AI at the core of banking with OpenAI",
-      "link": "https://openai.com/index/bbva",
-      "source": "OpenAI Blog",
-      "category": "AI & markaðssetning",
-      "language": "en",
-      "pubDate": "2026-06-11T00:00:00.000Z",
-      "summary": "Learn how BBVA scaled ChatGPT Enterprise to 100,000 employees and partnered with OpenAI to accelerate AI-powered banking transformation worldwide.",
+      "title": "‘The human touch’: Inside Etsy’s life-by-numbers brand campaign",
+      "link": "\r\n                https://www.marketingbrew.com/stories/etsy-life-by-numbers-brand-campaign-celebrate-being-human?utm_source=&utm_medium=syndication&utm_campaign=feed\r\n            ",
+      "source": "Marketing Brew",
+      "category": "Auglýsingar & sköpun",
+      "pubDate": "2026-06-08T15:38:09.000Z",
+      "summary": "“As more of life becomes automated and impersonal, people are increasingly looking for things that feel more personal, expressive, and human,” the brand’s CMO told us.",
       "tags": [
-        "AI",
-        "Stefna"
+        "Branding",
+        "Sköpun"
       ],
-      "score": 2
-    },
-    {
-      "title": "Access OpenAI models and Codex through your Oracle cloud commitment",
-      "link": "https://openai.com/index/openai-on-oracle-cloud",
-      "source": "OpenAI Blog",
-      "category": "AI & markaðssetning",
-      "language": "en",
-      "pubDate": "2026-06-10T20:00:00.000Z",
-      "summary": "Access OpenAI models and Codex through Oracle Cloud, using existing commitments to build and deploy AI with enterprise security and governance.",
-      "tags": [
-        "AI"
-      ],
-      "score": 2
+      "score": 1.9
     }
   ],
-  "disclaimer": "Yfirlit unnið sjálfvirkt úr RSS-straumum. Tenglar vísa á upprunalegar heimildir."
+  "disclaimer": "Yfirlit unnið sjálfvirkt úr RSS-straumum opinberra heimilda. Tenglar vísa á upprunalegar heimildir."
 }
