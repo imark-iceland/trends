@@ -1,0 +1,209 @@
+{
+  "_comment": "ÍMARK Trends – Sources & Config. Edit this file to add/remove sources, adjust categories, or block domains.",
+
+  "sources": [
+    {
+      "name": "Marketing Brew",
+      "url": "https://www.marketingbrew.com/rss",
+      "category": "Auglýsingar & sköpun",
+      "language": "en",
+      "weight": 1.2
+    },
+    {
+      "name": "Adweek",
+      "url": "https://www.adweek.com/feed/",
+      "category": "Auglýsingar & sköpun",
+      "language": "en",
+      "weight": 1.2
+    },
+    {
+      "name": "The Drum",
+      "url": "https://www.thedrum.com/rss/news",
+      "category": "Auglýsingar & sköpun",
+      "language": "en",
+      "weight": 1.1
+    },
+    {
+      "name": "Think with Google",
+      "url": "https://www.thinkwithgoogle.com/feed/",
+      "category": "AI & markaðssetning",
+      "language": "en",
+      "weight": 1.3
+    },
+    {
+      "name": "Nieman Lab",
+      "url": "https://www.niemanlab.org/feed/",
+      "category": "Miðlar & pallborð",
+      "language": "en",
+      "weight": 1.1
+    },
+    {
+      "name": "OpenAI Blog",
+      "url": "https://openai.com/blog/rss.xml",
+      "category": "AI & markaðssetning",
+      "language": "en",
+      "weight": 1.4
+    },
+    {
+      "name": "Anthropic News",
+      "url": "https://www.anthropic.com/news/rss",
+      "category": "AI & markaðssetning",
+      "language": "en",
+      "weight": 1.4
+    },
+    {
+      "name": "Google AI Blog",
+      "url": "https://blog.google/technology/ai/rss/",
+      "category": "AI & markaðssetning",
+      "language": "en",
+      "weight": 1.3
+    },
+    {
+      "name": "Campaign",
+      "url": "https://www.campaignlive.co.uk/rss",
+      "category": "Branding & stefna",
+      "language": "en",
+      "weight": 1.1
+    },
+    {
+      "name": "PR Week",
+      "url": "https://www.prweek.com/rss/feed",
+      "category": "PR & orðspor",
+      "language": "en",
+      "weight": 1.1
+    },
+    {
+      "name": "Contagious",
+      "url": "https://www.contagious.com/news-and-views/rss",
+      "category": "Auglýsingar & sköpun",
+      "language": "en",
+      "weight": 1.2
+    },
+    {
+      "name": "Harvard Business Review – Marketing",
+      "url": "https://feeds.hbr.org/harvardbusiness",
+      "category": "Branding & stefna",
+      "language": "en",
+      "weight": 1.2
+    },
+    {
+      "name": "McKinsey Insights",
+      "url": "https://www.mckinsey.com/feeds/rss/latest-insights",
+      "category": "Branding & stefna",
+      "language": "en",
+      "weight": 1.1
+    },
+    {
+      "name": "Mbl.is – Viðskipti",
+      "url": "https://www.mbl.is/feeds/innlent/",
+      "category": "Ísland & Norðurlönd",
+      "language": "is",
+      "weight": 1.5
+    },
+    {
+      "name": "Vísir – Viðskipti",
+      "url": "https://www.visir.is/rss/section/vidskipti",
+      "category": "Ísland & Norðurlönd",
+      "language": "is",
+      "weight": 1.5
+    },
+    {
+      "name": "RÚV – Fréttir",
+      "url": "https://www.ruv.is/rss/frettir",
+      "category": "Ísland & Norðurlönd",
+      "language": "is",
+      "weight": 1.3
+    },
+    {
+      "name": "Kjarninn",
+      "url": "https://kjarninn.is/feed/",
+      "category": "Ísland & Norðurlönd",
+      "language": "is",
+      "weight": 1.4
+    },
+    {
+      "name": "Social Media Today",
+      "url": "https://www.socialmediatoday.com/rss.xml",
+      "category": "Miðlar & pallborð",
+      "language": "en",
+      "weight": 1.0
+    },
+    {
+      "name": "Digiday",
+      "url": "https://digiday.com/feed/",
+      "category": "Miðlar & pallborð",
+      "language": "en",
+      "weight": 1.1
+    },
+    {
+      "name": "Nielsen Insights",
+      "url": "https://www.nielsen.com/insights/feed/",
+      "category": "Neytendahegðun",
+      "language": "en",
+      "weight": 1.0
+    }
+  ],
+
+  "categories": [
+    "AI & markaðssetning",
+    "Branding & stefna",
+    "Auglýsingar & sköpun",
+    "Miðlar & pallborð",
+    "PR & orðspor",
+    "Neytendahegðun",
+    "Ísland & Norðurlönd"
+  ],
+
+  "tags": [
+    "AI",
+    "Branding",
+    "Miðlar",
+    "PR",
+    "Sköpun",
+    "Stefna",
+    "Neytendur",
+    "Auglýsingar",
+    "Social"
+  ],
+
+  "blockedDomains": [
+    "example-spam-site.com"
+  ],
+
+  "blockedKeywords": [
+    "casino",
+    "gambling",
+    "crypto pump",
+    "NFT mint"
+  ],
+
+  "relevanceKeywords": {
+    "high": [
+      "brand", "branding", "marketing", "advertising", "media", "PR", "creative",
+      "AI", "artificial intelligence", "generative", "consumer", "strategy",
+      "campaign", "agency", "social media", "content", "digital", "analytics",
+      "markaðs", "auglýs", "miðl", "neytend", "strat"
+    ],
+    "medium": [
+      "technology", "data", "privacy", "regulation", "trend", "insight",
+      "platform", "growth", "audience", "engagement", "measurement"
+    ]
+  },
+
+  "settings": {
+    "maxItemsPerWeek": 10,
+    "minItemsPerWeek": 6,
+    "fetchDaysBack": 8,
+    "deduplicationThreshold": 0.7,
+    "language": {
+      "ui": "is",
+      "summaries": "is",
+      "titlesKeepOriginal": true
+    },
+    "ai": {
+      "model": "claude-opus-4-8",
+      "summaryMaxTokens": 300,
+      "editorNoteMaxTokens": 500
+    }
+  }
+}

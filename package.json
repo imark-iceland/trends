@@ -1,0 +1,20 @@
+{
+  "name": "imark-trends",
+  "version": "1.0.0",
+  "description": "Weekly trends dashboard for ÍMARK members",
+  "type": "module",
+  "scripts": {
+    "fetch": "node src/fetch.js",
+    "generate": "node src/generate.js",
+    "build": "node src/fetch.js && node src/generate.js",
+    "preview": "npx serve public"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "rss-parser": "^3.13.0",
+    "node-fetch": "^3.3.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
