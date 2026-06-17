@@ -29,7 +29,7 @@ const CATEGORIES = {
   "AI & markaðssetning":    { quota: 2, max: MAX_PER_CATEGORY },
   "Branding & auðkenni":    { quota: 2, max: MAX_PER_CATEGORY },
   "Auglýsingar & sköpun":   { quota: 2, max: MAX_PER_CATEGORY },
-  "Miðlar & pallborð":      { quota: 2, max: MAX_PER_CATEGORY },
+  "Miðlar & platform":      { quota: 2, max: MAX_PER_CATEGORY },
   "Neytendahegðun":         { quota: 1, max: MAX_PER_CATEGORY },
   "PR & orðspor":           { quota: 1, max: 2 },
 };
@@ -53,9 +53,9 @@ const RSS_SOURCES = [
   { name: "Digiday",           url: "https://digiday.com/feed/",                          category: "Auglýsingar & sköpun", weight: 1.2 },
 
   // Media & Platforms
-  { name: "Nieman Lab",        url: "https://www.niemanlab.org/feed/",                    category: "Miðlar & pallborð",    weight: 1.3 },
-  { name: "Meta Newsroom",     url: "https://about.fb.com/news/feed/",                    category: "Miðlar & pallborð",    weight: 1.1 },
-  { name: "YouTube Blog",      url: "https://blog.youtube/rss/",                          category: "Miðlar & pallborð",    weight: 1.0 },
+  { name: "Nieman Lab",        url: "https://www.niemanlab.org/feed/",                    category: "Miðlar & platform",    weight: 1.3 },
+  { name: "Meta Newsroom",     url: "https://about.fb.com/news/feed/",                    category: "Miðlar & platform",    weight: 1.1 },
+  { name: "YouTube Blog",      url: "https://blog.youtube/rss/",                          category: "Miðlar & platform",    weight: 1.0 },
 ];
 
 // Sources that contribute to secondary categories via keyword detection
