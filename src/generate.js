@@ -83,53 +83,40 @@ function renderCard(item, index) {
 
 // ─── Brief ───────────────────────────────────────────────────────────────────
 
-function renderBriefCard(item, cls) {
-  return `
-    <article class="${cls}-card">
-      <span class="${cls}-card-category">${item.category}</span>
-      <h3 class="${cls}-card-title">
+function renderTopStories(brief) {
+  if (!brief) return "";
+
+  const icelandItems = (brief.iceland || []);
+  const globalItems = (brief.items || []);
+  const allItems = [...icelandItems, ...globalItems];
+
+  if (allItems.length === 0) return "";
+
+  const cards = allItems.map((item) => {
+    const isIcelandic = icelandItems.includes(item);
+    return `
+    <article class="top-card">
+      <span class="top-card-flag">${isIcelandic ? "🇮🇸 " : ""}${item.category}</span>
+      <h3 class="top-card-title">
         <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a>
       </h3>
-      <p class="${cls}-card-summary">${item.summary}</p>
+      <p class="top-card-summary">${item.summary}</p>
       ${item.whyItMatters ? `
-      <div class="${cls}-card-why">
-        <span class="${cls}-card-why-label">Af hverju skiptir þetta máli</span>
+      <div class="top-card-why">
+        <span class="top-card-why-label">Af hverju skiptir þetta máli</span>
         <p>${item.whyItMatters}</p>
       </div>` : ""}
-      <div class="${cls}-card-source">
+      <div class="top-card-source">
         Heimild: <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.source}</a>
       </div>
     </article>`;
-}
+  }).join("\n");
 
-function renderBrief(brief) {
-  if (!brief || !brief.items || brief.items.length === 0) return "";
-  const cards = brief.items.map((item) => renderBriefCard(item, "brief")).join("\n");
   return `
-  <section class="brief-section">
-    <div class="brief-inner">
-      <div class="section-header">
-        <span class="section-badge section-badge--red">Vikulegt brief</span>
-        <span class="section-meta">Unnið af ÍMARK ritstjórn · ${formatDate(brief.publishedAt)}</span>
-      </div>
-      <div class="brief-grid">
-        ${cards}
-      </div>
-    </div>
-  </section>`;
-}
-
-function renderIceland(brief) {
-  if (!brief || !brief.iceland || brief.iceland.length === 0) return "";
-  const cards = brief.iceland.map((item) => renderBriefCard(item, "iceland")).join("\n");
-  return `
-  <section class="iceland-section">
-    <div class="iceland-inner">
-      <div class="section-header">
-        <span class="section-badge section-badge--white">🇮🇸 Íslenski markaðurinn</span>
-        <span class="section-meta">Valdar fréttir úr íslenskri markaðsstarfsemi</span>
-      </div>
-      <div class="iceland-grid">
+  <section class="top-section">
+    <div class="top-inner">
+      <p class="top-heading"><span>▪</span> Mikilvægast í markaðsmálum þessa vikuna</p>
+      <div class="top-grid">
         ${cards}
       </div>
     </div>
@@ -262,51 +249,29 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
     .card-link { font-size: 0.78rem; font-weight: 600; color: var(--red); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--light); }
     .card-link:hover { text-decoration: none; opacity: 0.8; }
 
-    /* Shared section header */
-    .section-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
-    .section-badge { display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.7rem; }
-    .section-badge--red { background: var(--red); color: var(--white); }
-    .section-badge--white { background: var(--white); color: var(--dark); }
-    .section-badge--outline { background: none; border: 1px solid var(--grey-4); color: var(--grey-3); }
-    .section-meta { font-size: 0.75rem; color: var(--grey-3); }
+    /* Top stories */
+    .top-section { background: var(--dark); color: var(--white); padding: 3rem var(--gap); }
+    .top-inner { max-width: var(--max-w); margin: 0 auto; }
+    .top-heading { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 2rem; }
+    .top-heading span { color: var(--red); margin-right: 0.5rem; }
+    .top-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.25rem; }
+    .top-card { background: var(--grey-1); border: 1px solid var(--grey-2); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .top-card-flag { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
+    .top-card-title { font-size: 1rem; font-weight: 600; line-height: 1.35; color: var(--white); }
+    .top-card-title a { color: inherit; }
+    .top-card-title a:hover { color: var(--red); text-decoration: none; }
+    .top-card-summary { font-size: 0.85rem; color: #aaaaaa; line-height: 1.6; }
+    .top-card-why { border-left: 2px solid var(--red); padding-left: 0.85rem; }
+    .top-card-why-label { display: block; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 0.25rem; }
+    .top-card-why p { font-size: 0.83rem; color: #cccccc; line-height: 1.55; font-style: italic; }
+    .top-card-source { font-size: 0.75rem; color: var(--grey-3); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--grey-2); }
+    .top-card-source a { color: var(--grey-3); text-decoration: underline; text-underline-offset: 2px; }
+    .top-card-source a:hover { color: var(--white); }
 
-    /* Brief (dark) */
-    .brief-section { background: var(--dark); color: var(--white); padding: 3rem var(--gap); }
-    .brief-inner { max-width: var(--max-w); margin: 0 auto; }
-    .brief-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.25rem; }
-    .brief-card { background: var(--grey-1); border: 1px solid var(--grey-2); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
-    .brief-card-category { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
-    .brief-card-title { font-size: 1rem; font-weight: 600; line-height: 1.35; color: var(--white); }
-    .brief-card-title a { color: inherit; }
-    .brief-card-title a:hover { color: var(--red); text-decoration: none; }
-    .brief-card-summary { font-size: 0.85rem; color: #aaaaaa; line-height: 1.6; }
-    .brief-card-why { border-left: 2px solid var(--red); padding-left: 0.85rem; }
-    .brief-card-why-label { display: block; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 0.25rem; }
-    .brief-card-why p { font-size: 0.83rem; color: #cccccc; line-height: 1.55; font-style: italic; }
-    .brief-card-source { font-size: 0.75rem; color: var(--grey-3); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--grey-2); }
-    .brief-card-source a { color: var(--grey-3); text-decoration: underline; text-underline-offset: 2px; }
-    .brief-card-source a:hover { color: var(--white); }
-
-    /* Iceland section (light) */
-    .iceland-section { background: var(--white); padding: 3rem var(--gap); border-bottom: 3px solid var(--dark); }
-    .iceland-inner { max-width: var(--max-w); margin: 0 auto; }
-    .iceland-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.25rem; }
-    .iceland-card { background: var(--light); border: 1px solid var(--grey-4); border-left: 3px solid var(--dark); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
-    .iceland-card-category { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
-    .iceland-card-title { font-size: 1rem; font-weight: 600; line-height: 1.35; color: var(--dark); }
-    .iceland-card-title a { color: inherit; }
-    .iceland-card-title a:hover { color: var(--red); text-decoration: none; }
-    .iceland-card-summary { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
-    .iceland-card-why { border-left: 2px solid var(--red); padding-left: 0.85rem; }
-    .iceland-card-why-label { display: block; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 0.25rem; }
-    .iceland-card-why p { font-size: 0.83rem; color: var(--text-dim); line-height: 1.55; font-style: italic; }
-    .iceland-card-source { font-size: 0.75rem; color: var(--grey-3); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--grey-4); }
-    .iceland-card-source a { color: var(--grey-3); text-decoration: underline; text-underline-offset: 2px; }
-    .iceland-card-source a:hover { color: var(--red); }
-
-    /* More news section */
-    .more-section-header { max-width: var(--max-w); margin: 0 auto 0; padding: 2.5rem var(--gap) 0; display: flex; align-items: center; gap: 1rem; }
-    .more-section-divider { flex: 1; height: 1px; background: var(--grey-4); }
+    /* More news divider */
+    .more-header { max-width: var(--max-w); margin: 0 auto; padding: 2.5rem var(--gap) 0; display: flex; align-items: center; gap: 1rem; }
+    .more-header-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-3); white-space: nowrap; }
+    .more-header-line { flex: 1; height: 1px; background: var(--grey-4); }
 
     /* Archive */
     .archive-section { max-width: var(--max-w); margin: 0 auto 3rem; padding: 0 var(--gap); }
@@ -350,13 +315,11 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
     </div>
   </section>
 
-  ${renderBrief(brief)}
+  ${renderTopStories(brief)}
 
-  ${renderIceland(brief)}
-
-  <div class="more-section-header">
-    <span class="section-badge section-badge--outline">Fleiri fréttir</span>
-    <div class="more-section-divider"></div>
+  <div class="more-header">
+    <span class="more-header-label">Fleiri fréttir</span>
+    <div class="more-header-line"></div>
   </div>
 
   <nav class="filters" aria-label="Sía eftir flokki">
