@@ -81,6 +81,41 @@ function renderCard(item, index) {
     </article>`;
 }
 
+// ─── Brief ───────────────────────────────────────────────────────────────────
+
+function renderBrief(brief) {
+  if (!brief || !brief.items || brief.items.length === 0) return "";
+
+  const cards = brief.items.map((item) => `
+    <article class="brief-card">
+      <span class="brief-card-category">${item.category}</span>
+      <h3 class="brief-card-title">
+        <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a>
+      </h3>
+      <p class="brief-card-summary">${item.summary}</p>
+      <div class="brief-card-why">
+        <span class="brief-card-why-label">Af hverju skiptir þetta máli</span>
+        <p>${item.whyItMatters}</p>
+      </div>
+      <div class="brief-card-source">
+        Heimild: <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.source}</a>
+      </div>
+    </article>`).join("\n");
+
+  return `
+  <section class="brief-section">
+    <div class="brief-inner">
+      <div class="brief-eyebrow">
+        <span class="brief-badge">Vikulegt brief</span>
+        <span class="brief-meta">Unnið af ÍMARK ritstjórn · ${formatDate(brief.publishedAt)}</span>
+      </div>
+      <div class="brief-grid">
+        ${cards}
+      </div>
+    </div>
+  </section>`;
+}
+
 // ─── Archive ─────────────────────────────────────────────────────────────────
 
 function renderArchiveLinks(weeks) {
@@ -111,7 +146,7 @@ async function getArchivedWeeks() {
 
 // ─── Full HTML ────────────────────────────────────────────────────────────────
 
-function buildHTML(data, archiveWeeks = []) {
+function buildHTML(data, archiveWeeks = [], brief = null) {
   const cards = data.items.map((item, i) => renderCard(item, i)).join("\n");
 
   const allCategories = [...new Set(data.items.map((i) => i.category))];
@@ -207,6 +242,27 @@ function buildHTML(data, archiveWeeks = []) {
     .card-link { font-size: 0.78rem; font-weight: 600; color: var(--red); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--light); }
     .card-link:hover { text-decoration: none; opacity: 0.8; }
 
+    /* Brief */
+    .brief-section { background: var(--dark); color: var(--white); padding: 3rem var(--gap); }
+    .brief-inner { max-width: var(--max-w); margin: 0 auto; }
+    .brief-eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
+    .brief-badge { display: inline-block; background: var(--red); color: var(--white); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.7rem; }
+    .brief-heading { font-size: clamp(1.1rem, 2.5vw, 1.4rem); font-weight: 700; letter-spacing: -0.02em; color: var(--white); }
+    .brief-meta { font-size: 0.75rem; color: var(--grey-3); }
+    .brief-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.25rem; }
+    .brief-card { background: var(--grey-1); border: 1px solid var(--grey-2); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .brief-card-category { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
+    .brief-card-title { font-size: 1rem; font-weight: 600; line-height: 1.35; color: var(--white); }
+    .brief-card-title a { color: inherit; }
+    .brief-card-title a:hover { color: var(--red); text-decoration: none; }
+    .brief-card-summary { font-size: 0.85rem; color: #aaaaaa; line-height: 1.6; }
+    .brief-card-why { border-left: 2px solid var(--red); padding-left: 0.85rem; }
+    .brief-card-why-label { display: block; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 0.25rem; }
+    .brief-card-why p { font-size: 0.83rem; color: #cccccc; line-height: 1.55; font-style: italic; }
+    .brief-card-source { font-size: 0.75rem; color: var(--grey-3); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--grey-2); }
+    .brief-card-source a { color: var(--grey-3); text-decoration: underline; text-underline-offset: 2px; }
+    .brief-card-source a:hover { color: var(--white); }
+
     /* Archive */
     .archive-section { max-width: var(--max-w); margin: 0 auto 3rem; padding: 0 var(--gap); }
     .archive-heading { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 0.75rem; }
@@ -248,6 +304,8 @@ function buildHTML(data, archiveWeeks = []) {
       <p class="week-subtitle">${data.items.length} valdar greinar · ${formatGeneratedDate(data.generatedAt)}</p>
     </div>
   </section>
+
+  ${renderBrief(brief)}
 
   <nav class="filters" aria-label="Sía eftir flokki">
     <div class="filters-inner">
@@ -316,7 +374,15 @@ async function main() {
   }
 
   const archiveWeeks = await getArchivedWeeks();
-  const html = buildHTML(data, archiveWeeks);
+
+  let brief = null;
+  try {
+    brief = JSON.parse(await fs.readFile(path.join(ROOT, "data/brief.json"), "utf-8"));
+  } catch {
+    // brief.json is optional — no warning needed
+  }
+
+  const html = buildHTML(data, archiveWeeks, brief);
 
   await fs.mkdir(path.join(ROOT, "docs"), { recursive: true });
   await fs.writeFile(path.join(ROOT, "docs/index.html"), html, "utf-8");
