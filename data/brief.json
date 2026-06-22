@@ -2,7 +2,7 @@
   "weekId": "2026-W25",
   "publishedAt": "2026-06-22",
   "editor": "ÍMARK riststjórn",
-  "items": [
+  "iceland": [
     {
       "title": "Colas Ísland og Pipar/TBWA: Hola-herferðin hlaut verðlaun á Lúðrinum",
       "category": "Auglýsingar & sköpun",
@@ -18,7 +18,9 @@
       "link": "https://www.plataarsins.is/",
       "summary": "Nói Síríus kynnti sumarherferðina Plata ársins þar sem þrír þekktir einstaklingar - Árni Páll Árnason (Herra Hnetusmjör), Sólrún Diego og Hjörvar Hafliðason - hönnuðu hver sína súkkulaðiplötu í samstarfi við vöruþróunarteymi fyrirtækisins. Herferðin var þróuð með Cirkus auglýsingastofu og kynningin var leikleg: influencers auglýstu á sínum miðlum að plata væri í vændum - og uppljóstrunin var að um súkkulaðiplötu var að ræða.",
       "whyItMatters": "Góð íslensk fyrirmynd um hvernig má nýta influencer-samstarf á skapandi hátt - þar sem kynningarleikurinn er hluti af herferðinni sjálfri."
-    },
+    }
+  ],
+  "items": [
     {
       "title": "Icelandair: This is not AI",
       "category": "Branding & auðkenni",

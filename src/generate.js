@@ -83,33 +83,53 @@ function renderCard(item, index) {
 
 // ─── Brief ───────────────────────────────────────────────────────────────────
 
-function renderBrief(brief) {
-  if (!brief || !brief.items || brief.items.length === 0) return "";
-
-  const cards = brief.items.map((item) => `
-    <article class="brief-card">
-      <span class="brief-card-category">${item.category}</span>
-      <h3 class="brief-card-title">
+function renderBriefCard(item, cls) {
+  return `
+    <article class="${cls}-card">
+      <span class="${cls}-card-category">${item.category}</span>
+      <h3 class="${cls}-card-title">
         <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.title}</a>
       </h3>
-      <p class="brief-card-summary">${item.summary}</p>
-      <div class="brief-card-why">
-        <span class="brief-card-why-label">Af hverju skiptir þetta máli</span>
+      <p class="${cls}-card-summary">${item.summary}</p>
+      ${item.whyItMatters ? `
+      <div class="${cls}-card-why">
+        <span class="${cls}-card-why-label">Af hverju skiptir þetta máli</span>
         <p>${item.whyItMatters}</p>
-      </div>
-      <div class="brief-card-source">
+      </div>` : ""}
+      <div class="${cls}-card-source">
         Heimild: <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.source}</a>
       </div>
-    </article>`).join("\n");
+    </article>`;
+}
 
+function renderBrief(brief) {
+  if (!brief || !brief.items || brief.items.length === 0) return "";
+  const cards = brief.items.map((item) => renderBriefCard(item, "brief")).join("\n");
   return `
   <section class="brief-section">
     <div class="brief-inner">
-      <div class="brief-eyebrow">
-        <span class="brief-badge">Vikulegt brief</span>
-        <span class="brief-meta">Unnið af ÍMARK ritstjórn · ${formatDate(brief.publishedAt)}</span>
+      <div class="section-header">
+        <span class="section-badge section-badge--red">Vikulegt brief</span>
+        <span class="section-meta">Unnið af ÍMARK ritstjórn · ${formatDate(brief.publishedAt)}</span>
       </div>
       <div class="brief-grid">
+        ${cards}
+      </div>
+    </div>
+  </section>`;
+}
+
+function renderIceland(brief) {
+  if (!brief || !brief.iceland || brief.iceland.length === 0) return "";
+  const cards = brief.iceland.map((item) => renderBriefCard(item, "iceland")).join("\n");
+  return `
+  <section class="iceland-section">
+    <div class="iceland-inner">
+      <div class="section-header">
+        <span class="section-badge section-badge--white">🇮🇸 Íslenski markaðurinn</span>
+        <span class="section-meta">Valdar fréttir úr íslenskri markaðsstarfsemi</span>
+      </div>
+      <div class="iceland-grid">
         ${cards}
       </div>
     </div>
@@ -242,13 +262,17 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
     .card-link { font-size: 0.78rem; font-weight: 600; color: var(--red); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--light); }
     .card-link:hover { text-decoration: none; opacity: 0.8; }
 
-    /* Brief */
+    /* Shared section header */
+    .section-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
+    .section-badge { display: inline-block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.7rem; }
+    .section-badge--red { background: var(--red); color: var(--white); }
+    .section-badge--white { background: var(--white); color: var(--dark); }
+    .section-badge--outline { background: none; border: 1px solid var(--grey-4); color: var(--grey-3); }
+    .section-meta { font-size: 0.75rem; color: var(--grey-3); }
+
+    /* Brief (dark) */
     .brief-section { background: var(--dark); color: var(--white); padding: 3rem var(--gap); }
     .brief-inner { max-width: var(--max-w); margin: 0 auto; }
-    .brief-eyebrow { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 2rem; }
-    .brief-badge { display: inline-block; background: var(--red); color: var(--white); font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 0.3rem 0.7rem; }
-    .brief-heading { font-size: clamp(1.1rem, 2.5vw, 1.4rem); font-weight: 700; letter-spacing: -0.02em; color: var(--white); }
-    .brief-meta { font-size: 0.75rem; color: var(--grey-3); }
     .brief-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.25rem; }
     .brief-card { background: var(--grey-1); border: 1px solid var(--grey-2); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
     .brief-card-category { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
@@ -262,6 +286,27 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
     .brief-card-source { font-size: 0.75rem; color: var(--grey-3); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--grey-2); }
     .brief-card-source a { color: var(--grey-3); text-decoration: underline; text-underline-offset: 2px; }
     .brief-card-source a:hover { color: var(--white); }
+
+    /* Iceland section (light) */
+    .iceland-section { background: var(--white); padding: 3rem var(--gap); border-bottom: 3px solid var(--dark); }
+    .iceland-inner { max-width: var(--max-w); margin: 0 auto; }
+    .iceland-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.25rem; }
+    .iceland-card { background: var(--light); border: 1px solid var(--grey-4); border-left: 3px solid var(--dark); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
+    .iceland-card-category { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-dim); }
+    .iceland-card-title { font-size: 1rem; font-weight: 600; line-height: 1.35; color: var(--dark); }
+    .iceland-card-title a { color: inherit; }
+    .iceland-card-title a:hover { color: var(--red); text-decoration: none; }
+    .iceland-card-summary { font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; }
+    .iceland-card-why { border-left: 2px solid var(--red); padding-left: 0.85rem; }
+    .iceland-card-why-label { display: block; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 0.25rem; }
+    .iceland-card-why p { font-size: 0.83rem; color: var(--text-dim); line-height: 1.55; font-style: italic; }
+    .iceland-card-source { font-size: 0.75rem; color: var(--grey-3); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--grey-4); }
+    .iceland-card-source a { color: var(--grey-3); text-decoration: underline; text-underline-offset: 2px; }
+    .iceland-card-source a:hover { color: var(--red); }
+
+    /* More news section */
+    .more-section-header { max-width: var(--max-w); margin: 0 auto 0; padding: 2.5rem var(--gap) 0; display: flex; align-items: center; gap: 1rem; }
+    .more-section-divider { flex: 1; height: 1px; background: var(--grey-4); }
 
     /* Archive */
     .archive-section { max-width: var(--max-w); margin: 0 auto 3rem; padding: 0 var(--gap); }
@@ -306,6 +351,13 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
   </section>
 
   ${renderBrief(brief)}
+
+  ${renderIceland(brief)}
+
+  <div class="more-section-header">
+    <span class="section-badge section-badge--outline">Fleiri fréttir</span>
+    <div class="more-section-divider"></div>
+  </div>
 
   <nav class="filters" aria-label="Sía eftir flokki">
     <div class="filters-inner">
