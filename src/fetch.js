@@ -1,6 +1,9 @@
 /**
- * IMARK Intelligence - weekly watcher
- * Builds data/intelligence.json for a static GitHub Pages dashboard.
+ * IMARK Intelligence - weekly editorial intelligence watcher.
+ *
+ * This is not a news dump. It gathers public source material, scores it for
+ * relevance to Icelandic marketing people, and publishes only the strongest
+ * sourced items.
  */
 
 import Parser from "rss-parser";
@@ -13,8 +16,10 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, "..");
 
 const DAYS_BACK = Number(process.env.IMARK_DAYS_BACK || 14);
-const MAX_ITEMS = Number(process.env.IMARK_MAX_ITEMS || 14);
-const TOP_COUNT = 8;
+const MIN_SCORE = Number(process.env.IMARK_MIN_SCORE || 35);
+const MIN_ITEMS = Number(process.env.IMARK_MIN_ITEMS || 5);
+const MAX_ITEMS = Number(process.env.IMARK_MAX_ITEMS || 12);
+const TARGET_LOCAL_SHARE = 0.4;
 const CUTOFF = Date.now() - DAYS_BACK * 86400000;
 const UA = "IMARK-Intelligence/1.0 (+https://imark-iceland.github.io/trends/)";
 const EDITORIAL_ITEMS_PATH = path.join(ROOT, "config/editorial-items.json");
@@ -25,95 +30,82 @@ const parser = new Parser({
 });
 
 const SOURCES = [
-  { name: "Markadsmal", url: "https://markadsmal.is/feed/", type: "rss", market: "Icelandic", weight: 2.4 },
-  { name: "Markadsmal", url: "https://www.markadsmal.is/feed/", type: "rss", market: "Icelandic", weight: 2.4 },
-  { name: "Markadsmal", url: "https://markadsmal.is/", type: "site", market: "Icelandic", weight: 1.8 },
-  { name: "Markadsmal", url: "https://www.markadsmal.is/", type: "site", market: "Icelandic", weight: 1.8 },
-  { name: "VB", url: "https://vb.is/feed/", type: "rss", market: "Icelandic", weight: 2.2 },
-  { name: "VB", url: "https://vb.is/", type: "site", market: "Icelandic", weight: 1.6 },
-  { name: "Google News - islenskar auglysingastofur", url: "https://news.google.com/rss/search?q=(%22Pipar%2FTBWA%22%20OR%20%22Pipar%20TBWA%22%20OR%20Brandenburg%20OR%20%22Hv%C3%ADta%20h%C3%BAsi%C3%B0%22%20OR%20%22Hvita%20husid%22%20OR%20Cirkus%20OR%20Kontor)%20(herfer%C3%B0%20OR%20campaign%20OR%20Cannes%20OR%20Lions%20OR%20ver%C3%B0laun%20OR%20tilnefnd%20OR%20vann%20OR%20hlaut%20OR%20r%C3%A1%C3%B0in%20OR%20r%C3%A1%C3%B0inn)&hl=is&gl=IS&ceid=IS:is", type: "rss", market: "Icelandic", weight: 2.8, requireAgencySignal: true },
-  { name: "Google News - Icelandic agency awards", url: "https://news.google.com/rss/search?q=(%22Pipar%2FTBWA%22%20OR%20%22Pipar%20TBWA%22%20OR%20Brandenburg%20OR%20%22Hv%C3%ADta%20h%C3%BAsi%C3%B0%22%20OR%20%22Hvita%20husid%22%20OR%20Cirkus%20OR%20Kontor)%20(%22Cannes%20Lions%22%20OR%20Effie%20OR%20award%20OR%20shortlist%20OR%20winner)&hl=en&gl=IS&ceid=IS:en", type: "rss", market: "Icelandic", weight: 2.7, requireAgencySignal: true },
+  { name: "Markaðsmál", url: "https://markadsmal.is/feed/", type: "rss", market: "Icelandic", focus: "icelandic-market" },
+  { name: "Markaðsmál", url: "https://www.markadsmal.is/", type: "site", market: "Icelandic", focus: "icelandic-market" },
+  { name: "VB", url: "https://vb.is/feed/", type: "rss", market: "Icelandic", focus: "icelandic-market" },
+  { name: "VB", url: "https://vb.is/", type: "site", market: "Icelandic", focus: "icelandic-market" },
+  { name: "Mbl Viðskipti", url: "https://www.mbl.is/feeds/vidskipti/", type: "rss", market: "Icelandic", focus: "icelandic-market" },
+  { name: "Vísir Viðskipti", url: "https://www.visir.is/rss/section/vidskipti", type: "rss", market: "Icelandic", focus: "icelandic-market" },
 
-  { name: "Pipar/TBWA", url: "https://pipar-tbwa.is/", type: "site", market: "Icelandic", weight: 1.9 },
-  { name: "Brandenburg", url: "https://brandenburg.is/", type: "site", market: "Icelandic", weight: 1.8 },
-  { name: "Hvita husid", url: "https://www.hvitahusid.is/", type: "site", market: "Icelandic", weight: 1.8 },
-  { name: "Cirkus", url: "https://cirkus.is/", type: "site", market: "Icelandic", weight: 1.6 },
-  { name: "Kontor", url: "https://kontor.is/", type: "site", market: "Icelandic", weight: 1.6 },
+  { name: "Pipar/TBWA", url: "https://pipar-tbwa.is/", type: "site", market: "Icelandic", focus: "agency" },
+  { name: "Brandenburg", url: "https://brandenburg.is/", type: "site", market: "Icelandic", focus: "agency" },
+  { name: "Hvíta húsið", url: "https://www.hvitahusid.is/", type: "site", market: "Icelandic", focus: "agency" },
+  { name: "Cirkus", url: "https://cirkus.is/", type: "site", market: "Icelandic", focus: "agency" },
+  { name: "Kontor", url: "https://kontor.is/", type: "site", market: "Icelandic", focus: "agency" },
+  { name: "Google News - íslenskar auglýsingastofur", url: "https://news.google.com/rss/search?q=(%22Pipar%2FTBWA%22%20OR%20%22Pipar%20TBWA%22%20OR%20Brandenburg%20OR%20%22Hv%C3%ADta%20h%C3%BAsi%C3%B0%22%20OR%20%22Hvita%20husid%22%20OR%20Cirkus%20OR%20Kontor)%20(herfer%C3%B0%20OR%20campaign%20OR%20case%20OR%20ver%C3%B0laun%20OR%20tilnefnd%20OR%20vann%20OR%20hlaut%20OR%20r%C3%A1%C3%B0in%20OR%20r%C3%A1%C3%B0inn)&hl=is&gl=IS&ceid=IS:is", type: "rss", market: "Icelandic", focus: "agency-search", requireAgencySignal: true },
 
-  { name: "Icelandair", url: "https://www.icelandair.com/blog/", type: "site", market: "Icelandic", weight: 1.5 },
-  { name: "Nova", url: "https://www.nova.is/frettir", type: "site", market: "Icelandic", weight: 1.6 },
-  { name: "Siminn", url: "https://www.siminn.is/frettir", type: "site", market: "Icelandic", weight: 1.6 },
-  { name: "Kronan", url: "https://kronan.is/frettir", type: "site", market: "Icelandic", weight: 1.6 },
-  { name: "Arion banki", url: "https://www.arionbanki.is/bankinn/fjolmidlatorg/frettir/", type: "site", market: "Icelandic", weight: 1.5 },
-  { name: "Landsbankinn", url: "https://www.landsbankinn.is/frettir", type: "site", market: "Icelandic", weight: 1.5 },
-  { name: "Blaa lonid", url: "https://www.bluelagoon.com/news", type: "site", market: "Icelandic", weight: 1.4 },
-  { name: "Islandsstofa", url: "https://www.islandsstofa.is/frettir", type: "site", market: "Icelandic", weight: 1.7 },
-  { name: "Syn", url: "https://syn.is/frettir", type: "site", market: "Icelandic", weight: 1.5 },
+  { name: "Icelandair", url: "https://www.icelandair.com/blog/", type: "site", market: "Icelandic", focus: "brand" },
+  { name: "Nova", url: "https://www.nova.is/frettir", type: "site", market: "Icelandic", focus: "brand" },
+  { name: "Síminn", url: "https://www.siminn.is/frettir", type: "site", market: "Icelandic", focus: "brand" },
+  { name: "Krónan", url: "https://kronan.is/frettir", type: "site", market: "Icelandic", focus: "brand" },
+  { name: "Arion banki", url: "https://www.arionbanki.is/bankinn/fjolmidlatorg/frettir/", type: "site", market: "Icelandic", focus: "brand" },
+  { name: "Landsbankinn", url: "https://www.landsbankinn.is/frettir", type: "site", market: "Icelandic", focus: "brand" },
+  { name: "Bláa lónið", url: "https://www.bluelagoon.com/news", type: "site", market: "Icelandic", focus: "brand" },
+  { name: "Íslandsstofa", url: "https://www.islandsstofa.is/frettir", type: "site", market: "Icelandic", focus: "brand" },
+  { name: "Sýn", url: "https://syn.is/frettir", type: "site", market: "Icelandic", focus: "brand" },
 
-  { name: "Marketing Week", url: "https://www.marketingweek.com/feed/", type: "rss", market: "Global", weight: 1.5 },
-  { name: "Adweek", url: "https://www.adweek.com/feed/", type: "rss", market: "Global", weight: 1.4 },
-  { name: "The Drum", url: "https://www.thedrum.com/rss/news", type: "rss", market: "Global", weight: 1.4 },
-  { name: "Campaign", url: "https://www.campaignlive.co.uk/rss", type: "rss", market: "Global", weight: 1.3 },
-  { name: "Creative Review", url: "https://www.creativereview.co.uk/feed/", type: "rss", market: "Global", weight: 1.3 },
-  { name: "Design Week", url: "https://www.designweek.co.uk/feed/", type: "rss", market: "Global", weight: 1.3 },
-  { name: "Marketing Brew", url: "https://www.marketingbrew.com/feed.xml", type: "rss", market: "Global", weight: 1.4 },
-  { name: "OpenAI", url: "https://openai.com/blog/rss.xml", type: "rss", market: "Global", weight: 1.1, requireMarketingSignal: true },
-  { name: "Anthropic", url: "https://www.anthropic.com/news", type: "site", market: "Global", weight: 1.1, requireMarketingSignal: true },
-  { name: "Canva", url: "https://www.canva.com/newsroom/news/", type: "site", market: "Global", weight: 1.1, requireMarketingSignal: true },
-  { name: "Adobe", url: "https://blog.adobe.com/en/topics/creative-cloud", type: "site", market: "Global", weight: 1.1, requireMarketingSignal: true },
+  { name: "Adweek", url: "https://www.adweek.com/feed/", type: "rss", market: "Global", focus: "global-marketing" },
+  { name: "Campaign", url: "https://www.campaignlive.co.uk/rss", type: "rss", market: "Global", focus: "global-marketing" },
+  { name: "Marketing Week", url: "https://www.marketingweek.com/feed/", type: "rss", market: "Global", focus: "global-marketing" },
+  { name: "The Drum", url: "https://www.thedrum.com/rss/news", type: "rss", market: "Global", focus: "global-marketing" },
+  { name: "Design Week", url: "https://www.designweek.co.uk/feed/", type: "rss", market: "Global", focus: "branding-design" },
+  { name: "Creative Review", url: "https://www.creativereview.co.uk/feed/", type: "rss", market: "Global", focus: "creative-case" },
+  { name: "Brandingmag", url: "https://www.brandingmag.com/feed/", type: "rss", market: "Global", focus: "branding-design" },
+  { name: "Marketing Brew", url: "https://www.marketingbrew.com/feed.xml", type: "rss", market: "Global", focus: "global-marketing" },
+  { name: "Nieman Lab", url: "https://www.niemanlab.org/feed/", type: "rss", market: "Global", focus: "media-platform" },
+  { name: "OpenAI", url: "https://openai.com/blog/rss.xml", type: "rss", market: "Global", focus: "ai-platform" },
+  { name: "Anthropic", url: "https://www.anthropic.com/news", type: "site", market: "Global", focus: "ai-platform" },
+  { name: "Adobe", url: "https://blog.adobe.com/en/topics/creative-cloud", type: "site", market: "Global", focus: "ai-platform" },
+  { name: "Canva", url: "https://www.canva.com/newsroom/news/", type: "site", market: "Global", focus: "ai-platform" },
+  { name: "Google", url: "https://blog.google/technology/ai/rss/", type: "rss", market: "Global", focus: "ai-platform" },
+  { name: "Meta", url: "https://about.fb.com/news/feed/", type: "rss", market: "Global", focus: "media-platform" },
 ];
 
 const CATEGORY_RULES = [
-  ["Radningar", ["hired", "appointed", "joins", "promotion", "chief marketing", "cmo", "director", "radinn", "radning", "tekur vid", "nyr framkvæmdastjori"]],
-  ["Verdlaun og tilnefningar", ["award", "awards", "shortlist", "winner", "cannes", "effie", "tilnefnd", "verdlaun", "hlaut", "vann"]],
-  ["Endurmarkun og ny vorumerki", ["rebrand", "brand identity", "new identity", "logo", "visual identity", "refresh", "endurmark", "nytt merki", "ny ásýnd"]],
-  ["Herferdir", ["campaign", "ad campaign", "launches", "work by", "advert", "herferd", "auglýsing", "kynningarherferd", "markaðsherferd"]],
-  ["AI og taekni", ["ai", "artificial intelligence", "generative", "chatgpt", "claude", "openai", "anthropic", "canva", "adobe", "automation", "gervigreind"]],
-  ["Althjodleg case", ["case study", "strategy", "effectiveness", "brand growth", "lessons", "learned", "how ", "why "]],
+  ["Ráðningar", ["hired", "appointed", "joins", "promotion", "chief marketing", "cmo", "director", "ráðinn", "ráðning", "tekur við", "nýr framkvæmdastjóri"]],
+  ["Verðlaun og tilnefningar", ["award", "awards", "shortlist", "winner", "cannes", "effie", "tilnefnd", "verðlaun", "hlaut", "vann"]],
+  ["Endurmörkun og ný vörumerki", ["rebrand", "brand identity", "new identity", "logo", "visual identity", "refresh", "endurmark", "nýtt merki", "ný ásýnd"]],
+  ["Herferðir", ["campaign", "ad campaign", "launches", "work by", "advert", "case", "herferð", "auglýsing", "kynningarherferð", "markaðsherferð"]],
+  ["AI og tækni", ["ai", "artificial intelligence", "generative", "chatgpt", "claude", "openai", "anthropic", "canva", "adobe", "automation", "gervigreind"]],
+  ["Miðlar og platform", ["google", "meta", "linkedin", "instagram", "tiktok", "youtube", "search", "algorithm", "privacy", "cookies", "media", "platform"]],
+  ["Neytendur og rannsóknir", ["consumer", "research", "survey", "study", "trend", "insight", "shopper", "audience", "neytend", "rannsókn", "könnun"]],
+  ["Alþjóðlegt case", ["case study", "effectiveness", "brand growth", "lessons", "learned", "strategy", "how ", "why "]],
 ];
 
-const HIGH_SIGNAL = [
-  "marketing", "brand", "branding", "advertising", "campaign", "agency", "creative",
-  "media", "social", "content", "consumer", "customer", "commerce", "retail",
-  "design", "identity", "rebrand", "pr", "communications", "sponsorship",
-  "market", "markads", "markaðs", "vorumerki", "vörumerki", "augl", "herfer",
-  "midl", "miðl", "samskipta", "kynning", "neytend", "honnun", "hönnun",
-];
-
+const AGENCY_SIGNALS = ["pipar", "tbwa", "pipar/tbwa", "brandenburg", "hvíta húsið", "hvita husid", "cirkus", "kontor"];
 const ICELAND_SIGNALS = [
-  "iceland", "island", "islands", "íslensk", "íslenskur", "íslenskt", "ísland",
-  "reykjavik", "reykjavík", "icelandair", "pipar", "tbwa", "brandenburg",
-  "hvíta húsið", "hvita husid", "cirkus", "kontor", "nova", "síminn",
-  "siminn", "krónan", "kronan", "arion", "landsbankinn", "bláa lónið",
-  "blue lagoon", "islandsstofa", "sýn",
+  "iceland", "íslensk", "íslenskur", "íslenskt", "ísland", "reykjavik", "reykjavík",
+  "icelandair", "nova", "síminn", "siminn", "krónan", "kronan", "arion", "landsbankinn",
+  "bláa lónið", "blue lagoon", "islandsstofa", "sýn", ...AGENCY_SIGNALS,
 ];
-
-const AGENCY_SIGNALS = [
-  "pipar", "tbwa", "pipar/tbwa", "brandenburg", "hvíta húsið",
-  "hvita husid", "cirkus", "kontor",
+const LEARNING_SIGNALS = [
+  "case", "strategy", "effectiveness", "growth", "research", "study", "trend", "insight",
+  "measurement", "consumer", "creator", "retail media", "loyalty", "brand platform",
+  "ai", "automation", "search", "privacy", "algorithm", "social", "media",
 ];
-
 const BLOCKED = [
-  "stock market", "share price", "earnings call", "football", "basketball",
-  "crime", "war ", "election", "weather", "crypto", "nft", "casino",
-  "lögregla", "slys", "veður", "kosning", "knattspyrna", "handbolti",
-  "transfermarkt", "squad", "league", "match", "player", "verein",
+  "stock market", "share price", "earnings call", "football", "basketball", "crime",
+  "war ", "election", "weather", "crypto", "nft", "casino", "transfermarkt", "squad",
+  "league", "match", "player", "verein", "lögregla", "slys", "veður", "kosning",
+  "knattspyrna", "handbolti", "data center", "data centre", "google finance",
+  "new investments and community support",
 ];
-
 const SITE_NOISE = [
-  "logo", "merki", "tengili", "fyrir fjölmiðla", "þjónustutilkynningar",
-  "status", "privacy", "cookie", "skilmalar", "terms", "gjaldskra",
-  "laus störf", "störf í boði", "opnunart", "english", "newsletter",
+  "logo", "merki", "tengili", "fyrir fjölmiðla", "þjónustutilkynningar", "status",
+  "privacy", "cookie", "skilmalar", "terms", "gjaldskra", "laus störf", "störf í boði",
+  "opnunart", "english", "newsletter", "subscribe", "youtube rás", "linkedin síða",
+  "instagram síða", "tiktok síða", "facebook síða", "samfélagsmiðlar",
 ];
-
-function cleanText(value = "") {
-  return decodeEntities(String(value))
-    .replace(/<script[\s\S]*?<\/script>/gi, " ")
-    .replace(/<style[\s\S]*?<\/style>/gi, " ")
-    .replace(/<[^>]+>/g, " ")
-    .replace(/\s+/g, " ")
-    .trim();
-}
 
 function decodeEntities(value = "") {
   return value
@@ -128,18 +120,29 @@ function decodeEntities(value = "") {
     .replace(/&gt;/g, ">");
 }
 
+function cleanText(value = "") {
+  return decodeEntities(String(value))
+    .replace(/<script[\s\S]*?<\/script>/gi, " ")
+    .replace(/<style[\s\S]*?<\/style>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function normalise(value = "") {
-  return cleanText(value).toLowerCase().replace(/[^a-z0-9áðéíóúýþæö\s-]/gi, " ").replace(/\s+/g, " ").trim();
+  return cleanText(value).toLowerCase().replace(/[^a-z0-9áðéíóúýþæö\s/-]/gi, " ").replace(/\s+/g, " ").trim();
 }
 
 function containsKeyword(text, keyword) {
   const clean = normalise(text);
   const kw = normalise(keyword);
   if (!kw) return false;
-  if (/^[a-z0-9áðéíóúýþæö-]+$/i.test(kw)) {
-    return new RegExp(`(^|\\s)${kw}(\\s|$)`, "i").test(clean);
-  }
+  if (/^[a-z0-9áðéíóúýþæö/-]+$/i.test(kw)) return new RegExp(`(^|\\s)${kw}(\\s|$)`, "i").test(clean);
   return clean.includes(kw);
+}
+
+function hasAny(text, keywords) {
+  return keywords.some((keyword) => containsKeyword(text, keyword));
 }
 
 function getIsoWeek(date = new Date()) {
@@ -150,11 +153,11 @@ function getIsoWeek(date = new Date()) {
   return { weekId: `${d.getUTCFullYear()}-W${String(week).padStart(2, "0")}`, label: `Vika ${week}, ${d.getUTCFullYear()}` };
 }
 
-function excerpt(text, max = 260) {
+function excerpt(text, max = 320) {
   const clean = cleanText(text);
   if (clean.length <= max) return clean;
   const cut = clean.lastIndexOf(" ", max);
-  return `${clean.slice(0, cut > 80 ? cut : max)}...`;
+  return `${clean.slice(0, cut > 100 ? cut : max)}...`;
 }
 
 function absoluteUrl(href, base) {
@@ -172,94 +175,164 @@ function linkKey(url) {
     parsed.search = "";
     return parsed.toString().replace(/\/$/, "");
   } catch {
-    return url.trim();
+    return String(url).trim();
   }
 }
 
 function titleSimilarity(a, b) {
-  const aw = new Set(normalise(a).split(" ").filter((w) => w.length > 3));
-  const bw = new Set(normalise(b).split(" ").filter((w) => w.length > 3));
+  const aw = new Set(normalise(a).split(" ").filter((word) => word.length > 3));
+  const bw = new Set(normalise(b).split(" ").filter((word) => word.length > 3));
   if (!aw.size || !bw.size) return 0;
-  return [...aw].filter((w) => bw.has(w)).length / Math.max(aw.size, bw.size);
+  return [...aw].filter((word) => bw.has(word)).length / Math.max(aw.size, bw.size);
 }
 
 function detectCategory(title, summary) {
   const text = `${title} ${summary}`;
   for (const [category, keywords] of CATEGORY_RULES) {
-    if (keywords.some((kw) => containsKeyword(text, kw))) return category;
+    if (hasAny(text, keywords)) return category;
   }
-  return "Markadsfrettir";
+  return "Markaðsfréttir";
 }
 
-function hasSignal(title, summary) {
-  const text = `${title} ${summary}`;
-  if (BLOCKED.some((kw) => containsKeyword(text, kw))) return false;
-  return HIGH_SIGNAL.some((kw) => containsKeyword(text, kw));
+function parseDateFromText(title) {
+  const text = cleanText(title).toLowerCase();
+  const slash = text.match(/\b(\d{1,2})\/(\d{1,2})\/(20\d{2})\b/);
+  if (slash) return new Date(Date.UTC(Number(slash[3]), Number(slash[1]) - 1, Number(slash[2]), 12)).toISOString();
+
+  const months = {
+    januar: 0, janúar: 0, februar: 1, febrúar: 1, mars: 2, april: 3, apríl: 3,
+    mai: 4, maí: 4, juni: 5, júní: 5, juli: 6, júlí: 6, agust: 7, ágúst: 7,
+    september: 8, oktober: 9, október: 9, november: 10, desember: 11,
+  };
+  const monthNames = Object.keys(months).join("|");
+  const named = text.match(new RegExp(`\\b(\\d{1,2})\\.\\s*(${monthNames})\\s+(20\\d{2})\\b`, "i"));
+  if (named) return new Date(Date.UTC(Number(named[3]), months[named[2]], Number(named[1]), 12)).toISOString();
+  return "";
 }
 
-function hasIcelandSignal(title, summary, url = "") {
-  const text = `${title} ${summary} ${url}`;
-  return ICELAND_SIGNALS.some((kw) => containsKeyword(text, kw));
+function isBlocked(title, summary, url = "") {
+  return hasAny(`${title} ${summary} ${url}`, BLOCKED);
 }
 
-function hasAgencySignal(title, summary, url = "") {
-  const text = `${title} ${summary} ${url}`;
-  return AGENCY_SIGNALS.some((kw) => containsKeyword(text, kw));
+function isNoiseLink(title, url) {
+  const text = `${title} ${url}`;
+  if (hasAny(text, SITE_NOISE)) return true;
+  if (normalise(title).split(" ").length < 3) return true;
+  return false;
 }
 
-function scoreItem(item, source) {
+function isIcelandic(item) {
+  return item.market_relevance === "Icelandic" || hasAny(`${item.title} ${item.rawSummary} ${item.url}`, ICELAND_SIGNALS);
+}
+
+function isAgencyItem(item) {
+  return item.focus === "agency" || item.focus === "agency-search" || hasAny(`${item.title} ${item.rawSummary} ${item.url}`, AGENCY_SIGNALS);
+}
+
+function scoreItem(item) {
   const text = `${item.title} ${item.rawSummary}`;
-  let score = source.weight;
+  const local = isIcelandic(item);
+  const agency = isAgencyItem(item);
+  const platformMarketingSignal = hasAny(text, [
+    "advertising", "ads", "ad ", "marketing", "brand", "creator", "content",
+    "social", "media", "search", "algorithm", "privacy", "cookies", "measurement",
+    "instagram", "tiktok", "youtube", "linkedin", "reels", "influencer",
+  ]);
 
-  if (source.market === "Icelandic") score += 1.4;
-  if (item.category === "Herferdir") score += 0.8;
-  if (item.category === "Endurmarkun og ny vorumerki") score += 0.7;
-  if (item.category === "Radningar") score += 0.6;
-  if (item.category === "Verdlaun og tilnefningar") score += 0.6;
-  if (item.category === "AI og taekni" && hasSignal(item.title, item.rawSummary)) score += 0.5;
-  if (["Icelandair", "Nova", "Siminn", "Kronan", "Arion banki", "Landsbankinn", "Islandsstofa", "Syn"].includes(source.name)) score += 0.4;
+  let score = 0;
+  let scoreReason = "Almenn frétt";
 
-  for (const keyword of HIGH_SIGNAL) {
-    if (containsKeyword(text, keyword)) score += 0.08;
+  if (local && item.category === "Herferðir") {
+    score = agency ? 60 : 60;
+    scoreReason = agency ? "Íslenskt agency case" : "Íslensk markaðsherferð";
+  } else if (local && item.category === "Endurmörkun og ný vörumerki") {
+    score = 60;
+    scoreReason = "Íslensk endurmörkun";
+  } else if (local && item.category === "Verðlaun og tilnefningar") {
+    score = 55;
+    scoreReason = "Íslensk verðlaun eða tilnefning";
+  } else if (local && item.category === "Ráðningar") {
+    score = 45;
+    scoreReason = "Íslensk ráðning í markaðs- eða samskiptastarf";
+  } else if (!local && item.category === "Alþjóðlegt case" && hasAny(text, LEARNING_SIGNALS)) {
+    score = 45;
+    scoreReason = "Alþjóðlegt case með sterkum lærdómi";
+  } else if (item.category === "AI og tækni" && hasAny(text, ["marketing", "brand", "creative", "content", "advertising", "media", "search", "gervigreind", "markaðs"])) {
+    score = 40;
+    scoreReason = "AI sem getur breytt markaðsstarfi";
+  } else if (item.category === "Miðlar og platform" && platformMarketingSignal) {
+    score = 40;
+    scoreReason = "Mikilvæg breyting á miðli eða platformi";
+  } else if (item.category === "Neytendur og rannsóknir") {
+    score = 35;
+    scoreReason = "Rannsókn eða neytendatrend";
+  } else if (!local && hasAny(text, LEARNING_SIGNALS) && hasAny(text, ["brand", "campaign", "creative", "media", "consumer", "retail", "strategy"])) {
+    score = 35;
+    scoreReason = "Alþjóðleg þróun með nothæfum lærdómi";
+  } else if (!local) {
+    score = 5;
+    scoreReason = "Almenn erlend markaðsfrétt";
   }
 
   const age = Date.now() - new Date(item.date || Date.now()).getTime();
-  if (Number.isFinite(age) && age > 0) score += Math.max(0, 0.5 - age / (DAYS_BACK * 86400000));
-  return score;
+  if (Number.isFinite(age) && age > 0) score += Math.max(0, 4 - age / 86400000);
+  if (agency) score += 8;
+  if (local) score += 4;
+  if (item.editorial) score += 100;
+
+  return { score: Math.round(score), scoreReason };
 }
 
 function summaryIs(item) {
-  const sourceText = item.rawSummary || item.title;
-  if (sourceText && sourceText !== item.title) return excerpt(sourceText, 230);
+  const sourceText = item.rawSummary && item.rawSummary !== item.title ? item.rawSummary : "";
+  const base = sourceText ? excerpt(sourceText, 260) : `${item.source} birtir atriði sem tengist ${item.category.toLowerCase()}.`;
 
-  const categoryLead = {
-    "Herferdir": "Ny herferd eða kynning sem vert er að fylgjast með.",
-    "Endurmarkun og ny vorumerki": "Breyting á vörumerki, ásýnd eða stöðu sem getur gefið vísbendingu um nýja stefnu.",
-    "Radningar": "Mannauðs- eða leiðtogabreyting í markaðs- og samskiptum.",
-    "Verdlaun og tilnefningar": "Viðurkenning eða tilnefning sem varpar ljósi á árangur og faglega þróun.",
-    "AI og taekni": "Tæknifrétt með möguleg áhrif á efnisgerð, greiningu eða markaðsstarf.",
-    "Althjodleg case": "Alþjóðlegt dæmi sem getur nýst sem lærdómur fyrir íslenskt markaðsfólk.",
-    "Markadsfrettir": "Frétt sem tengist vörumerkjum, miðlum, neytendum eða markaðsstarfi.",
-  };
-  return `${categoryLead[item.category]} Heimild: ${item.source}.`;
+  if (item.market_relevance === "Icelandic") {
+    return `${base} Atriðið er tekið með vegna þess að það tengist íslenskum markaði, íslensku vörumerki eða íslenskri stofu.`;
+  }
+  return `${base} Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.`;
 }
 
 function whyItMattersIs(item) {
-  const localPrefix = item.market_relevance === "Icelandic"
-    ? "Þetta skiptir íslenskt markaðsfólk máli vegna þess að þetta gerist á heimamarkaði og getur haft bein áhrif á samkeppni, miðlun eða væntingar neytenda."
-    : "Þetta skiptir íslenskt markaðsfólk máli vegna þess að dæmið sýnir þróun sem getur haft áhrif á stefnu, skapandi vinnu eða miðlanotkun hér heima.";
+  const source = item.source;
+  const title = item.title;
+  const local = item.market_relevance === "Icelandic";
 
-  const categoryWhy = {
-    "Herferdir": "Það gefur vísbendingu um hvaða skilaboð, rásir og menningarleg tenging eru að virka.",
-    "Endurmarkun og ny vorumerki": "Það hjálpar fólki að lesa hvernig vörumerki eru að skerpa stöðu sína og aðgreiningu.",
-    "Radningar": "Mannauðsbreytingar sýna hvar hæfni, ábyrgð og áherslur í markaðsstarfi eru að færast.",
-    "Verdlaun og tilnefningar": "Viðurkenningar draga fram vinnubrögð og hugmyndir sem fagið getur lært af.",
-    "AI og taekni": "Tæknin getur breytt hraða, kostnaði og gæðum í efnisgerð, greiningu og þjónustuupplifun.",
-    "Althjodleg case": "Skýrt alþjóðlegt dæmi hjálpar teymum að þýða lærdóm yfir í íslenskan veruleika.",
-    "Markadsfrettir": "Fréttin gefur samhengi um breytingar á neytendahegðun, miðlum eða vörumerkjastjórnun.",
-  };
+  if (item.category === "Herferðir") {
+    return local
+      ? `Þetta skiptir máli vegna þess að ${source} sýnir hvernig herferð eða skapandi vinna er að birtast á íslenskum markaði. Íslensk fyrirtæki geta skoðað hvaða innsýn, rásir og skilaboð eru notuð og borið saman við eigin markhópa.`
+      : `Lærdómurinn fyrir íslensk teymi er að skoða hvernig ${source} rammar inn hugmynd, miðlanotkun og árangur. Ef nálgunin er yfirfæranleg getur hún hjálpað við að skerpa brief, channel planning eða skapandi framkvæmd hér heima.`;
+  }
 
-  return `${localPrefix} ${categoryWhy[item.category]}`;
+  if (item.category === "Endurmörkun og ný vörumerki") {
+    return local
+      ? `Endurmörkun á íslenskum markaði getur haft bein áhrif á samkeppni, væntingar neytenda og hvernig flokkurinn talar um virði. Markaðsfólk getur lært af því hvaða stöðu vörumerkið er að taka og hvaða merki um breytingu eru sýnileg.`
+      : `Fyrir íslensk vörumerki er lærdómurinn að skoða hvernig staðfærsla, auðkenni og upplifun vinna saman. Slík dæmi hjálpa teymum að forðast yfirborðslega ásýndarbreytingu og tengja endurmörkun við stefnu.`;
+  }
+
+  if (item.category === "Verðlaun og tilnefningar") {
+    return local
+      ? `Íslenskur árangur eða tilnefning skiptir máli vegna þess að hann sýnir hvaða vinnubrögð standast samanburð utan heimamarkaðar. Fyrirtæki geta lært af því hvaða hugmynd, árangur eða framkvæmd var metin nógu sterk til að vekja athygli.`
+      : `Verðlaunaumræða er aðeins tekin með þegar hún bendir á vinnubrögð sem hægt er að læra af. Hér er gagnlegt að spyrja hvað gerði verkefnið eftirtektarvert og hvort sömu prinsipp eigi við í smærri íslenskum markaði.`;
+  }
+
+  if (item.category === "Ráðningar") {
+    return `Ráðningar í markaðs- og samskiptastörf gefa vísbendingu um hvaða hæfni fyrirtæki telja mikilvæga næst. Fyrir íslensk teymi er þetta merki um hvort áherslan sé að færast í gögn, vörumerkjastefnu, samskipti, vöxt eða stafræna upplifun.`;
+  }
+
+  if (item.category === "AI og tækni") {
+    return `Þetta skiptir máli ef tæknin breytir hraða, kostnaði eða gæðum í efnisgerð, greiningu, leitarhegðun eða þjónustuupplifun. Íslensk fyrirtæki ættu að spyrja hvar þetta getur bætt vinnuferli án þess að veikja traust eða sérstöðu vörumerkisins.`;
+  }
+
+  if (item.category === "Miðlar og platform") {
+    return `Breytingar á miðlum og platformum geta haft bein áhrif á dreifingu, mælingar, kostnað og sýnileika. Íslensk markaðsteymi þurfa að meta hvort þetta kalli á breytingar í miðlaplani, efnisgerð eða gagnasöfnun.`;
+  }
+
+  if (item.category === "Neytendur og rannsóknir") {
+    return `Rannsóknir og neytendatrend eru gagnleg þegar þau hjálpa teymum að endurmeta forsendur um kauphegðun, traust eða athygli. Lærdómurinn er að bera innsýnina saman við íslenskan veruleika áður en hún er sett í stefnu eða herferð.`;
+  }
+
+  return `Atriðið er valið vegna þess að það getur haft áhrif á hvernig íslensk fyrirtæki hugsa um markaðsstarf, vörumerki eða miðlun. Lærdómurinn er að skoða hvort þróunin í "${title}" breyti forsendum fyrir eigin stefnu, skilaboð eða framkvæmd.`;
 }
 
 async function loadEditorialItems() {
@@ -269,23 +342,25 @@ async function loadEditorialItems() {
     if (!Array.isArray(items)) return [];
 
     return items
-      .filter((item) => item && item.title && item.url && item.source)
-      .filter((item) => item.enabled !== false)
+      .filter((item) => item && item.enabled !== false && item.title && item.url && item.source)
       .filter((item) => !item.pinnedUntil || new Date(item.pinnedUntil).getTime() >= Date.now())
-      .map((item, index) => {
+      .map((item) => {
         const base = {
           title: cleanText(item.title),
           source: cleanText(item.source),
           url: String(item.url).trim(),
           date: item.date || new Date().toISOString(),
-          category: item.category || "Markadsfrettir",
+          category: item.category || "Markaðsfréttir",
           rawSummary: item.summary_is || item.summary || "",
           market_relevance: item.market_relevance || "Icelandic",
+          focus: item.focus || "editorial",
+          editorial: true,
         };
-
+        const { score, scoreReason } = scoreItem(base);
         return {
           ...base,
-          score: Number(item.score || 100 - index),
+          score: Number(item.score || score),
+          score_reason: item.score_reason || scoreReason,
           summary_is: item.summary_is || summaryIs(base),
           why_it_matters_is: item.why_it_matters_is || whyItMattersIs(base),
         };
@@ -295,56 +370,25 @@ async function loadEditorialItems() {
   }
 }
 
-function parseDateFromText(title) {
-  const text = cleanText(title).toLowerCase();
-  const slash = text.match(/\b(\d{1,2})\/(\d{1,2})\/(20\d{2})\b/);
-  if (slash) {
-    const [, month, day, year] = slash;
-    return new Date(Date.UTC(Number(year), Number(month) - 1, Number(day), 12)).toISOString();
-  }
-
-  const months = {
-    januar: 0, janúar: 0, februar: 1, febrúar: 1, mars: 2, april: 3, apríl: 3,
-    mai: 4, maí: 4, juni: 5, júní: 5, juli: 6, júlí: 6, agust: 7, ágúst: 7,
-    september: 8, oktober: 9, október: 9, november: 10, desember: 11,
-  };
-  const monthNames = Object.keys(months).join("|");
-  const named = text.match(new RegExp(`\\b(\\d{1,2})\\.\\s*(${monthNames})\\s+(20\\d{2})\\b`, "i"));
-  if (named) {
-    const [, day, monthName, year] = named;
-    return new Date(Date.UTC(Number(year), months[monthName], Number(day), 12)).toISOString();
-  }
-  return "";
-}
-
-function isNoiseLink(title, url) {
-  const text = `${title} ${url}`;
-  if (SITE_NOISE.some((kw) => containsKeyword(text, kw))) return true;
-  if (normalise(title).split(" ").length < 3) return true;
-  return false;
-}
-
 async function fetchRSS(source) {
   try {
     const feed = await parser.parseURL(source.url);
     const items = feed.items
       .map((entry) => {
         const date = entry.isoDate || entry.pubDate || entry.date || new Date().toISOString();
-        const rawSummary = excerpt(entry.contentSnippet || entry.summary || entry.content || "", 280);
-        const sourceName = cleanText(entry.source?.title || entry.source || source.name);
         return makeCandidate(source, {
           title: cleanText(entry.title),
           url: cleanText(entry.link),
           date,
-          rawSummary,
-          sourceName,
+          rawSummary: excerpt(entry.contentSnippet || entry.summary || entry.content || "", 320),
+          sourceName: cleanText(entry.source?.title || entry.source || source.name),
         });
       })
       .filter(Boolean);
-    console.log(`OK  ${source.name.padEnd(18)} ${items.length}`);
+    console.log(`OK  ${source.name.padEnd(34)} ${items.length}`);
     return items;
   } catch (error) {
-    console.warn(`--  ${source.name.padEnd(18)} ${error.message.split("\n")[0].slice(0, 80)}`);
+    console.warn(`--  ${source.name.padEnd(34)} ${error.message.split("\n")[0].slice(0, 80)}`);
     return [];
   }
 }
@@ -358,38 +402,30 @@ async function fetchSite(source) {
     if (!response.ok) throw new Error(`HTTP ${response.status}`);
     const html = await response.text();
     const links = [...html.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)]
-      .map(([, href, label]) => ({
-        url: absoluteUrl(href, source.url),
-        title: cleanText(label),
-      }))
+      .map(([, href, label]) => ({ url: absoluteUrl(href, source.url), title: cleanText(label) }))
       .filter((link) => link.url && link.title.length >= 12)
       .filter((link) => !link.url.includes("#") && !/\.(pdf|jpg|jpeg|png|gif|svg)$/i.test(link.url))
-      .slice(0, 40);
+      .filter((link) => !isNoiseLink(link.title, link.url))
+      .slice(0, 60);
 
-    const unique = [];
     const seen = new Set();
+    const items = [];
     for (const link of links) {
       const key = linkKey(link.url);
-      if (!seen.has(key)) {
-        seen.add(key);
-        unique.push(link);
-      }
-    }
-
-    const items = unique
-      .filter((link) => !isNoiseLink(link.title, link.url))
-      .map((link) => makeCandidate(source, {
+      if (seen.has(key)) continue;
+      seen.add(key);
+      const item = makeCandidate(source, {
         ...link,
         date: parseDateFromText(link.title),
         rawSummary: "",
-      }))
-      .filter(Boolean)
-      .slice(0, 8);
-
-    console.log(`OK  ${source.name.padEnd(18)} ${items.length}`);
+      });
+      if (item) items.push(item);
+      if (items.length >= 10) break;
+    }
+    console.log(`OK  ${source.name.padEnd(34)} ${items.length}`);
     return items;
   } catch (error) {
-    console.warn(`--  ${source.name.padEnd(18)} ${error.message.split("\n")[0].slice(0, 80)}`);
+    console.warn(`--  ${source.name.padEnd(34)} ${error.message.split("\n")[0].slice(0, 80)}`);
     return [];
   }
 }
@@ -399,6 +435,7 @@ function makeCandidate(source, entry) {
   const dateMs = new Date(entry.date || 0).getTime();
   if (source.type === "rss" && (!dateMs || dateMs < CUTOFF)) return null;
   if (source.type === "site" && dateMs && dateMs < CUTOFF) return null;
+  if (isBlocked(entry.title, entry.rawSummary, entry.url)) return null;
 
   const category = detectCategory(entry.title, entry.rawSummary);
   const base = {
@@ -409,18 +446,19 @@ function makeCandidate(source, entry) {
     category,
     rawSummary: entry.rawSummary,
     market_relevance: source.market,
+    focus: source.focus,
   };
 
-  if (!hasSignal(base.title, base.rawSummary) && category === "Markadsfrettir") return null;
-  if (source.type === "site" && !entry.date && category === "Markadsfrettir") return null;
-  if (source.requireMarketingSignal && !hasSignal(base.title, base.rawSummary)) return null;
-  if (source.requireIcelandSignal && !hasIcelandSignal(base.title, base.rawSummary, base.url)) return null;
-  if (source.requireAgencySignal && !hasAgencySignal(base.title, base.rawSummary, base.url)) return null;
+  if (source.requireAgencySignal && !hasAny(`${base.title} ${base.rawSummary} ${base.url}`, AGENCY_SIGNALS)) return null;
+  if (category === "Markaðsfréttir" && !hasAny(`${base.title} ${base.rawSummary}`, [...LEARNING_SIGNALS, ...ICELAND_SIGNALS])) return null;
 
-  const score = scoreItem(base, source);
+  const { score, scoreReason } = scoreItem(base);
+  if (score < MIN_SCORE) return null;
+
   return {
     ...base,
     score,
+    score_reason: scoreReason,
     summary_is: summaryIs(base),
     why_it_matters_is: whyItMattersIs(base),
   };
@@ -443,7 +481,7 @@ function selectItems(items) {
   const deduped = dedupe(items);
   const local = deduped.filter((item) => item.market_relevance === "Icelandic");
   const global = deduped.filter((item) => item.market_relevance !== "Icelandic");
-  const neededLocal = local.length >= Math.ceil(TOP_COUNT * 0.4) ? Math.ceil(TOP_COUNT * 0.4) : local.length;
+  const localTarget = Math.min(local.length, Math.ceil(MAX_ITEMS * TARGET_LOCAL_SHARE));
 
   const selected = [];
   const add = (item) => {
@@ -451,11 +489,12 @@ function selectItems(items) {
     if (!selected.some((existing) => linkKey(existing.url) === linkKey(item.url))) selected.push(item);
   };
 
-  local.slice(0, neededLocal).forEach(add);
-  [...deduped].forEach(add);
+  local.slice(0, localTarget).forEach(add);
+  [...local.slice(localTarget), ...global].sort((a, b) => b.score - a.score).forEach(add);
 
-  const top = selected
+  return selected
     .slice(0, MAX_ITEMS)
+    .sort((a, b) => b.score - a.score)
     .map((item, index) => ({
       title: item.title,
       source: item.source,
@@ -465,24 +504,23 @@ function selectItems(items) {
       summary_is: item.summary_is,
       why_it_matters_is: item.why_it_matters_is,
       market_relevance: item.market_relevance,
+      score: item.score,
+      score_reason: item.score_reason,
       priority: index + 1,
     }));
-
-  return top;
 }
 
 async function main() {
   console.log("IMARK Intelligence - weekly watch\n");
 
-  const batches = await Promise.all(SOURCES.map((source) => (
-    source.type === "rss" ? fetchRSS(source) : fetchSite(source)
-  )));
-  const editorialItems = await loadEditorialItems();
-  const candidates = [...editorialItems, ...batches.flat()];
-  const topItems = selectItems(candidates);
+  const [editorialItems, batches] = await Promise.all([
+    loadEditorialItems(),
+    Promise.all(SOURCES.map((source) => (source.type === "rss" ? fetchRSS(source) : fetchSite(source)))),
+  ]);
 
-  if (topItems.length < 5) {
-    console.error(`Only ${topItems.length} usable sourced items found. Existing intelligence.json was not overwritten.`);
+  const topItems = selectItems([...editorialItems, ...batches.flat()]);
+  if (topItems.length < MIN_ITEMS) {
+    console.error(`Only ${topItems.length} strong intelligence items found. Existing intelligence.json was not overwritten.`);
     process.exit(1);
   }
 
@@ -498,10 +536,9 @@ async function main() {
   await fs.writeFile(path.join(ROOT, "data/intelligence.json"), `${JSON.stringify(output, null, 2)}\n`, "utf-8");
   await fs.writeFile(path.join(ROOT, `data/weeks/${weekId}-intelligence.json`), `${JSON.stringify(output, null, 2)}\n`, "utf-8");
 
-  console.log(`\nSaved data/intelligence.json with ${topItems.length} sourced items.`);
-  console.log(`Icelandic share in top ${Math.min(TOP_COUNT, topItems.length)}: ${
-    topItems.slice(0, TOP_COUNT).filter((item) => item.market_relevance === "Icelandic").length
-  }/${Math.min(TOP_COUNT, topItems.length)}`);
+  const localCount = topItems.filter((item) => item.market_relevance === "Icelandic").length;
+  console.log(`\nSaved data/intelligence.json with ${topItems.length} intelligence items.`);
+  console.log(`Icelandic items: ${localCount}/${topItems.length}`);
   process.exit(0);
 }
 

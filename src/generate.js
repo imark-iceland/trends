@@ -1,5 +1,5 @@
 /**
- * IMARK Intelligence - static dashboard generator
+ * IMARK Intelligence - static dashboard generator.
  * Reads data/intelligence.json and writes docs/index.html.
  */
 
@@ -38,35 +38,21 @@ function formatUpdated(iso) {
 }
 
 function relevanceLabel(value) {
-  const labels = {
+  return {
     Icelandic: "Íslenskt",
     Nordic: "Norrænt",
     Global: "Alþjóðlegt",
-  };
-  return labels[value] || value;
+  }[value] || value;
 }
 
-function categoryLabel(value) {
-  const labels = {
-    "Radningar": "Ráðningar",
-    "Verdlaun og tilnefningar": "Verðlaun og tilnefningar",
-    "Endurmarkun og ny vorumerki": "Endurmörkun og ný vörumerki",
-    "Herferdir": "Herferðir",
-    "AI og taekni": "AI og tækni",
-    "Althjodleg case": "Alþjóðleg case",
-    "Markadsfrettir": "Markaðsfréttir",
-  };
-  return labels[value] || value;
-}
-
-function renderItem(item, variant = "primary") {
+function renderItem(item) {
   const priority = Number(item.priority || 0);
   return `
-    <article class="item ${variant}">
+    <article class="item">
       <div class="item-rank">${priority ? String(priority).padStart(2, "0") : ""}</div>
       <div class="item-body">
         <div class="item-meta">
-          <span>${escapeHtml(categoryLabel(item.category))}</span>
+          <span>${escapeHtml(item.category)}</span>
           <span>${escapeHtml(relevanceLabel(item.market_relevance))}</span>
           <span>${escapeHtml(formatDate(item.date))}</span>
         </div>
@@ -81,40 +67,15 @@ function renderItem(item, variant = "primary") {
     </article>`;
 }
 
-function fallbackFromLatest(latest) {
-  const items = (latest.items || []).slice(0, 10).map((item, index) => ({
-    title: item.title,
-    source: item.source,
-    url: String(item.link || "").trim(),
-    date: item.pubDate,
-    category: item.category || "Markadsfrettir",
-    summary_is: item.summary || "Valin frétt úr fyrri ÍMARK vakt.",
-    why_it_matters_is: "Þetta er varðveitt úr síðustu keyrslu og gefur samhengi þar til næsta Intelligence vakt keyrir.",
-    market_relevance: "Global",
-    priority: index + 1,
-  }));
-
-  return {
-    week: latest.weekId ? latest.weekId.replace("-W", ", vika ") : "Vika",
-    updatedAt: latest.generatedAt || new Date().toISOString(),
-    topItems: items,
-  };
-}
-
 async function readData() {
-  try {
-    return JSON.parse(await fs.readFile(path.join(ROOT, "data/intelligence.json"), "utf-8"));
-  } catch {
-    const latest = JSON.parse(await fs.readFile(path.join(ROOT, "data/latest.json"), "utf-8"));
-    return fallbackFromLatest(latest);
-  }
+  return JSON.parse(await fs.readFile(path.join(ROOT, "data/intelligence.json"), "utf-8"));
 }
 
 function buildHTML(data) {
-  const allItems = (data.topItems || []).sort((a, b) => Number(a.priority || 99) - Number(b.priority || 99));
-  const topItems = allItems.slice(0, 8);
-  const moreItems = allItems.slice(8);
-  const localCount = topItems.filter((item) => item.market_relevance === "Icelandic").length;
+  const items = (data.topItems || [])
+    .sort((a, b) => Number(a.priority || 99) - Number(b.priority || 99))
+    .slice(0, 12);
+  const localCount = items.filter((item) => item.market_relevance === "Icelandic").length;
 
   return `<!DOCTYPE html>
 <html lang="is">
@@ -162,7 +123,7 @@ function buildHTML(data) {
       align-items: center;
       gap: 14px;
       font-weight: 800;
-      letter-spacing: .02em;
+      letter-spacing: 0;
     }
     .logo img { height: 34px; width: auto; display: block; }
     .updated { color: #b8b8b8; font-size: 14px; text-align: right; }
@@ -252,7 +213,6 @@ function buildHTML(data) {
       line-height: 1.12;
       letter-spacing: 0;
     }
-    .item.secondary h2 { font-size: clamp(19px, 2.2vw, 24px); }
     .item h2 a { text-decoration-thickness: 1px; text-underline-offset: 5px; }
     .summary {
       color: #333333;
@@ -280,16 +240,6 @@ function buildHTML(data) {
       color: var(--red);
       font-weight: 700;
       font-size: 14px;
-    }
-    .more {
-      margin-top: 42px;
-      padding-top: 28px;
-      border-top: 1px solid var(--line);
-    }
-    .more-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
-      gap: 16px;
     }
     .empty {
       background: var(--white);
@@ -332,11 +282,11 @@ function buildHTML(data) {
     <div class="hero-inner">
       <p class="eyebrow">${escapeHtml(data.week || "")}</p>
       <h1>ÍMARK Intelligence</h1>
-      <p class="subtitle">Það sem íslenskt markaðsfólk þarf að vita í þessari viku</p>
+      <p class="subtitle">Það sem íslenskt markaðsfólk þarf að vita í þessari viku.</p>
       <div class="stats">
-        <span class="stat">${topItems.length} mikilvægustu atriðin</span>
-        <span class="stat">${localCount} íslensk atriði í aðalyfirliti</span>
-        <span class="stat">Allt með heimild og skýringu</span>
+        <span class="stat">${items.length} valin atriði</span>
+        <span class="stat">${localCount} íslensk atriði</span>
+        <span class="stat">Ritstýrt eftir mikilvægi</span>
       </div>
     </div>
   </section>
@@ -345,22 +295,14 @@ function buildHTML(data) {
     <div class="content">
       <h2 class="section-title">Ritstýrt yfirlit</h2>
       <div class="lead-list">
-        ${topItems.length ? topItems.map((item) => renderItem(item)).join("\n") : `<p class="empty">Engin atriði fundust í þessari keyrslu.</p>`}
+        ${items.length ? items.map((item) => renderItem(item)).join("\n") : `<p class="empty">Engin atriði fundust í þessari keyrslu.</p>`}
       </div>
-
-      ${moreItems.length ? `
-      <section class="more">
-        <h2 class="section-title">Fleira áhugavert</h2>
-        <div class="more-grid">
-          ${moreItems.map((item) => renderItem(item, "secondary")).join("\n")}
-        </div>
-      </section>` : ""}
     </div>
   </main>
 
   <footer>
     <div class="footer-inner">
-      <span>ÍMARK Intelligence er unnið sjálfvirkt úr opinberum heimildum og birtir ekki atriði án tengils á uppruna.</span>
+      <span>ÍMARK Intelligence velur opinberar heimildir eftir lærdómi og vægi fyrir íslenskt markaðsfólk.</span>
       <span>GitHub Pages</span>
     </div>
   </footer>
