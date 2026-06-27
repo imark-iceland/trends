@@ -17,6 +17,7 @@ const MAX_ITEMS = Number(process.env.IMARK_MAX_ITEMS || 14);
 const TOP_COUNT = 8;
 const CUTOFF = Date.now() - DAYS_BACK * 86400000;
 const UA = "IMARK-Intelligence/1.0 (+https://imark-iceland.github.io/trends/)";
+const EDITORIAL_ITEMS_PATH = path.join(ROOT, "config/editorial-items.json");
 
 const parser = new Parser({
   timeout: 12000,
@@ -25,9 +26,13 @@ const parser = new Parser({
 
 const SOURCES = [
   { name: "Markadsmal", url: "https://markadsmal.is/feed/", type: "rss", market: "Icelandic", weight: 2.4 },
+  { name: "Markadsmal", url: "https://www.markadsmal.is/feed/", type: "rss", market: "Icelandic", weight: 2.4 },
   { name: "Markadsmal", url: "https://markadsmal.is/", type: "site", market: "Icelandic", weight: 1.8 },
+  { name: "Markadsmal", url: "https://www.markadsmal.is/", type: "site", market: "Icelandic", weight: 1.8 },
   { name: "VB", url: "https://vb.is/feed/", type: "rss", market: "Icelandic", weight: 2.2 },
   { name: "VB", url: "https://vb.is/", type: "site", market: "Icelandic", weight: 1.6 },
+  { name: "Google News - islenskar auglysingastofur", url: "https://news.google.com/rss/search?q=(%22Pipar%2FTBWA%22%20OR%20%22Pipar%20TBWA%22%20OR%20Brandenburg%20OR%20%22Hv%C3%ADta%20h%C3%BAsi%C3%B0%22%20OR%20%22Hvita%20husid%22%20OR%20Cirkus%20OR%20Kontor)%20(herfer%C3%B0%20OR%20campaign%20OR%20Cannes%20OR%20Lions%20OR%20ver%C3%B0laun%20OR%20tilnefnd%20OR%20vann%20OR%20hlaut%20OR%20r%C3%A1%C3%B0in%20OR%20r%C3%A1%C3%B0inn)&hl=is&gl=IS&ceid=IS:is", type: "rss", market: "Icelandic", weight: 2.8, requireAgencySignal: true },
+  { name: "Google News - Icelandic agency awards", url: "https://news.google.com/rss/search?q=(%22Pipar%2FTBWA%22%20OR%20%22Pipar%20TBWA%22%20OR%20Brandenburg%20OR%20%22Hv%C3%ADta%20h%C3%BAsi%C3%B0%22%20OR%20%22Hvita%20husid%22%20OR%20Cirkus%20OR%20Kontor)%20(%22Cannes%20Lions%22%20OR%20Effie%20OR%20award%20OR%20shortlist%20OR%20winner)&hl=en&gl=IS&ceid=IS:en", type: "rss", market: "Icelandic", weight: 2.7, requireAgencySignal: true },
 
   { name: "Pipar/TBWA", url: "https://pipar-tbwa.is/", type: "site", market: "Icelandic", weight: 1.9 },
   { name: "Brandenburg", url: "https://brandenburg.is/", type: "site", market: "Icelandic", weight: 1.8 },
@@ -75,10 +80,24 @@ const HIGH_SIGNAL = [
   "midl", "miðl", "samskipta", "kynning", "neytend", "honnun", "hönnun",
 ];
 
+const ICELAND_SIGNALS = [
+  "iceland", "island", "islands", "íslensk", "íslenskur", "íslenskt", "ísland",
+  "reykjavik", "reykjavík", "icelandair", "pipar", "tbwa", "brandenburg",
+  "hvíta húsið", "hvita husid", "cirkus", "kontor", "nova", "síminn",
+  "siminn", "krónan", "kronan", "arion", "landsbankinn", "bláa lónið",
+  "blue lagoon", "islandsstofa", "sýn",
+];
+
+const AGENCY_SIGNALS = [
+  "pipar", "tbwa", "pipar/tbwa", "brandenburg", "hvíta húsið",
+  "hvita husid", "cirkus", "kontor",
+];
+
 const BLOCKED = [
   "stock market", "share price", "earnings call", "football", "basketball",
   "crime", "war ", "election", "weather", "crypto", "nft", "casino",
   "lögregla", "slys", "veður", "kosning", "knattspyrna", "handbolti",
+  "transfermarkt", "squad", "league", "match", "player", "verein",
 ];
 
 const SITE_NOISE = [
@@ -117,7 +136,7 @@ function containsKeyword(text, keyword) {
   const clean = normalise(text);
   const kw = normalise(keyword);
   if (!kw) return false;
-  if (/^[a-z0-9áðéíóúýþæö]{1,3}$/i.test(kw)) {
+  if (/^[a-z0-9áðéíóúýþæö-]+$/i.test(kw)) {
     return new RegExp(`(^|\\s)${kw}(\\s|$)`, "i").test(clean);
   }
   return clean.includes(kw);
@@ -178,6 +197,16 @@ function hasSignal(title, summary) {
   return HIGH_SIGNAL.some((kw) => containsKeyword(text, kw));
 }
 
+function hasIcelandSignal(title, summary, url = "") {
+  const text = `${title} ${summary} ${url}`;
+  return ICELAND_SIGNALS.some((kw) => containsKeyword(text, kw));
+}
+
+function hasAgencySignal(title, summary, url = "") {
+  const text = `${title} ${summary} ${url}`;
+  return AGENCY_SIGNALS.some((kw) => containsKeyword(text, kw));
+}
+
 function scoreItem(item, source) {
   const text = `${item.title} ${item.rawSummary}`;
   let score = source.weight;
@@ -233,6 +262,39 @@ function whyItMattersIs(item) {
   return `${localPrefix} ${categoryWhy[item.category]}`;
 }
 
+async function loadEditorialItems() {
+  try {
+    const raw = await fs.readFile(EDITORIAL_ITEMS_PATH, "utf-8");
+    const items = JSON.parse(raw);
+    if (!Array.isArray(items)) return [];
+
+    return items
+      .filter((item) => item && item.title && item.url && item.source)
+      .filter((item) => item.enabled !== false)
+      .filter((item) => !item.pinnedUntil || new Date(item.pinnedUntil).getTime() >= Date.now())
+      .map((item, index) => {
+        const base = {
+          title: cleanText(item.title),
+          source: cleanText(item.source),
+          url: String(item.url).trim(),
+          date: item.date || new Date().toISOString(),
+          category: item.category || "Markadsfrettir",
+          rawSummary: item.summary_is || item.summary || "",
+          market_relevance: item.market_relevance || "Icelandic",
+        };
+
+        return {
+          ...base,
+          score: Number(item.score || 100 - index),
+          summary_is: item.summary_is || summaryIs(base),
+          why_it_matters_is: item.why_it_matters_is || whyItMattersIs(base),
+        };
+      });
+  } catch {
+    return [];
+  }
+}
+
 function parseDateFromText(title) {
   const text = cleanText(title).toLowerCase();
   const slash = text.match(/\b(\d{1,2})\/(\d{1,2})\/(20\d{2})\b/);
@@ -269,11 +331,13 @@ async function fetchRSS(source) {
       .map((entry) => {
         const date = entry.isoDate || entry.pubDate || entry.date || new Date().toISOString();
         const rawSummary = excerpt(entry.contentSnippet || entry.summary || entry.content || "", 280);
+        const sourceName = cleanText(entry.source?.title || entry.source || source.name);
         return makeCandidate(source, {
           title: cleanText(entry.title),
           url: cleanText(entry.link),
           date,
           rawSummary,
+          sourceName,
         });
       })
       .filter(Boolean);
@@ -339,7 +403,7 @@ function makeCandidate(source, entry) {
   const category = detectCategory(entry.title, entry.rawSummary);
   const base = {
     title: cleanText(entry.title),
-    source: source.name,
+    source: entry.sourceName || source.name,
     url: entry.url.trim(),
     date: new Date(entry.date || Date.now()).toISOString(),
     category,
@@ -350,6 +414,8 @@ function makeCandidate(source, entry) {
   if (!hasSignal(base.title, base.rawSummary) && category === "Markadsfrettir") return null;
   if (source.type === "site" && !entry.date && category === "Markadsfrettir") return null;
   if (source.requireMarketingSignal && !hasSignal(base.title, base.rawSummary)) return null;
+  if (source.requireIcelandSignal && !hasIcelandSignal(base.title, base.rawSummary, base.url)) return null;
+  if (source.requireAgencySignal && !hasAgencySignal(base.title, base.rawSummary, base.url)) return null;
 
   const score = scoreItem(base, source);
   return {
@@ -411,7 +477,8 @@ async function main() {
   const batches = await Promise.all(SOURCES.map((source) => (
     source.type === "rss" ? fetchRSS(source) : fetchSite(source)
   )));
-  const candidates = batches.flat();
+  const editorialItems = await loadEditorialItems();
+  const candidates = [...editorialItems, ...batches.flat()];
   const topItems = selectItems(candidates);
 
   if (topItems.length < 5) {

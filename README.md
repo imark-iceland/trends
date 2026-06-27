@@ -72,6 +72,12 @@ Workflowið í `.github/workflows/weekly-fetch.yml` keyrir á mánudögum kl. 07
 - Forðast endurtekningar með URL- og titilsamanburði.
 - Skýra alltaf af hverju atriðið skiptir máli fyrir íslenskt markaðsfólk.
 
+## Handvalin mikilvæg atriði
+
+Ef ritstjórn veit af mikilvægu íslensku atriði sem sjálfvirka vaktin grípur ekki, til dæmis íslenskri Cannes Lions viðurkenningu, má setja það í `config/editorial-items.json`.
+
+Settu `enabled` í `true`, fylltu inn raunverulegan heimildartengil og hafðu `market_relevance` sem `Icelandic`. Slík atriði fá mjög hátt vægi en eru samt aldrei birt án `source` og `url`.
+
 ## Stack
 
 - Node.js 20 í GitHub Actions
