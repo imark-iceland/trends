@@ -17,6 +17,8 @@ const ROOT = path.resolve(__dirname, "..");
 
 const DAYS_BACK = Number(process.env.IMARK_DAYS_BACK || 14);
 const MIN_SCORE = Number(process.env.IMARK_MIN_SCORE || 35);
+const MIN_ICELANDIC_SCORE = Number(process.env.IMARK_MIN_ICELANDIC_SCORE || 30);
+const MIN_ICELANDIC_AGENCY_CASE_SCORE = Number(process.env.IMARK_MIN_ICELANDIC_AGENCY_CASE_SCORE || 20);
 const MIN_ITEMS = Number(process.env.IMARK_MIN_ITEMS || 5);
 const MAX_ITEMS = Number(process.env.IMARK_MAX_ITEMS || 12);
 const TARGET_LOCAL_SHARE = 0.4;
@@ -73,7 +75,7 @@ const SOURCES = [
 ];
 
 const CATEGORY_RULES = [
-  ["Ráðningar", ["hired", "appointed", "joins", "promotion", "chief marketing", "cmo", "director", "ráðinn", "ráðning", "tekur við", "nýr framkvæmdastjóri"]],
+  ["Ráðningar", ["hired", "appointed", "joins", "promotion", "chief marketing", "cmo", "director", "ráðinn", "ráðin", "ráðning", "tekur við", "nýr framkvæmdastjóri"]],
   ["Verðlaun og tilnefningar", ["award", "awards", "shortlist", "winner", "cannes", "effie", "tilnefnd", "verðlaun", "hlaut", "vann"]],
   ["Endurmörkun og ný vörumerki", ["rebrand", "brand identity", "new identity", "visual identity", "refresh", "endurmark", "nýtt merki", "ný ásýnd"]],
   ["Herferðir", ["campaign", "ad campaign", "launches", "work by", "advert", "case", "herferð", "auglýsing", "kynningarherferð", "markaðsherferð"]],
@@ -85,11 +87,13 @@ const CATEGORY_RULES = [
 
 const AGENCY_SIGNALS = ["pipar", "tbwa", "pipar/tbwa", "brandenburg", "hvíta húsið", "hvita husid", "cirkus", "kontor"];
 const ICELAND_SIGNALS = ["iceland", "íslensk", "íslenskur", "íslenskt", "ísland", "reykjavik", "reykjavík", "icelandair", "nova", "síminn", "siminn", "krónan", "kronan", "arion", "landsbankinn", "bláa lónið", "blue lagoon", "islandsstofa", "sýn", ...AGENCY_SIGNALS];
-const LEARNING_SIGNALS = ["case", "strategy", "effectiveness", "growth", "research", "study", "trend", "insight", "measurement", "consumer", "creator", "retail media", "loyalty", "brand platform", "ai", "automation", "search", "privacy", "algorithm", "social", "media"];
+const ICELANDIC_MARKETING_SIGNALS = ["markaðs", "auglýs", "vörumerki", "herferð", "kynning", "miðlar", "samfélagsmiðlar", "ráðinn", "ráðin", "markaðsstjóri", "samskiptastjóri", "almannatengsl", "verðlaun", "tilnefnd", "vann", "hlaut", "lúðurinn", "cannes", "effie"];
+const AGENCY_CASE_SIGNALS = ["work", "case", "verkefni", "verkefnin", "vinna", "campaign", "client", "brand", "branding", "auglýsing", "herferð"];
+const LEARNING_SIGNALS = ["case", "strategy", "effectiveness", "growth", "research", "study", "trend", "insight", "measurement", "consumer", "creator", "retail media", "loyalty", "brand platform", "ai", "automation", "search", "privacy", "algorithm", "social", "media", ...ICELANDIC_MARKETING_SIGNALS, ...AGENCY_CASE_SIGNALS];
 const MARKETING_ROLE_SIGNALS = ["marketing", "markaðs", "markaðsstjóri", "cmo", "brand", "vörumerki", "communications", "samskipta", "samskiptastjóri", "pr", "almannatengsl", "creative", "agency", "auglýsing", "miðlun", "media", "content"];
 const AI_MARKETING_SIGNALS = ["marketing", "markaðs", "brand", "vörumerki", "creative", "content", "advertising", "auglýsing", "media", "miðla", "search", "commerce", "customer", "consumer", "creator", "design", "workflow", "campaign", "personalization", "measurement", "analytics"];
 const BLOCKED = ["stock market", "share price", "earnings call", "football", "basketball", "crime", "war ", "election", "weather", "crypto", "nft", "casino", "transfermarkt", "squad", "league", "match", "player", "verein", "lögregla", "slys", "veður", "kosning", "knattspyrna", "handbolti", "data center", "data centre", "google finance", "new investments and community support"];
-const SITE_NOISE = ["logo", "merki", "tengili", "fyrir fjölmiðla", "þjónustutilkynningar", "status", "privacy", "cookie", "skilmalar", "terms", "gjaldskra", "laus störf", "störf í boði", "opnunart", "english", "newsletter", "subscribe", "youtube rás", "linkedin síða", "instagram síða", "tiktok síða", "facebook síða", "samfélagsmiðlar"];
+const SITE_NOISE = ["logo", "merki", "tengili", "fyrir fjölmiðla", "þjónustutilkynningar", "status", "privacy", "cookie", "vefkökur", "skilmalar", "terms", "gjaldskra", "laus störf", "störf í boði", "opnunart", "opnunartími", "verslanir", "vefverslun", "karfan", "prepaid", "starter pack", "english", "newsletter", "subscribe", "youtube rás", "linkedin síða", "instagram síða", "tiktok síða", "facebook síða", "samfélagsmiðlar", "mailto:", "tel:", "maps.google", "google.com/maps", "goo.gl/maps", "google.is/maps", "um okkur", "viltu vita meira"];
 
 function decodeEntities(value = "") {
   return value
@@ -114,7 +118,7 @@ function cleanText(value = "") {
 }
 
 function normalise(value = "") {
-  return cleanText(value).toLowerCase().replace(/[^a-z0-9áðéíóúýþæö\s/-]/gi, " ").replace(/\s+/g, " ").trim();
+  return cleanText(value).toLowerCase().replace(/[\/_-]+/g, " ").replace(/[^a-z0-9áðéíóúýþæö\s]/gi, " ").replace(/\s+/g, " ").trim();
 }
 
 function containsKeyword(text, keyword) {
@@ -127,6 +131,10 @@ function containsKeyword(text, keyword) {
 
 function hasAny(text, keywords) {
   return keywords.some((keyword) => containsKeyword(text, keyword));
+}
+
+function matchedKeywords(text, keywords) {
+  return keywords.filter((keyword) => containsKeyword(text, keyword));
 }
 
 function getIsoWeek(date = new Date()) {
@@ -187,14 +195,24 @@ function createDiagnostic(source) {
     itemsAfterFilter: 0,
     itemsRejected: 0,
     rejectionReasons: {},
+    rejectedItems: [],
     errorMessage: "",
     lastChecked: new Date().toISOString(),
   };
 }
 
-function addRejection(diag, reason) {
+function addRejection(diag, reason, detail = null) {
   diag.itemsRejected += 1;
   diag.rejectionReasons[reason] = (diag.rejectionReasons[reason] || 0) + 1;
+  if (diag.market === "Icelandic" && diag.rejectedItems.length < 5 && detail?.title && detail?.url) {
+    diag.rejectedItems.push({
+      title: detail.title,
+      url: detail.url,
+      score: Number(detail.score || 0),
+      rejectionReason: reason,
+      matchedKeywords: detail.matchedKeywords || [],
+    });
+  }
 }
 
 function finishDiagnostic(diag) {
@@ -228,9 +246,25 @@ function isBlocked(title, summary, url = "") {
 
 function isNoiseLink(title, url) {
   const text = `${title} ${url}`;
+  if (/^(mailto|tel):/i.test(url)) return true;
+  if (/^\+?\d[\d\s-]{6,}$/.test(cleanText(title))) return true;
+  if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(cleanText(title))) return true;
   if (hasAny(text, SITE_NOISE)) return true;
   if (normalise(title).split(" ").length < 3) return true;
   return false;
+}
+
+function linkPriority(link, source) {
+  const text = `${link.title} ${link.url}`;
+  let priority = 0;
+  if (hasAny(text, [...ICELANDIC_MARKETING_SIGNALS, ...AGENCY_CASE_SIGNALS])) priority += 40;
+  if (hasAny(text, ["frett", "frétt", "news", "blog", "article", "verkefni", "work", "case", "cases"])) priority += 25;
+  if (source.focus === "agency" && hasAny(text, AGENCY_CASE_SIGNALS)) priority += 35;
+  if (source.focus === "icelandic-market" && hasAny(text, ICELANDIC_MARKETING_SIGNALS)) priority += 25;
+  if (source.focus === "brand" && hasAny(text, ["frétt", "frett", "news", "blog", "vörumerki", "kynning", "herferð"])) priority += 15;
+  if (isNoiseLink(link.title, link.url)) priority -= 100;
+  priority += Math.min(10, normalise(link.title).split(" ").length);
+  return priority;
 }
 
 function isIcelandic(item) {
@@ -241,8 +275,18 @@ function isAgencyItem(item) {
   return item.focus === "agency" || item.focus === "agency-search" || hasAny(`${item.title} ${item.rawSummary} ${item.url}`, AGENCY_SIGNALS);
 }
 
+function isAgencyCaseLike(item) {
+  return isAgencyItem(item) && hasAny(`${item.title} ${item.rawSummary} ${item.url}`, AGENCY_CASE_SIGNALS);
+}
+
+function scoreThreshold(item) {
+  if (item.market_relevance === "Icelandic" && isAgencyCaseLike(item)) return MIN_ICELANDIC_AGENCY_CASE_SCORE;
+  if (item.market_relevance === "Icelandic") return MIN_ICELANDIC_SCORE;
+  return MIN_SCORE;
+}
+
 function scoreItem(item) {
-  const text = `${item.title} ${item.rawSummary}`;
+  const text = `${item.title} ${item.rawSummary} ${item.url}`;
   const local = isIcelandic(item);
   const agency = isAgencyItem(item);
   const platformMarketingSignal = hasAny(text, ["advertising", "ads", "ad ", "marketing", "brand", "creator", "content", "social", "media", "search", "algorithm", "privacy", "cookies", "measurement", "instagram", "tiktok", "youtube", "linkedin", "reels", "influencer"]);
@@ -250,7 +294,7 @@ function scoreItem(item) {
   let score = 0;
   let scoreReason = "Almenn frétt";
 
-  if (local && item.category === "Herferðir") {
+  if (local && (item.category === "Herferðir" || isAgencyCaseLike(item))) {
     score = 60;
     scoreReason = agency ? "Íslenskt agency case" : "Íslensk markaðsherferð";
   } else if (local && item.category === "Endurmörkun og ný vörumerki") {
@@ -280,12 +324,19 @@ function scoreItem(item) {
   } else if (!local) {
     score = 5;
     scoreReason = "Almenn erlend markaðsfrétt";
+  } else {
+    score = 5;
+    scoreReason = "Íslensk markaðsvakt";
   }
 
   const age = Date.now() - new Date(item.date || Date.now()).getTime();
   if (Number.isFinite(age) && age > 0) score += Math.max(0, 4 - age / 86400000);
-  if (agency) score += 8;
-  if (local) score += 4;
+  if (local) score += 25;
+  if (item.focus === "agency") score += 25;
+  if (item.focus === "agency-search") score += 25;
+  if (item.focus === "icelandic-market") score += 20;
+  if (item.focus === "brand") score += 10;
+  if (agency && !["agency", "agency-search"].includes(item.focus)) score += 8;
   if (item.editorial) score += 100;
 
   return { score: Math.round(score), scoreReason };
@@ -322,9 +373,19 @@ function whyItMattersIs(item) {
 function evaluateCandidate(source, entry) {
   if (!entry.title || !entry.url) return { item: null, reason: "missing-title-or-url" };
   const dateMs = new Date(entry.date || 0).getTime();
-  if (source.type === "rss" && (!dateMs || dateMs < CUTOFF)) return { item: null, reason: "no-new-articles-in-window" };
-  if (source.type === "html" && dateMs && dateMs < CUTOFF) return { item: null, reason: "no-new-articles-in-window" };
-  if (isBlocked(entry.title, entry.rawSummary, entry.url)) return { item: null, reason: "blocked-keyword-or-topic" };
+  const sourceText = `${entry.title} ${entry.rawSummary} ${entry.url}`;
+  const keywordUniverse = [...LEARNING_SIGNALS, ...ICELAND_SIGNALS, ...ICELANDIC_MARKETING_SIGNALS, ...AGENCY_CASE_SIGNALS, ...AI_MARKETING_SIGNALS, ...MARKETING_ROLE_SIGNALS];
+  const debug = (reason, score = 0, keywords = matchedKeywords(sourceText, keywordUniverse)) => ({
+    item: null,
+    reason,
+    title: cleanText(entry.title),
+    url: entry.url.trim(),
+    score,
+    matchedKeywords: keywords.slice(0, 12),
+  });
+  if (source.type === "rss" && (!dateMs || dateMs < CUTOFF)) return debug("no-new-articles-in-window");
+  if (source.type === "html" && dateMs && dateMs < CUTOFF) return debug("no-new-articles-in-window");
+  if (isBlocked(entry.title, entry.rawSummary, entry.url)) return debug("blocked-keyword-or-topic");
 
   const category = detectCategory(entry.title, entry.rawSummary);
   const base = {
@@ -339,13 +400,19 @@ function evaluateCandidate(source, entry) {
     editorial: source.type === "manual",
   };
 
-  if (source.requireAgencySignal && !hasAny(`${base.title} ${base.rawSummary} ${base.url}`, AGENCY_SIGNALS)) return { item: null, reason: "agency-signal-missing" };
-  if (category === "Ráðningar" && !hasAny(`${base.title} ${base.rawSummary}`, MARKETING_ROLE_SIGNALS)) return { item: null, reason: "hiring-not-marketing-or-communications" };
-  if (category === "AI og tækni" && !hasAny(`${base.title} ${base.rawSummary}`, AI_MARKETING_SIGNALS)) return { item: null, reason: "ai-not-marketing-related" };
-  if (category === "Markaðsfréttir" && !hasAny(`${base.title} ${base.rawSummary}`, [...LEARNING_SIGNALS, ...ICELAND_SIGNALS])) return { item: null, reason: "weak-market-relevance" };
-
   const { score, scoreReason } = scoreItem(base);
-  if (score < MIN_SCORE) return { item: null, reason: "score-below-threshold" };
+  const baseText = `${base.title} ${base.rawSummary} ${base.url}`;
+  const matched = matchedKeywords(baseText, keywordUniverse).slice(0, 12);
+  const local = base.market_relevance === "Icelandic";
+
+  if (source.requireAgencySignal && !hasAny(baseText, [...AGENCY_SIGNALS, ...AGENCY_CASE_SIGNALS])) return debug("agency-signal-missing", score, matched);
+  if (local && source.focus === "agency" && category === "Markaðsfréttir" && !isAgencyCaseLike(base)) return debug("agency-case-signal-missing", score, matched);
+  if (local && source.focus === "icelandic-market" && category === "Markaðsfréttir" && !hasAny(baseText, ICELANDIC_MARKETING_SIGNALS)) return debug("weak-market-relevance", score, matched);
+  if (local && source.focus === "brand" && category === "Markaðsfréttir" && !hasAny(baseText, ICELANDIC_MARKETING_SIGNALS)) return debug("weak-market-relevance", score, matched);
+  if (category === "Ráðningar" && !hasAny(baseText, MARKETING_ROLE_SIGNALS)) return debug("hiring-not-marketing-or-communications", score, matched);
+  if (category === "AI og tækni" && !hasAny(baseText, AI_MARKETING_SIGNALS)) return debug("ai-not-marketing-related", score, matched);
+  if (!local && category === "Markaðsfréttir" && !hasAny(baseText, [...LEARNING_SIGNALS, ...ICELAND_SIGNALS])) return debug("weak-market-relevance", score, matched);
+  if (score < scoreThreshold(base)) return debug("score-below-threshold", score, matched);
 
   return {
     item: {
@@ -387,7 +454,7 @@ async function loadEditorialItems() {
         if (row.why_it_matters_is) result.item.why_it_matters_is = row.why_it_matters_is;
         items.push(result.item);
       } else {
-        addRejection(diag, result.reason);
+        addRejection(diag, result.reason, result);
       }
     }
     diag.status = "success";
@@ -421,7 +488,7 @@ async function fetchRSS(source) {
         sourceName: cleanText(entry.source?.title || entry.source || source.name),
       });
       if (result.item) items.push(result.item);
-      else addRejection(diag, result.reason);
+      else addRejection(diag, result.reason, result);
     }
     diag.status = "success";
     diag.itemsAfterFilter = items.length;
@@ -468,7 +535,11 @@ async function fetchHTML(source, existingDiagnostic = null) {
 
     const seen = new Set();
     const items = [];
-    const linksToProcess = links.slice(0, 80);
+    const maxLinksToProcess = source.market === "Icelandic" ? 160 : 80;
+    const rankedLinks = links
+      .map((link) => ({ ...link, priority: linkPriority(link, source) }))
+      .sort((a, b) => b.priority - a.priority);
+    const linksToProcess = rankedLinks.slice(0, maxLinksToProcess);
     const skippedByLimit = Math.max(0, links.length - linksToProcess.length);
     if (skippedByLimit) {
       diag.itemsRejected += skippedByLimit;
@@ -491,7 +562,7 @@ async function fetchHTML(source, existingDiagnostic = null) {
         rawSummary: "",
       });
       if (result.item) items.push(result.item);
-      else addRejection(diag, result.reason);
+      else addRejection(diag, result.reason, result);
       if (items.length >= 10) break;
     }
     diag.status = "success";
