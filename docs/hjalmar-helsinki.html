@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="is">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="Hjálmar Helsinki">
+  <title>Hjálmar – Helsinki Cup 2026</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: #0a0a0a;
+      color: #fff;
+      font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+      min-height: 100vh;
+      padding-bottom: 40px;
+    }
+
+    header {
+      background: linear-gradient(135deg, #1a1a1a 0%, #000 100%);
+      padding: 28px 20px 20px;
+      text-align: center;
+      border-bottom: 3px solid #c8a850;
+    }
+
+    .kr-logo {
+      font-size: 52px;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .player-name {
+      font-size: 30px;
+      font-weight: 800;
+      color: #c8a850;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+
+    .team-name {
+      font-size: 16px;
+      color: #ddd;
+      font-weight: 500;
+      margin-bottom: 6px;
+    }
+
+    .tournament-name {
+      font-size: 13px;
+      color: #bbb;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .section-header {
+      padding: 18px 20px 8px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #c8a850;
+      text-transform: uppercase;
+      letter-spacing: 3px;
+    }
+
+    .day-group {
+      margin-bottom: 4px;
+    }
+
+    .day-label {
+      padding: 10px 20px 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .game-card {
+      margin: 0 16px 10px;
+      border-radius: 16px;
+      padding: 18px 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-card.upcoming {
+      background: linear-gradient(135deg, #1c2a0e 0%, #243610 100%);
+      border: 2px solid #4caf50;
+    }
+
+    .game-card.normal {
+      background: #1a1a1a;
+      border: 1.5px solid #2a2a2a;
+    }
+
+    .game-card.past {
+      background: #111;
+      border: 1.5px solid #1e1e1e;
+      opacity: 0.6;
+    }
+
+    .next-badge {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: #4caf50;
+      color: #fff;
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .game-time {
+      font-size: 38px;
+      font-weight: 900;
+      color: #fff;
+      line-height: 1;
+      margin-bottom: 10px;
+      letter-spacing: -1px;
+    }
+
+    .game-card.upcoming .game-time {
+      color: #7bc67f;
+    }
+
+    .vs-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .team-pill {
+      flex: 1;
+      text-align: center;
+      padding: 8px 6px;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .team-pill.kr {
+      background: #c8a850;
+      color: #000;
+    }
+
+    .team-pill.opponent {
+      background: #2a2a2a;
+      color: #ccc;
+    }
+
+    .vs-text {
+      font-size: 13px;
+      color: #aaa;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .game-meta {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .meta-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 5px 12px;
+      border-radius: 20px;
+    }
+
+    .meta-item.field {
+      background: #2e2e2e;
+      color: #fff;
+      font-size: 15px;
+    }
+
+    .meta-item.homeway {
+      background: #1e3a1e;
+      color: #7dcc7d;
+    }
+
+    .meta-item.homeway.away {
+      background: #1e1e3a;
+      color: #7d9dcc;
+    }
+
+    .meta-item span {
+      font-size: 16px;
+    }
+
+    .info-section {
+      margin: 16px 16px 0;
+      background: #1a1a1a;
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      padding: 14px 18px;
+      border-bottom: 1px solid #222;
+      gap: 14px;
+    }
+
+    .info-row:last-child {
+      border-bottom: none;
+    }
+
+    .info-icon {
+      font-size: 22px;
+      width: 32px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .info-content {
+      flex: 1;
+    }
+
+    .info-label {
+      font-size: 11px;
+      color: #aaa;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 2px;
+    }
+
+    .info-value {
+      font-size: 15px;
+      color: #fff;
+      font-weight: 600;
+    }
+
+    .info-sub {
+      font-size: 12px;
+      color: #bbb;
+      margin-top: 1px;
+    }
+
+    .countdown-card {
+      margin: 0 16px 10px;
+      background: linear-gradient(135deg, #0d1f3c 0%, #0a1628 100%);
+      border: 1.5px solid #1e4080;
+      border-radius: 16px;
+      padding: 16px 20px;
+      text-align: center;
+    }
+
+    .countdown-label {
+      font-size: 11px;
+      color: #6699cc;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 6px;
+    }
+
+    .countdown-value {
+      font-size: 28px;
+      font-weight: 900;
+      color: #4d9fff;
+    }
+
+    .room-card {
+      margin: 0 16px;
+      background: #1a1a1a;
+      border: 1.5px solid #2a2a2a;
+      border-radius: 16px;
+      padding: 16px 20px;
+    }
+
+    .room-title {
+      font-size: 13px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+    }
+
+    .roommates {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .roommate-chip {
+      background: #252525;
+      border: 1px solid #333;
+      border-radius: 20px;
+      padding: 6px 14px;
+      font-size: 14px;
+      color: #bbb;
+      font-weight: 500;
+    }
+
+    .roommate-chip.self {
+      background: #c8a850;
+      color: #000;
+      font-weight: 800;
+      border-color: #c8a850;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="kr-logo">⚽</div>
+  <div class="player-name">Hjálmar Sand</div>
+  <div class="team-name">KR — Lið 3</div>
+  <div class="tournament-name">Helsinki Cup 2026</div>
+</header>
+
+<div class="section-header">Leikirnir</div>
+
+<!-- MÁNUDAGUR 6. júlí -->
+<div class="day-group">
+  <div class="day-label">Mánudagur · 6. júlí</div>
+
+  <div class="game-card upcoming" id="game1">
+    <div class="next-badge">Fyrsti leikur</div>
+    <div class="game-time">12:00</div>
+    <div class="vs-row">
+      <div class="team-pill kr">KR/3</div>
+      <div class="vs-text">VS</div>
+      <div class="team-pill opponent">LoPa / P2012</div>
+    </div>
+    <div class="game-meta">
+      <a href="https://maps.app.goo.gl/3y2m24zvbUFFZKCSA" target="_blank" class="meta-item field" style="text-decoration:none;"><span>📍</span> Tali 18 — Purotie 8</a>    </div>
+  </div>
+
+  <div class="game-card normal">
+    <div class="game-time">13:40</div>
+    <div class="vs-row">
+      <div class="team-pill opponent">LPS</div>
+      <div class="vs-text">VS</div>
+      <div class="team-pill kr">KR/3</div>
+    </div>
+    <div class="game-meta">
+      <a href="https://maps.app.goo.gl/3y2m24zvbUFFZKCSA" target="_blank" class="meta-item field" style="text-decoration:none;"><span>📍</span> Tali 18 — Purotie 8</a>    </div>
+  </div>
+</div>
+
+<!-- ÞRIÐJUDAGUR 7. júlí -->
+<div class="day-group">
+  <div class="day-label">Þriðjudagur · 7. júlí</div>
+
+  <div class="game-card normal">
+    <div class="game-time">08:50</div>
+    <div class="vs-row">
+      <div class="team-pill opponent">FC KTP Juniorit</div>
+      <div class="vs-text">VS</div>
+      <div class="team-pill kr">KR/3</div>
+    </div>
+    <div class="game-meta">
+      <a href="https://maps.app.goo.gl/3y2m24zvbUFFZKCSA" target="_blank" class="meta-item field" style="text-decoration:none;"><span>📍</span> Tali 18 — Purotie 8</a>    </div>
+  </div>
+</div>
+
+<!-- MIÐVIKUDAGUR 8. júlí -->
+<div class="day-group">
+  <div class="day-label">Miðvikudagur · 8. júlí</div>
+
+  <div class="game-card normal">
+    <div class="game-time">15:10</div>
+    <div class="vs-row">
+      <div class="team-pill kr">KR/3</div>
+      <div class="vs-text">VS</div>
+      <div class="team-pill opponent">Wood</div>
+    </div>
+    <div class="game-meta">
+      <a href="https://maps.app.goo.gl/3y2m24zvbUFFZKCSA" target="_blank" class="meta-item field" style="text-decoration:none;"><span>📍</span> Tali 18 — Purotie 8</a>    </div>
+  </div>
+
+  <div class="game-card normal">
+    <div class="game-time">16:50</div>
+    <div class="vs-row">
+      <div class="team-pill kr">KR/3</div>
+      <div class="vs-text">VS</div>
+      <div class="team-pill opponent">PPV/PiTa YJ</div>
+    </div>
+    <div class="game-meta">
+      <a href="https://maps.app.goo.gl/3y2m24zvbUFFZKCSA" target="_blank" class="meta-item field" style="text-decoration:none;"><span>📍</span> Tali 18 — Purotie 8</a>    </div>
+  </div>
+</div>
+
+<div class="section-header">Upplýsingar</div>
+
+<div class="info-section">
+  <div class="info-row" onclick="document.getElementById('hotel-details').style.display = document.getElementById('hotel-details').style.display === 'none' ? 'block' : 'none'" style="cursor:pointer;">
+    <div class="info-icon">🏨</div>
+    <div class="info-content">
+      <div class="info-label">Hótel — smelltu fyrir upplýsingar</div>
+      <div class="info-value">Scandic Meilahti</div>
+      <div class="info-sub">Helsinki ▸</div>
+    </div>
+  </div>
+  <div id="hotel-details" style="display:none; border-top:1px solid #2a2a2a; padding:16px 18px 18px 18px;">
+    <a href="https://maps.app.goo.gl/f8sT1dedVu7G6Rm88" target="_blank"
+       style="display:flex;align-items:center;gap:8px;background:#222;border-radius:12px;padding:12px 14px;text-decoration:none;margin-bottom:14px;">
+      <span style="font-size:20px;">🗺️</span>
+      <div>
+        <div style="color:#c8a850;font-weight:800;font-size:15px;">Opna á korti</div>
+        <div style="color:#bbb;font-size:12px;">Google Maps</div>
+      </div>
+    </a>
+    <div style="color:#c8a850;font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">🍽️ Fæði</div>
+    <div style="color:#fff;font-size:14px;line-height:1.8;">
+      <div style="margin-bottom:6px;">☕ <strong>Morgunmatur</strong> á hótelinu</div>
+      <div style="margin-bottom:6px;">🥗 <strong>Hádegismatur</strong> 11:00–15:00</div>
+      <div style="margin-bottom:12px;">🍝 <strong>Kvöldverður</strong> 15:30–21:30</div>
+      <div style="background:#1e1e1e;border-radius:10px;padding:10px 14px;color:#bbb;font-size:13px;line-height:1.7;">
+        Hádegis- og kvöldverður er á veitingastað mótsins — ca. 15 mín ganga —<br>
+        <strong style="color:#fff;">Olympic Stadium North side</strong><br><br>
+        Fyrsta máltíð: <strong style="color:#fff;">Kvöldverður Sun 5. júlí</strong><br>
+        Síðasta máltíð: <strong style="color:#fff;">Laugardagur 11. júlí</strong>
+      </div>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="info-icon">🛏️</div>
+    <div class="info-content">
+      <div class="info-label">Herbergi 3</div>
+      <div class="info-value">Grímúlfur · Styrmir P.</div>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="info-icon">✈️</div>
+    <div class="info-content">
+      <div class="info-label">Flug heim</div>
+      <div class="info-value">11. júlí kl. 15:00</div>
+      <div class="info-sub">FI343 · HEL → KEF</div>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="info-icon">📞</div>
+    <div class="info-content">
+      <div class="info-label">Þjálfari</div>
+      <div class="info-value">Björn Breiðfjörð</div>
+      <div class="info-sub">846-7545</div>
+    </div>
+  </div>
+</div>
+
+<div class="section-header">Fararstjórar</div>
+
+<div class="info-section">
+  <div class="info-row">
+    <div class="info-icon">👩</div>
+    <div class="info-content">
+      <div class="info-value" style="color:#fff;font-size:17px;font-weight:800;margin-bottom:2px;">Guðrún Hulda</div>
+      <div class="info-label" style="margin-bottom:4px;color:#bbb;">Mamma Emils Páls</div>
+      <a href="tel:8669072" style="color:#c8a850;text-decoration:none;font-size:22px;font-weight:900;">☎ 866-9072</a>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="info-icon">👨</div>
+    <div class="info-content">
+      <div class="info-value" style="color:#fff;font-size:17px;font-weight:800;margin-bottom:2px;">Heimir</div>
+      <div class="info-label" style="margin-bottom:4px;color:#bbb;">Pabbi Róberts</div>
+      <a href="tel:8950848" style="color:#c8a850;text-decoration:none;font-size:22px;font-weight:900;">☎ 895-0848</a>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="info-icon">👨</div>
+    <div class="info-content">
+      <div class="info-value" style="color:#fff;font-size:17px;font-weight:800;margin-bottom:2px;">Jón Helgi</div>
+      <div class="info-label" style="margin-bottom:4px;color:#bbb;">Pabbi Jóns Óttars</div>
+      <div style="color:#aaa;font-size:14px;">Númer ekki skráð</div>
+    </div>
+  </div>
+  <div class="info-row">
+    <div class="info-icon">👨</div>
+    <div class="info-content">
+      <div class="info-value" style="color:#fff;font-size:17px;font-weight:800;margin-bottom:2px;">Sigurður Ingi</div>
+      <div class="info-label" style="margin-bottom:4px;color:#bbb;">Pabbi Mumma</div>
+      <a href="tel:6179515" style="color:#c8a850;text-decoration:none;font-size:22px;font-weight:900;">☎ 617-9515</a>
+    </div>
+  </div>
+</div>
+
+<div class="section-header">Niðurstöður</div>
+
+<div style="margin: 0 16px 20px;">
+  <a href="https://helsinkicup.torneopal.fi/taso/sarja.php?turnaus=hc2026&sarja=B14&lohko=14"
+     target="_blank"
+     style="display:flex;align-items:center;gap:14px;background:#1a1a1a;border:1.5px solid #2a2a2a;border-radius:16px;padding:18px 20px;text-decoration:none;">
+    <div style="font-size:32px;">🏆</div>
+    <div>
+      <div style="color:#fff;font-size:17px;font-weight:800;margin-bottom:3px;">Stigatafla deildarinnar</div>
+      <div style="color:#bbb;font-size:13px;">B14 · KR/3 hópur · Helsinki Cup 2026</div>
+      <div style="color:#c8a850;font-size:12px;margin-top:4px;font-weight:700;">Smelltu hér fyrir niðurstöður ▸</div>
+    </div>
+  </a>
+</div>
+
+<script>
+  // Highlight next upcoming game
+  const now = new Date();
+
+  const games = [
+    { id: 'game1', date: new Date('2026-07-06T12:00:00+03:00') },
+  ];
+
+  // Auto-mark past games
+  const cards = document.querySelectorAll('.game-card');
+  const gameDates = [
+    new Date('2026-07-06T12:00:00+03:00'),
+    new Date('2026-07-06T13:40:00+03:00'),
+    new Date('2026-07-07T08:50:00+03:00'),
+    new Date('2026-07-08T15:10:00+03:00'),
+    new Date('2026-07-08T16:50:00+03:00'),
+  ];
+
+  let nextFound = false;
+  cards.forEach((card, i) => {
+    const gameTime = gameDates[i];
+    const endTime = new Date(gameTime.getTime() + 50 * 60000); // +50 min
+    if (endTime < now) {
+      card.classList.remove('upcoming', 'normal');
+      card.classList.add('past');
+    } else if (!nextFound) {
+      card.classList.remove('normal', 'past');
+      card.classList.add('upcoming');
+      const badge = card.querySelector('.next-badge');
+      if (!badge) {
+        const b = document.createElement('div');
+        b.className = 'next-badge';
+        b.textContent = 'Næsti leikur';
+        card.appendChild(b);
+      } else {
+        badge.textContent = 'Næsti leikur';
+      }
+      nextFound = true;
+    }
+  });
+</script>
+
+</body>
+</html>
