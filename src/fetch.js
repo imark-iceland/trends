@@ -93,6 +93,17 @@ const LEARNING_SIGNALS = [
   "measurement", "consumer", "creator", "retail media", "loyalty", "brand platform",
   "ai", "automation", "search", "privacy", "algorithm", "social", "media",
 ];
+const MARKETING_ROLE_SIGNALS = [
+  "marketing", "markaðs", "markaðsstjóri", "cmo", "brand", "vörumerki",
+  "communications", "samskipta", "samskiptastjóri", "pr", "almannatengsl",
+  "creative", "agency", "auglýsing", "miðlun", "media", "content",
+];
+const AI_MARKETING_SIGNALS = [
+  "marketing", "markaðs", "brand", "vörumerki", "creative", "content",
+  "advertising", "auglýsing", "media", "miðla", "search", "commerce",
+  "customer", "consumer", "creator", "design", "workflow", "campaign",
+  "personalization", "measurement", "analytics",
+];
 const BLOCKED = [
   "stock market", "share price", "earnings call", "football", "basketball", "crime",
   "war ", "election", "weather", "crypto", "nft", "casino", "transfermarkt", "squad",
@@ -257,7 +268,7 @@ function scoreItem(item) {
   } else if (!local && item.category === "Alþjóðlegt case" && hasAny(text, LEARNING_SIGNALS)) {
     score = 45;
     scoreReason = "Alþjóðlegt case með sterkum lærdómi";
-  } else if (item.category === "AI og tækni" && hasAny(text, ["marketing", "brand", "creative", "content", "advertising", "media", "search", "gervigreind", "markaðs"])) {
+  } else if (item.category === "AI og tækni" && hasAny(text, AI_MARKETING_SIGNALS)) {
     score = 40;
     scoreReason = "AI sem getur breytt markaðsstarfi";
   } else if (item.category === "Miðlar og platform" && platformMarketingSignal) {
@@ -450,6 +461,8 @@ function makeCandidate(source, entry) {
   };
 
   if (source.requireAgencySignal && !hasAny(`${base.title} ${base.rawSummary} ${base.url}`, AGENCY_SIGNALS)) return null;
+  if (category === "Ráðningar" && !hasAny(`${base.title} ${base.rawSummary}`, MARKETING_ROLE_SIGNALS)) return null;
+  if (category === "AI og tækni" && !hasAny(`${base.title} ${base.rawSummary}`, AI_MARKETING_SIGNALS)) return null;
   if (category === "Markaðsfréttir" && !hasAny(`${base.title} ${base.rawSummary}`, [...LEARNING_SIGNALS, ...ICELAND_SIGNALS])) return null;
 
   const { score, scoreReason } = scoreItem(base);
