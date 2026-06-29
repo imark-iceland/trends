@@ -1,0 +1,698 @@
+{
+  "generatedAt": "2026-06-29T11:55:12.275Z",
+  "noIcelandicItems": true,
+  "summary": {
+    "totalSources": 37,
+    "totalSourcesSuccessful": 31,
+    "icelandicSources": 22,
+    "icelandicSourcesWorking": 17,
+    "icelandicItemsSelected": 0
+  },
+  "sources": [
+    {
+      "name": "Manual editorial items",
+      "url": "config/editorial-items.json",
+      "type": "manual",
+      "market": "Icelandic",
+      "focus": "editorial",
+      "status": "success",
+      "httpStatus": null,
+      "itemsFound": 1,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 1,
+      "rejectionReasons": {
+        "manual-item-disabled": 1
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.473Z"
+    },
+    {
+      "name": "Campaign",
+      "url": "https://www.campaignlive.co.uk/rss",
+      "type": "rss",
+      "market": "Global",
+      "focus": "global-marketing",
+      "status": "failed",
+      "httpStatus": 403,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "errorMessage": "RSS URL responded HTTP 403",
+      "lastChecked": "2026-06-29T11:55:05.664Z"
+    },
+    {
+      "name": "Marketing Week",
+      "url": "https://www.marketingweek.com/feed/",
+      "type": "rss",
+      "market": "Global",
+      "focus": "global-marketing",
+      "status": "failed",
+      "httpStatus": 403,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "errorMessage": "RSS URL responded HTTP 403",
+      "lastChecked": "2026-06-29T11:55:05.667Z"
+    },
+    {
+      "name": "The Drum",
+      "url": "https://www.thedrum.com/rss/news",
+      "type": "rss",
+      "market": "Global",
+      "focus": "global-marketing",
+      "status": "failed",
+      "httpStatus": 404,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "errorMessage": "RSS URL responded HTTP 404",
+      "lastChecked": "2026-06-29T11:55:05.676Z"
+    },
+    {
+      "name": "Bláa lónið",
+      "url": "https://www.bluelagoon.com/news",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "brand",
+      "status": "failed",
+      "httpStatus": 404,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "errorMessage": "HTML URL responded HTTP 404",
+      "lastChecked": "2026-06-29T11:55:05.644Z"
+    },
+    {
+      "name": "Vísir Viðskipti",
+      "url": "https://www.visir.is/rss/section/vidskipti",
+      "type": "rss",
+      "market": "Icelandic",
+      "focus": "icelandic-market",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.581Z"
+    },
+    {
+      "name": "Markaðsmál",
+      "url": "https://www.markadsmal.is/",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "icelandic-market",
+      "status": "failed",
+      "httpStatus": null,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "errorMessage": "request to https://www.markadsmal.is/ failed, reason: Hostname/IP does not match certificate's altnames: Host: www.markadsmal.is. is not in the cert's altnames: DNS:*.bluehost.com, DNS:bluehost.com",
+      "lastChecked": "2026-06-29T11:55:05.566Z"
+    },
+    {
+      "name": "Adweek",
+      "url": "https://www.adweek.com/feed/",
+      "type": "rss",
+      "market": "Global",
+      "focus": "global-marketing",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 10,
+      "itemsAfterFilter": 3,
+      "itemsRejected": 7,
+      "rejectionReasons": {
+        "weak-market-relevance": 2,
+        "score-below-threshold": 5
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.660Z"
+    },
+    {
+      "name": "Mbl Viðskipti",
+      "url": "https://www.mbl.is/feeds/vidskipti/",
+      "type": "rss",
+      "market": "Icelandic",
+      "focus": "icelandic-market",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 20,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 20,
+      "rejectionReasons": {
+        "weak-market-relevance": 20
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.577Z"
+    },
+    {
+      "name": "Hvíta húsið",
+      "url": "https://www.hvitahusid.is/",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "agency",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 5,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 5,
+      "rejectionReasons": {
+        "navigation-or-non-article-link": 2,
+        "score-below-threshold": 1,
+        "weak-market-relevance": 2
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.601Z"
+    },
+    {
+      "name": "Markaðsmál",
+      "url": "https://markadsmal.is/feed/",
+      "type": "rss",
+      "market": "Icelandic",
+      "focus": "icelandic-market",
+      "status": "failed",
+      "httpStatus": null,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "errorMessage": "request to https://markadsmal.is/feed/ failed, reason: Hostname/IP does not match certificate's altnames: Host: markadsmal.is. is not in the cert's altnames: DNS:*.bluehost.com, DNS:bluehost.com; attempted HTML fallback https://markadsmal.is/; request to https://markadsmal.is/ failed, reason: Hostname/IP does not match certificate's altnames: Host: markadsmal.is. is not in the cert's altnames: DNS:*.bluehost.com, DNS:bluehost.com",
+      "lastChecked": "2026-06-29T11:55:05.478Z"
+    },
+    {
+      "name": "Adobe",
+      "url": "https://blog.adobe.com/en/topics/creative-cloud",
+      "type": "html",
+      "market": "Global",
+      "focus": "ai-platform",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 1,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 1,
+      "rejectionReasons": {
+        "weak-market-relevance": 1
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.811Z"
+    },
+    {
+      "name": "Creative Review",
+      "url": "https://www.creativereview.co.uk/feed/",
+      "type": "rss",
+      "market": "Global",
+      "focus": "creative-case",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 12,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 12,
+      "rejectionReasons": {
+        "score-below-threshold": 8,
+        "weak-market-relevance": 3,
+        "blocked-keyword-or-topic": 1
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.776Z"
+    },
+    {
+      "name": "Kontor",
+      "url": "https://kontor.is/",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "agency",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 11,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 11,
+      "rejectionReasons": {
+        "weak-market-relevance": 8,
+        "score-below-threshold": 3
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.620Z"
+    },
+    {
+      "name": "Nova",
+      "url": "https://www.nova.is/frettir",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "brand",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 14,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 14,
+      "rejectionReasons": {
+        "weak-market-relevance": 3,
+        "duplicate-url": 2,
+        "navigation-or-non-article-link": 8,
+        "score-below-threshold": 1
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.626Z"
+    },
+    {
+      "name": "Cirkus",
+      "url": "https://cirkus.is/",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "agency",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "errorMessage": "HTML fetched, but no article links matched; page may rely on JavaScript or unsupported selectors.",
+      "lastChecked": "2026-06-29T11:55:05.616Z"
+    },
+    {
+      "name": "Pipar/TBWA",
+      "url": "https://pipar-tbwa.is/",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "agency",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 23,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 23,
+      "rejectionReasons": {
+        "navigation-or-non-article-link": 3,
+        "score-below-threshold": 1,
+        "duplicate-url": 10,
+        "weak-market-relevance": 9
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.588Z"
+    },
+    {
+      "name": "Meta",
+      "url": "https://about.fb.com/news/feed/",
+      "type": "rss",
+      "market": "Global",
+      "focus": "media-platform",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 10,
+      "itemsAfterFilter": 3,
+      "itemsRejected": 7,
+      "rejectionReasons": {
+        "blocked-keyword-or-topic": 1,
+        "score-below-threshold": 3,
+        "ai-not-marketing-related": 1,
+        "no-new-articles-in-window": 2
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.837Z"
+    },
+    {
+      "name": "Sýn",
+      "url": "https://syn.is/frettir",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "brand",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 24,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 24,
+      "rejectionReasons": {
+        "weak-market-relevance": 9,
+        "score-below-threshold": 7,
+        "navigation-or-non-article-link": 8
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.652Z"
+    },
+    {
+      "name": "VB",
+      "url": "https://vb.is/",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "icelandic-market",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 192,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 192,
+      "rejectionReasons": {
+        "source-item-limit": 112,
+        "navigation-or-non-article-link": 9,
+        "weak-market-relevance": 33,
+        "duplicate-url": 35,
+        "ai-not-marketing-related": 1,
+        "score-below-threshold": 2
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.573Z"
+    },
+    {
+      "name": "VB",
+      "url": "https://vb.is/feed/",
+      "type": "rss",
+      "market": "Icelandic",
+      "focus": "icelandic-market",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 192,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 192,
+      "rejectionReasons": {
+        "source-item-limit": 112,
+        "navigation-or-non-article-link": 9,
+        "weak-market-relevance": 33,
+        "duplicate-url": 35,
+        "ai-not-marketing-related": 1,
+        "score-below-threshold": 2
+      },
+      "errorMessage": "RSS URL responded HTTP 404; attempted HTML fallback https://vb.is/",
+      "lastChecked": "2026-06-29T11:55:05.570Z"
+    },
+    {
+      "name": "Google News - íslenskar auglýsingastofur",
+      "url": "https://news.google.com/rss/search?q=(%22Pipar%2FTBWA%22%20OR%20%22Pipar%20TBWA%22%20OR%20Brandenburg%20OR%20%22Hv%C3%ADta%20h%C3%BAsi%C3%B0%22%20OR%20%22Hvita%20husid%22%20OR%20Cirkus%20OR%20Kontor)%20(herfer%C3%B0%20OR%20campaign%20OR%20case%20OR%20ver%C3%B0laun%20OR%20tilnefnd%20OR%20vann%20OR%20hlaut%20OR%20r%C3%A1%C3%B0in%20OR%20r%C3%A1%C3%B0inn)&hl=is&gl=IS&ceid=IS:is",
+      "type": "rss",
+      "market": "Icelandic",
+      "focus": "agency-search",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 82,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 82,
+      "rejectionReasons": {
+        "no-new-articles-in-window": 82
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.622Z"
+    },
+    {
+      "name": "Brandenburg",
+      "url": "https://brandenburg.is/",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "agency",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 79,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 79,
+      "rejectionReasons": {
+        "score-below-threshold": 27,
+        "weak-market-relevance": 26,
+        "duplicate-url": 26
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.593Z"
+    },
+    {
+      "name": "Brandingmag",
+      "url": "https://www.brandingmag.com/feed/",
+      "type": "rss",
+      "market": "Global",
+      "focus": "branding-design",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 20,
+      "itemsAfterFilter": 1,
+      "itemsRejected": 19,
+      "rejectionReasons": {
+        "weak-market-relevance": 2,
+        "no-new-articles-in-window": 17
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.782Z"
+    },
+    {
+      "name": "Marketing Brew",
+      "url": "https://www.marketingbrew.com/feed.xml",
+      "type": "rss",
+      "market": "Global",
+      "focus": "global-marketing",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 40,
+      "itemsAfterFilter": 5,
+      "itemsRejected": 35,
+      "rejectionReasons": {
+        "weak-market-relevance": 3,
+        "score-below-threshold": 16,
+        "ai-not-marketing-related": 3,
+        "blocked-keyword-or-topic": 1,
+        "no-new-articles-in-window": 12
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.785Z"
+    },
+    {
+      "name": "Íslandsstofa",
+      "url": "https://www.islandsstofa.is/frettir",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "brand",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 38,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 38,
+      "rejectionReasons": {
+        "weak-market-relevance": 13,
+        "navigation-or-non-article-link": 14,
+        "duplicate-url": 4,
+        "score-below-threshold": 7
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.649Z"
+    },
+    {
+      "name": "Krónan",
+      "url": "https://kronan.is/frettir",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "brand",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 182,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 182,
+      "rejectionReasons": {
+        "source-item-limit": 102,
+        "navigation-or-non-article-link": 8,
+        "weak-market-relevance": 6,
+        "score-below-threshold": 2,
+        "duplicate-url": 1,
+        "no-new-articles-in-window": 63
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.630Z"
+    },
+    {
+      "name": "Landsbankinn",
+      "url": "https://www.landsbankinn.is/frettir",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "brand",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 61,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 61,
+      "rejectionReasons": {
+        "navigation-or-non-article-link": 18,
+        "duplicate-url": 3,
+        "weak-market-relevance": 32,
+        "score-below-threshold": 8
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.641Z"
+    },
+    {
+      "name": "Google",
+      "url": "https://blog.google/technology/ai/rss/",
+      "type": "rss",
+      "market": "Global",
+      "focus": "ai-platform",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 20,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 20,
+      "rejectionReasons": {
+        "blocked-keyword-or-topic": 2,
+        "ai-not-marketing-related": 1,
+        "no-new-articles-in-window": 17
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.818Z"
+    },
+    {
+      "name": "Síminn",
+      "url": "https://www.siminn.is/frettir",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "brand",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 24,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 24,
+      "rejectionReasons": {
+        "navigation-or-non-article-link": 7,
+        "weak-market-relevance": 6,
+        "no-new-articles-in-window": 10,
+        "duplicate-url": 1
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.628Z"
+    },
+    {
+      "name": "Nieman Lab",
+      "url": "https://www.niemanlab.org/feed/",
+      "type": "rss",
+      "market": "Global",
+      "focus": "media-platform",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 30,
+      "itemsAfterFilter": 5,
+      "itemsRejected": 25,
+      "rejectionReasons": {
+        "ai-not-marketing-related": 3,
+        "score-below-threshold": 1,
+        "weak-market-relevance": 4,
+        "no-new-articles-in-window": 17
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.795Z"
+    },
+    {
+      "name": "OpenAI",
+      "url": "https://openai.com/blog/rss.xml",
+      "type": "rss",
+      "market": "Global",
+      "focus": "ai-platform",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 1024,
+      "itemsAfterFilter": 3,
+      "itemsRejected": 1021,
+      "rejectionReasons": {
+        "score-below-threshold": 2,
+        "ai-not-marketing-related": 13,
+        "no-new-articles-in-window": 1006
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.799Z"
+    },
+    {
+      "name": "Design Week",
+      "url": "https://www.designweek.co.uk/feed/",
+      "type": "rss",
+      "market": "Global",
+      "focus": "branding-design",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 20,
+      "itemsAfterFilter": 4,
+      "itemsRejected": 16,
+      "rejectionReasons": {
+        "ai-not-marketing-related": 1,
+        "score-below-threshold": 8,
+        "weak-market-relevance": 7
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.728Z"
+    },
+    {
+      "name": "Canva",
+      "url": "https://www.canva.com/newsroom/news/",
+      "type": "html",
+      "market": "Global",
+      "focus": "ai-platform",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 116,
+      "itemsAfterFilter": 3,
+      "itemsRejected": 113,
+      "rejectionReasons": {
+        "source-item-limit": 36,
+        "ai-not-marketing-related": 6,
+        "navigation-or-non-article-link": 26,
+        "weak-market-relevance": 9,
+        "score-below-threshold": 7,
+        "duplicate-url": 29
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.814Z"
+    },
+    {
+      "name": "Arion banki",
+      "url": "https://www.arionbanki.is/bankinn/fjolmidlatorg/frettir/",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "brand",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 125,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 125,
+      "rejectionReasons": {
+        "source-item-limit": 45,
+        "weak-market-relevance": 25,
+        "navigation-or-non-article-link": 53,
+        "duplicate-url": 2
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.639Z"
+    },
+    {
+      "name": "Icelandair",
+      "url": "https://www.icelandair.com/blog/",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "brand",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 30,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 30,
+      "rejectionReasons": {
+        "navigation-or-non-article-link": 13,
+        "no-new-articles-in-window": 15,
+        "weak-market-relevance": 1,
+        "duplicate-url": 1
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.624Z"
+    },
+    {
+      "name": "Anthropic",
+      "url": "https://www.anthropic.com/news",
+      "type": "html",
+      "market": "Global",
+      "focus": "ai-platform",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 61,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 61,
+      "rejectionReasons": {
+        "ai-not-marketing-related": 23,
+        "score-below-threshold": 2,
+        "weak-market-relevance": 6,
+        "duplicate-url": 4,
+        "navigation-or-non-article-link": 26
+      },
+      "errorMessage": "",
+      "lastChecked": "2026-06-29T11:55:05.802Z"
+    }
+  ]
+}

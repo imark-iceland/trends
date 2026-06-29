@@ -71,11 +71,20 @@ async function readData() {
   return JSON.parse(await fs.readFile(path.join(ROOT, "data/intelligence.json"), "utf-8"));
 }
 
-function buildHTML(data) {
+async function readDiagnostics() {
+  try {
+    return JSON.parse(await fs.readFile(path.join(ROOT, "data/diagnostics.json"), "utf-8"));
+  } catch {
+    return null;
+  }
+}
+
+function buildHTML(data, diagnostics = null) {
   const items = (data.topItems || [])
     .sort((a, b) => Number(a.priority || 99) - Number(b.priority || 99))
     .slice(0, 12);
   const localCount = items.filter((item) => item.market_relevance === "Icelandic").length;
+  const showIcelandicWarning = diagnostics?.noIcelandicItems === true;
 
   return `<!DOCTYPE html>
 <html lang="is">
@@ -247,6 +256,14 @@ function buildHTML(data) {
       padding: 24px;
       color: var(--muted);
     }
+    .warning {
+      background: #fff3cd;
+      border: 1px solid #d9a400;
+      color: #4a3600;
+      font-weight: 700;
+      margin: 0 0 18px;
+      padding: 14px 16px;
+    }
     footer {
       background: var(--ink);
       color: #b8b8b8;
@@ -293,6 +310,7 @@ function buildHTML(data) {
 
   <main>
     <div class="content">
+      ${showIcelandicWarning ? `<div class="warning">Engin íslensk atriði fundust í þessari keyrslu — athuga þarf íslensku heimildirnar.</div>` : ""}
       <h2 class="section-title">Ritstýrt yfirlit</h2>
       <div class="lead-list">
         ${items.length ? items.map((item) => renderItem(item)).join("\n") : `<p class="empty">Engin atriði fundust í þessari keyrslu.</p>`}
@@ -312,7 +330,11 @@ function buildHTML(data) {
 
 async function main() {
   const data = await readData();
-  const html = buildHTML(data);
+  const diagnostics = await readDiagnostics();
+  if (diagnostics?.noIcelandicItems) {
+    console.warn("WARNING: Engin íslensk atriði fundust í þessari keyrslu — athuga þarf íslensku heimildirnar.");
+  }
+  const html = buildHTML(data, diagnostics);
   await fs.mkdir(path.join(ROOT, "docs"), { recursive: true });
   await fs.writeFile(path.join(ROOT, "docs/index.html"), html, "utf-8");
   console.log(`Generated docs/index.html from ${data.topItems?.length || 0} intelligence items.`);
