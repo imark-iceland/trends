@@ -1,198 +1,107 @@
-# ÍMARK Trends Dashboard
+# ÍMARK Intelligence
 
-Vikuyfirlit markaðsmála, branding, gervigreindar og fjölmiðlunar – fyrir ÍMARK félaga á imark.is.
+Vikuleg intelligence-vara fyrir félagsmenn ÍMARK:
 
----
+> Það sem íslenskt markaðsfólk þarf að vita í þessari viku.
 
-## Uppbygging verkefnis
+Live síða: https://imark-iceland.github.io/trends/
 
-```
-imark-trends/
-├── .github/workflows/
-│   └── weekly-fetch.yml      # GitHub Actions – keyrir á hverjum mánudegi kl. 07:00
-├── config/
-│   └── sources.json          # RSS heimildir, flokkar, blokkuð lén – breyttu hér
-├── data/
-│   ├── latest.json           # Síðasta vika (lesið af dashboard)
-│   └── weeks/                # Skjalasafn – ein JSON-skrá á viku
-├── docs/
-│   └── index.html            # Myndaður dashboard (settur inn á imark.is)
-├── src/
-│   ├── fetch.js              # Sækir RSS, gefur stig, eyðir tvítekningum, kallar á Claude
-│   └── generate.js           # Myndar HTML úr JSON
-├── .env.example              # Afritaðu í .env og fylltu út
-└── package.json
-```
+Þetta er ekki fréttasafn og ekki RSS-lesari. Kerfið safnar opinberu efni, metur vægi þess og birtir aðeins atriði sem hafa skýrt gildi fyrir íslenskt markaðsfólk.
 
----
+## Hvað verkefnið gerir
 
-## Uppsetning
+- Keyrir vikulega með GitHub Actions.
+- Vaktar íslenskar heimildir, íslenskar auglýsingastofur, íslensk vörumerki og valdar alþjóðlegar fagheimildir.
+- Skoðar RSS þar sem það er til, en líka fréttasíður, newsroom, case pages, bloggsíður og opinberar fréttatilkynningar.
+- Gefur hverju atriði intelligence-stig eftir mikilvægi.
+- Skrifar niðurstöður í `data/intelligence.json`.
+- Býr til static GitHub Pages dashboard í `docs/index.html`.
 
-### 1. Klónaðu verkefnið
+## Ritstjórnarregla
 
-```bash
-git clone https://github.com/<þitt-notandanafn>/imark-trends.git
-cd imark-trends
-npm install
-```
+Hvert atriði þarf að svara:
 
-### 2. Settu upp Anthropic API lykil
+- Af hverju skiptir þetta máli?
+- Hvað geta íslensk fyrirtæki lært af þessu?
+- Hefur þetta áhrif á markaðsmál á Íslandi?
 
-```bash
-cp .env.example .env
-# Opnaðu .env og settu inn þinn ANTHROPIC_API_KEY
-```
+Ef svarið er nei á atriðið ekki að birtast.
 
-Fáðu lykil á [console.anthropic.com](https://console.anthropic.com).
+## Scoring
 
-### 3. Prófaðu staðbundið
+- Íslensk markaðsherferð: `+60`
+- Íslenskt agency case: `+60`
+- Íslensk endurmörkun: `+60`
+- Íslensk verðlaun eða tilnefning: `+55`
+- Íslensk ráðning í markaðs- og samskiptastarf: `+45`
+- Alþjóðlegt case með sterkum lærdómi: `+45`
+- AI sem breytir markaðsstarfi: `+40`
+- Mikilvæg breyting hjá Google, Meta, LinkedIn eða öðrum platformum: `+40`
+- Sterk rannsókn eða neytendatrend: `+35`
+- Almenn erlend markaðsfrétt: `+5`
 
-```bash
-npm run build   # sækir + myndar HTML
-npm run preview # opnar á localhost
-```
+Sjálfgefið birtast aðeins atriði sem ná að minnsta kosti `35` stigum. Gæði ganga alltaf fyrir magn.
 
----
+## Hlutföll
 
-## GitHub Actions – Sjálfvirk uppfærsla
+Markmiðið er 40-60% íslenskt efni og 40-60% alþjóðlegt efni, en hlutföll eru ekki neydd ef góð íslensk atriði finnast ekki. Það er betra að birta færri og betri atriði en að fylla með veikum fréttum.
 
-Verkflæðið í `.github/workflows/weekly-fetch.yml` keyrir sjálfkrafa á hverjum mánudegi kl. 07:00 UTC.
-
-### Setja upp
-
-1. Farðu í **GitHub → Settings → Secrets and variables → Actions**
-2. Bættu við leyndarmáli: `ANTHROPIC_API_KEY` með gildi API-lykils þíns
-3. Virkjaðu GitHub Pages undir **Settings → Pages → Source: Deploy from branch → main → /public**
-
-Eftir fyrstu keyrslu mun `https://<notandanafn>.github.io/imark-trends/` vera virkt.
-
----
-
-## Innfelling á imark.is (Squarespace)
-
-### Leið 1 – iframe (mælt með)
-
-Þetta er einfaldasta leiðin. Settu inn Code Block á síðu í Squarespace og límdu inn:
-
-```html
-<iframe
-  src="https://<notandanafn>.github.io/imark-trends/"
-  width="100%"
-  height="1800"
-  style="border:none; min-height:1200px;"
-  title="ÍMARK – Vikan í markaðsmálum"
-  loading="lazy"
-></iframe>
-<script>
-  // Sjálfvirk hæðarjöfnun
-  window.addEventListener('message', function(e) {
-    if (e.data && e.data.imarkHeight) {
-      document.querySelector('iframe').style.height = e.data.imarkHeight + 'px';
-    }
-  });
-</script>
-```
-
-Til að virkja sjálfvirka hæðarjöfnun, bættu þessum línum við neðst í `docs/index.html` á undan `</body>`:
-
-```html
-<script>
-  window.parent.postMessage({ imarkHeight: document.body.scrollHeight }, '*');
-</script>
-```
-
-### Leið 2 – Setja HTML beint inn
-
-Ef þú vilt sameina dashboard við Squarespace sniðmát:
-
-1. Opnaðu `docs/index.html`
-2. Límdu allt efni í Custom Code Block í Squarespace
-3. Uppfærðu handvirkt eftir hverja keyrslu (eða sjálfvirkt með webhook)
-
----
-
-## Stillingar – `config/sources.json`
-
-### Bæta við heimild
+## JSON schema
 
 ```json
 {
-  "name": "Nafn heimildar",
-  "url": "https://example.com/rss",
-  "category": "AI & markaðssetning",
-  "language": "en",
-  "weight": 1.2
+  "week": "Vika XX, YYYY",
+  "updatedAt": "...",
+  "topItems": [
+    {
+      "title": "",
+      "source": "",
+      "url": "",
+      "date": "",
+      "category": "",
+      "summary_is": "",
+      "why_it_matters_is": "",
+      "market_relevance": "Icelandic | Nordic | Global",
+      "score": 45,
+      "score_reason": "",
+      "priority": 1
+    }
+  ]
 }
 ```
 
-`weight` er milli 0.5–2.0. Hærra þýðir meiri forgang við val á greinum.
+## Dashboard
 
-### Flokkar
+Dashboardið sýnir eitt ritstýrt yfirlit með 8-12 mikilvægustu atriðunum í forgangsröð. Það býr ekki til aðskilda kafla eins og “íslenski markaðurinn” eða “fleiri fréttir”.
 
-Flokkar eru stilltir í `categories` listanum. Bætti þú við flokki þar, bættu einnig við heimild sem notar hann.
+## Handvalin atriði
 
-### Blokkuð lén
+Ef ritstjórn veit af mikilvægu atriði sem sjálfvirka vaktin grípur ekki má setja það í `config/editorial-items.json`.
 
-Bættu lénum við `blockedDomains` til að útiloka þau:
+Settu `enabled` í `true`, fylltu inn raunverulegan heimildartengil og hafðu `market_relevance` sem `Icelandic` eða `Global`. Slík atriði fá hátt vægi en eru samt aldrei birt án `source` og `url`.
 
-```json
-"blockedDomains": ["example-spam-site.com", "clickbait.net"]
-```
-
-### Blokkuð leitarorð
-
-`blockedKeywords` útiloka greinar sem innihalda þessi orð í titli eða texta.
-
----
-
-## Tækni
-
-| Hluti | Val |
-|---|---|
-| Fetch | Node.js 18+, `rss-parser` |
-| AI samantektir | Claude API (`claude-opus-4-8`) |
-| HTML myndun | Vanillu JavaScript (engar þriðjaflokksramma) |
-| Keyrsla | GitHub Actions (cron) |
-| Geymsla | JSON-skrár í `data/` |
-| Innfelling | iframe eða beint HTML á Squarespace |
-
----
-
-## Uppfærsla á líkani eða greinafíkn
-
-Í `config/sources.json` undir `settings.ai`:
-
-```json
-"ai": {
-  "model": "claude-opus-4-8",
-  "summaryMaxTokens": 300,
-  "editorNoteMaxTokens": 500
-}
-```
-
----
-
-## Handvirk keyrsla
+## Keyrsla
 
 ```bash
-# Sækja nýtt efni og mynda HTML
+npm install
 npm run build
-
-# Sækja einungis
-npm run fetch
-
-# Mynda HTML einungis (úr gögnum sem þegar eru til)
-npm run generate
+npm run preview
 ```
 
----
+## GitHub Pages
 
-## Skjalasafn
+Stilltu GitHub Pages á:
 
-Hverja viku er JSON-skrá vistuð í `data/weeks/YYYY-WXX.json`. Dashboard sýnir tengla á síðustu 12 vikur neðst á síðunni.
+- Source: `Deploy from a branch`
+- Branch: `main`
+- Folder: `/docs`
 
----
+Workflowið í `.github/workflows/weekly-fetch.yml` keyrir á mánudögum kl. 07:00 UTC og má líka keyra handvirkt með `workflow_dispatch`.
 
-## Leyfi
+## Stack
 
-Verkefnið er ætlað ÍMARK – Markaðssamtök Íslands til innri nota. Allar heimildir eru opinberar RSS-streymisheimildir og greinar opnast í upprunalegri heimild.
+- Node.js 20 í GitHub Actions
+- `rss-parser` og `node-fetch`
+- JSON skrár í `data/`
+- Static HTML í `docs/`
+- Enginn gagnagrunnur og ekkert frontend framework

@@ -1,13 +1,13 @@
 {
-  "name": "imark-trends",
+  "name": "imark-intelligence",
   "version": "1.0.0",
-  "description": "Weekly trends dashboard for ÍMARK members",
+  "description": "Weekly IMARK Intelligence dashboard for Icelandic marketing professionals",
   "type": "module",
   "scripts": {
     "fetch": "node src/fetch.js",
     "generate": "node src/generate.js",
     "build": "node src/fetch.js && node src/generate.js",
-    "preview": "npx serve public"
+    "preview": "npx serve docs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",

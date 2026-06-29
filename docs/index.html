@@ -3,652 +3,444 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ÍMARK – Vikan í markaðsmálum</title>
-  <meta name="description" content="Valin frétt og þróun í markaðsmálum, branding, auglýsingum og gervigreind – fyrir ÍMARK félaga." />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
-  <noscript><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" /></noscript>
+  <title>ÍMARK Intelligence</title>
+  <meta name="description" content="Það sem íslenskt markaðsfólk þarf að vita í þessari viku." />
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
+    *, *::before, *::after { box-sizing: border-box; }
     :root {
-      --red:      #ce202c;
-      --dark:     #111111;
-      --light:    #efefef;
-      --white:    #ffffff;
-      --grey-1:   #1a1a1a;
-      --grey-2:   #2a2a2a;
-      --grey-3:   #888888;
-      --grey-4:   #cccccc;
-      --text:     #111111;
-      --text-dim: #555555;
-      --font:     'Inter', system-ui, sans-serif;
-      --max-w:    1100px;
-      --gap:      clamp(1rem, 3vw, 2rem);
+      --red: #ce202c;
+      --ink: #111111;
+      --paper: #f4f4f1;
+      --muted: #666666;
+      --line: #d8d8d2;
+      --white: #ffffff;
+      --max: 1120px;
     }
-
-    html { font-size: 16px; scroll-behavior: smooth; }
-    body { font-family: var(--font); background: var(--light); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-    a { color: inherit; text-decoration: none; }
-    a:hover { text-decoration: underline; }
-
-    /* Header */
-    .site-header { background: var(--dark); color: var(--white); padding: 2rem var(--gap); }
-    .header-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem; }
-    .header-logo img { height: 2.5rem; width: auto; display: block; }
-    .header-tagline { font-size: 0.75rem; color: var(--grey-3); letter-spacing: 0.05em; text-transform: uppercase; margin-left: 0.75rem; }
-    .header-date { font-size: 0.85rem; color: var(--grey-3); }
-
-    /* Hero */
-    .week-hero { background: var(--dark); color: var(--white); padding: 2.5rem var(--gap) 2rem; border-top: 1px solid var(--grey-2); }
-    .week-hero-inner { max-width: var(--max-w); margin: 0 auto; }
-    .week-label { display: inline-block; background: var(--red); color: var(--white); font-size: 0.7rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.25rem 0.6rem; margin-bottom: 1rem; }
-    .week-title { font-size: clamp(1.75rem, 4vw, 2.75rem); font-weight: 700; letter-spacing: -0.03em; line-height: 1.15; margin-bottom: 0.4rem; }
-    .week-subtitle { font-size: 0.85rem; color: var(--grey-3); }
-
-    /* Filters */
-    .filters { background: var(--light); padding: 1rem var(--gap); border-bottom: 1px solid var(--grey-4); position: sticky; top: 0; z-index: 10; }
-    .filters-inner { max-width: var(--max-w); margin: 0 auto; display: flex; gap: 0.5rem; flex-wrap: wrap; align-items: center; }
-    .filter-label { font-size: 0.75rem; font-weight: 600; color: var(--grey-3); letter-spacing: 0.05em; text-transform: uppercase; margin-right: 0.25rem; }
-    .filter-btn { background: none; border: 1px solid var(--grey-4); color: var(--text-dim); font-family: var(--font); font-size: 0.78rem; font-weight: 500; padding: 0.3rem 0.75rem; cursor: pointer; transition: all 0.15s; white-space: nowrap; }
-    .filter-btn:hover, .filter-btn.active { background: var(--dark); border-color: var(--dark); color: var(--white); }
-
-    /* Grid */
-    .main { padding: 2.5rem var(--gap) 4rem; }
-    .main-inner { max-width: var(--max-w); margin: 0 auto; }
-    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 1.5rem; }
-
-    /* Card */
-    .card { background: var(--white); padding: 1.75rem; display: flex; flex-direction: column; gap: 0.85rem; border: 1px solid rgba(0,0,0,0.07); transition: box-shadow 0.2s, transform 0.2s; }
-    .card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
-    .card.hidden { display: none; }
-
-    .card-meta { display: flex; align-items: center; justify-content: space-between; gap: 0.5rem; }
-    .card-category { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--red); }
-    .card-date { font-size: 0.72rem; color: var(--grey-3); }
-
-    .card-title { font-size: 1.05rem; font-weight: 600; line-height: 1.35; letter-spacing: -0.01em; }
-    .card-title a:hover { color: var(--red); text-decoration: none; }
-
-    .card-byline { display: flex; align-items: baseline; gap: 0.3rem; font-size: 0.78rem; }
-    .card-source-label { color: var(--grey-3); }
-    .card-source-link { font-weight: 600; text-decoration: underline; text-underline-offset: 2px; text-decoration-color: var(--grey-4); }
-    .card-source-link:hover { color: var(--red); text-decoration-color: var(--red); text-decoration: underline; }
-
-    .card-summary-block { border-left: 2px solid var(--light); padding-left: 0.9rem; flex: 1; }
-    .summary-label { display: block; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 0.3rem; }
-    .card-summary { font-size: 0.88rem; color: var(--text-dim); line-height: 1.6; }
-
-    .card-tags { display: flex; flex-wrap: wrap; gap: 0.35rem; }
-    .tag { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase; background: var(--light); color: var(--grey-3); padding: 0.2rem 0.5rem; border: 1px solid var(--grey-4); }
-
-    .card-link { font-size: 0.78rem; font-weight: 600; color: var(--red); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--light); }
-    .card-link:hover { text-decoration: none; opacity: 0.8; }
-
-    /* Top stories */
-    .top-section { background: var(--dark); color: var(--white); padding: 3rem var(--gap); }
-    .top-inner { max-width: var(--max-w); margin: 0 auto; }
-    .top-heading { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 2rem; }
-    .top-heading span { color: var(--red); margin-right: 0.5rem; }
-    .top-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: 1.25rem; }
-    .top-card { background: var(--grey-1); border: 1px solid var(--grey-2); padding: 1.5rem; display: flex; flex-direction: column; gap: 0.75rem; }
-    .top-card-flag { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--red); }
-    .top-card-title { font-size: 1rem; font-weight: 600; line-height: 1.35; color: var(--white); }
-    .top-card-title a { color: inherit; }
-    .top-card-title a:hover { color: var(--red); text-decoration: none; }
-    .top-card-summary { font-size: 0.85rem; color: #aaaaaa; line-height: 1.6; }
-    .top-card-why { border-left: 2px solid var(--red); padding-left: 0.85rem; }
-    .top-card-why-label { display: block; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 0.25rem; }
-    .top-card-why p { font-size: 0.83rem; color: #cccccc; line-height: 1.55; font-style: italic; }
-    .top-card-source { font-size: 0.75rem; color: var(--grey-3); margin-top: auto; padding-top: 0.5rem; border-top: 1px solid var(--grey-2); }
-    .top-card-source a { color: var(--grey-3); text-decoration: underline; text-underline-offset: 2px; }
-    .top-card-source a:hover { color: var(--white); }
-
-    /* More news divider */
-    .more-header { max-width: var(--max-w); margin: 0 auto; padding: 2.5rem var(--gap) 0; display: flex; align-items: center; gap: 1rem; }
-    .more-header-label { font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--grey-3); white-space: nowrap; }
-    .more-header-line { flex: 1; height: 1px; background: var(--grey-4); }
-
-    /* Archive */
-    .archive-section { max-width: var(--max-w); margin: 0 auto 3rem; padding: 0 var(--gap); }
-    .archive-heading { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 0.75rem; }
-    .archive-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .archive-link { font-size: 0.78rem; color: var(--text-dim); border: 1px solid var(--grey-4); padding: 0.3rem 0.7rem; transition: all 0.15s; }
-    .archive-link:hover { background: var(--dark); color: var(--white); border-color: var(--dark); text-decoration: none; }
-
-    /* Footer */
-    .site-footer { background: var(--dark); color: var(--grey-3); padding: 2rem var(--gap); font-size: 0.78rem; }
-    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
-    .footer-logo { font-weight: 700; font-size: 0.85rem; color: var(--white); }
-    .footer-logo span { color: var(--red); }
-
-    .no-results { display: none; text-align: center; padding: 3rem; color: var(--grey-3); font-size: 0.9rem; grid-column: 1 / -1; }
-
-    @media (max-width: 640px) {
-      .header-inner { flex-direction: column; align-items: flex-start; }
-      .cards-grid { grid-template-columns: 1fr; }
-      .card { padding: 1.25rem; }
+    body {
+      margin: 0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.55;
+    }
+    a { color: inherit; }
+    .header {
+      background: var(--ink);
+      color: var(--white);
+      padding: 26px clamp(18px, 4vw, 48px);
+    }
+    .header-inner, .hero-inner, .content, .footer-inner {
+      max-width: var(--max);
+      margin: 0 auto;
+    }
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+    .logo img { height: 34px; width: auto; display: block; }
+    .updated { color: #b8b8b8; font-size: 14px; text-align: right; }
+    .hero {
+      background: var(--ink);
+      color: var(--white);
+      padding: 32px clamp(18px, 4vw, 48px) 56px;
+      border-top: 1px solid #2a2a2a;
+    }
+    .eyebrow {
+      color: #ffb7bd;
+      text-transform: uppercase;
+      font-weight: 800;
+      font-size: 12px;
+      letter-spacing: .12em;
+      margin: 0 0 12px;
+    }
+    h1 {
+      font-size: clamp(42px, 8vw, 82px);
+      line-height: .96;
+      margin: 0;
+      letter-spacing: 0;
+      max-width: 920px;
+    }
+    .subtitle {
+      color: #d9d9d9;
+      font-size: clamp(18px, 2.3vw, 25px);
+      max-width: 760px;
+      margin: 20px 0 0;
+    }
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 26px;
+    }
+    .stat {
+      border: 1px solid #3a3a3a;
+      padding: 8px 12px;
+      color: #d8d8d8;
+      font-size: 13px;
+    }
+    main { padding: 42px clamp(18px, 4vw, 48px) 64px; }
+    .section-title {
+      margin: 0 0 18px;
+      font-size: 14px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+    .lead-list {
+      display: grid;
+      gap: 16px;
+    }
+    .item {
+      display: grid;
+      grid-template-columns: 58px 1fr;
+      gap: 18px;
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: clamp(18px, 3vw, 28px);
+    }
+    .item-rank {
+      color: var(--red);
+      font-size: 22px;
+      font-weight: 800;
+      line-height: 1;
+    }
+    .item-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .item-meta span {
+      border: 1px solid var(--line);
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 8px;
+      text-transform: uppercase;
+      letter-spacing: .04em;
+    }
+    .item h2 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 32px);
+      line-height: 1.12;
+      letter-spacing: 0;
+    }
+    .item h2 a { text-decoration-thickness: 1px; text-underline-offset: 5px; }
+    .summary {
+      color: #333333;
+      font-size: 16px;
+      margin: 14px 0 0;
+      max-width: 820px;
+    }
+    .why {
+      border-left: 3px solid var(--red);
+      margin-top: 16px;
+      padding-left: 14px;
+      max-width: 860px;
+    }
+    .why strong {
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      margin-bottom: 4px;
+    }
+    .why p { margin: 0; color: #444444; }
+    .source {
+      display: inline-block;
+      margin-top: 16px;
+      color: var(--red);
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .empty {
+      background: var(--white);
+      border: 1px solid var(--line);
+      padding: 24px;
+      color: var(--muted);
+    }
+    footer {
+      background: var(--ink);
+      color: #b8b8b8;
+      padding: 28px clamp(18px, 4vw, 48px);
+      font-size: 14px;
+    }
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+    @media (max-width: 680px) {
+      .header-inner { align-items: flex-start; flex-direction: column; }
+      .updated { text-align: left; }
+      .item { grid-template-columns: 1fr; gap: 10px; }
+      .item-rank { font-size: 18px; }
     }
   </style>
 </head>
 <body>
-
-  <header class="site-header">
+  <header class="header">
     <div class="header-inner">
-      <div>
-        <a class="header-logo" href="#"><img src="imark-logo.png" alt="ÍMARK" /></a>
-        <span class="header-tagline">Markaðstíðindi</span>
+      <div class="logo">
+        <img src="imark-logo.png" alt="ÍMARK" />
+        <span>Intelligence</span>
       </div>
-      <span class="header-date">Uppfært þriðjudagur, 16. júní 2026</span>
+      <div class="updated">Uppfært mánudagur, 29. júní 2026</div>
     </div>
   </header>
 
-  <section class="week-hero">
-    <div class="week-hero-inner">
-      <span class="week-label">Vikan í markaðsmálum</span>
-      <h1 class="week-title">Vika 25, 2026</h1>
-      <p class="week-subtitle">10 valdar greinar · þriðjudagur, 16. júní 2026</p>
-    </div>
-  </section>
-
-  
-  <section class="top-section">
-    <div class="top-inner">
-      <p class="top-heading"><span>▪</span> Mikilvægast í markaðsmálum þessa vikuna</p>
-      <div class="top-grid">
-        
-    <article class="top-card">
-      <span class="top-card-flag">🇮🇸 Auglýsingar & sköpun</span>
-      <h3 class="top-card-title">
-        <a href="https://news.cision.com/enewswire/r/cold-roads--hot-marketing--how-iceland-s-clever--hola--campaign-became-a-global-masterclass-in-publi,c4357025" target="_blank" rel="noopener noreferrer">Colas Ísland og Pipar/TBWA: Hola-herferðin hlaut verðlaun á Lúðrinum</a>
-      </h3>
-      <p class="top-card-summary">Colas Ísland og Pipar/TBWA völdu að snúa vandanum í tækifæri - í stað afsökunarbeiðna kynntu þeir til sögunnar Nicolas, ástríðufullann holuvin sem ferðaðist um Ísland og heilsaði gleðilega hverri holu á veginum. Herferðin hlaut verðlaun á Lúðrinum í ár.</p>
-      
-      <div class="top-card-why">
-        <span class="top-card-why-label">Af hverju skiptir þetta máli</span>
-        <p>Kraftmesta dæmið um lean into the problem markaðsstefnu sem hefur komið fram á íslenskum markaði - snilld í hugmyndafræðinni og framkvæmdinni.</p>
-      </div>
-      <div class="top-card-source">
-        Heimild: <a href="https://news.cision.com/enewswire/r/cold-roads--hot-marketing--how-iceland-s-clever--hola--campaign-became-a-global-masterclass-in-publi,c4357025" target="_blank" rel="noopener noreferrer">eNewsWire</a>
-      </div>
-    </article>
-
-    <article class="top-card">
-      <span class="top-card-flag">🇮🇸 Auglýsingar & sköpun</span>
-      <h3 class="top-card-title">
-        <a href="https://www.plataarsins.is/" target="_blank" rel="noopener noreferrer">Nói Síríus: Plata ársins - súkkulaðiherferð með influencers</a>
-      </h3>
-      <p class="top-card-summary">Nói Síríus kynnti sumarherferðina Plata ársins þar sem þrír þekktir einstaklingar - Árni Páll Árnason (Herra Hnetusmjör), Sólrún Diego og Hjörvar Hafliðason - hönnuðu hver sína súkkulaðiplötu í samstarfi við vöruþróunarteymi fyrirtækisins. Herferðin var þróuð með Cirkus auglýsingastofu og kynningin var leikleg: influencers auglýstu á sínum miðlum að plata væri í vændum - og uppljóstrunin var að um súkkulaðiplötu var að ræða.</p>
-      
-      <div class="top-card-why">
-        <span class="top-card-why-label">Af hverju skiptir þetta máli</span>
-        <p>Góð íslensk fyrirmynd um hvernig má nýta influencer-samstarf á skapandi hátt - þar sem kynningarleikurinn er hluti af herferðinni sjálfri.</p>
-      </div>
-      <div class="top-card-source">
-        Heimild: <a href="https://www.plataarsins.is/" target="_blank" rel="noopener noreferrer">plataarsins.is</a>
-      </div>
-    </article>
-
-    <article class="top-card">
-      <span class="top-card-flag">Branding & auðkenni</span>
-      <h3 class="top-card-title">
-        <a href="https://adage.com/article/marketing-news-strategy/icelandairs-not-ai-campaign/2607131/" target="_blank" rel="noopener noreferrer">Icelandair: This is not AI</a>
-      </h3>
-      <p class="top-card-summary">Icelandair er að keyra herferð í London og fleiri borgum sem undirstrikar að myndefnið sé raunverulegt - ekki AI-myndað. Herferðin er svar við vaxandi vantrausti neytenda á gervigreindarmyndum í ferðaauglýsingum.</p>
-      
-      <div class="top-card-why">
-        <span class="top-card-why-label">Af hverju skiptir þetta máli</span>
-        <p>Íslenskt fyrirtæki er með skýrasta svarið við einum stærsta áhyggjuefni greinarinnar núna - trúverðugleiki myndefnis. Góð innblástur fyrir aðrar stofnanir sem reiða sig á myndir.</p>
-      </div>
-      <div class="top-card-source">
-        Heimild: <a href="https://adage.com/article/marketing-news-strategy/icelandairs-not-ai-campaign/2607131/" target="_blank" rel="noopener noreferrer">Ad Age</a>
-      </div>
-    </article>
-
-    <article class="top-card">
-      <span class="top-card-flag">Branding & auðkenni</span>
-      <h3 class="top-card-title">
-        <a href="https://www.itsnicethat.com/articles/jkr-kfc-graphic-design-project-150626" target="_blank" rel="noopener noreferrer">KFC Bucketverse: Full 360 endurnýjun með JKR</a>
-      </h3>
-      <p class="top-card-summary">KFC og branding-stofan JKR hafa kynnt til sögunnar Bucketverse - heildræna endurnýjun á auðkenni KFC sem spannar lógó, leturgerð, umbúðir, forrit, innréttingar veitingastaða og samfélagsmiðla. Verkefnið hefst í Bretlandi og Írlandi og breiðist svo út til Ástralíu og Bandaríkjanna.</p>
-      
-      <div class="top-card-why">
-        <span class="top-card-why-label">Af hverju skiptir þetta máli</span>
-        <p>Hvernig heimsmerki nálgast heildræna endurnýjun - gott viðmiðunardæmi þegar íslenskar stofnanir eru að endurskoða sjónrænt auðkenni sitt.</p>
-      </div>
-      <div class="top-card-source">
-        Heimild: <a href="https://www.itsnicethat.com/articles/jkr-kfc-graphic-design-project-150626" target="_blank" rel="noopener noreferrer">It's Nice That</a>
-      </div>
-    </article>
-
-    <article class="top-card">
-      <span class="top-card-flag">AI & markaðssetning</span>
-      <h3 class="top-card-title">
-        <a href="https://www.adweek.com/brand-marketing/10-ai-marketing-trends-for-2026-agentic-ai-and-search-shifts/" target="_blank" rel="noopener noreferrer">Agentic AI: Frá efnisgerð til sjálfstæðrar herferðarstjórnunar</a>
-      </h3>
-      <p class="top-card-summary">Gartner spáir því að 60% vörumerkja muni nota agentic AI til eitt-á-eitt samskipta við 2028. Þróunin í 2026 er að AI-kerfi gera ekki bara verkefni - þau skipuleggja og keyra herferðir sjálfkrafa, skipta um fjármagn á milli rása í rauntíma og bregðast við án mannlegs inngripar.</p>
-      
-      <div class="top-card-why">
-        <span class="top-card-why-label">Af hverju skiptir þetta máli</span>
-        <p>Markaðsfólk þarf að skilja þetta skiptni núna - hlutverk þess er að breytast úr framkvæmdaraðilum í stefnumótunaraðila sem hafa umsjón með AI-kerfum.</p>
-      </div>
-      <div class="top-card-source">
-        Heimild: <a href="https://www.adweek.com/brand-marketing/10-ai-marketing-trends-for-2026-agentic-ai-and-search-shifts/" target="_blank" rel="noopener noreferrer">Adweek</a>
-      </div>
-    </article>
-
-    <article class="top-card">
-      <span class="top-card-flag">Miðlar & platform</span>
-      <h3 class="top-card-title">
-        <a href="https://www.niemanlab.org/2026/06/news-sites-are-the-new-newspapers-people-are-abandoning-them-for-social-media/" target="_blank" rel="noopener noreferrer">News sites are the new newspapers: People are abandoning them for social media</a>
-      </h3>
-      <p class="top-card-summary">Nýjar rannsóknir sýna að lesendur í öllum aldurshópum eru að hverfa frá fréttasíðum og útgefendaforritum yfir á samfélagsmiðla og myndbandasíður. Fréttasíður eru að verða ný dagblöð - og við vitum hvernig fór fyrir dagblöðunum.</p>
-      
-      <div class="top-card-why">
-        <span class="top-card-why-label">Af hverju skiptir þetta máli</span>
-        <p>Íslenskar stofnanir og fjölmiðlar þurfa að endurskoða hvar þær birta efni sitt - hefðbundinn vefur og fréttabréf eru ekki nóg.</p>
-      </div>
-      <div class="top-card-source">
-        Heimild: <a href="https://www.niemanlab.org/2026/06/news-sites-are-the-new-newspapers-people-are-abandoning-them-for-social-media/" target="_blank" rel="noopener noreferrer">Nieman Lab</a>
-      </div>
-    </article>
-
-    <article class="top-card">
-      <span class="top-card-flag">Branding & auðkenni</span>
-      <h3 class="top-card-title">
-        <a href="https://www.designweek.co.uk/the-rise-of-blanding-why-brands-must-stop-designing-for-machines/" target="_blank" rel="noopener noreferrer">The Rise of Blanding: Why Brands Must Stop Designing for Machines</a>
-      </h3>
-      <p class="top-card-summary">Hugtakið blanding - blanda af bland og branding - lýsir þróun þar sem vörumerki eru að missa persónuleika sinn í kapphlaupi um að virka á öllum stafrænum kerfum. Safe sans-serifs, hlutlæg litapaletta og kerfi hönnuð fyrir reiknirit - á kostnað sérleika og persónu.</p>
-      
-      <div class="top-card-why">
-        <span class="top-card-why-label">Af hverju skiptir þetta máli</span>
-        <p>Varnaðarorð fyrir íslenskar auglýsingastofur og markaðsaðila - sterkara og áhugaverðara auðkenni er samkeppnisforskot, ekki áhætta.</p>
-      </div>
-      <div class="top-card-source">
-        Heimild: <a href="https://www.designweek.co.uk/the-rise-of-blanding-why-brands-must-stop-designing-for-machines/" target="_blank" rel="noopener noreferrer">Design Week</a>
-      </div>
-    </article>
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="eyebrow">Vika 27, 2026</p>
+      <h1>ÍMARK Intelligence</h1>
+      <p class="subtitle">Það sem íslenskt markaðsfólk þarf að vita í þessari viku.</p>
+      <div class="stats">
+        <span class="stat">12 valin atriði</span>
+        <span class="stat">0 íslensk atriði</span>
+        <span class="stat">Ritstýrt eftir mikilvægi</span>
       </div>
     </div>
   </section>
 
-  <div class="more-header">
-    <span class="more-header-label">Fleiri fréttir</span>
-    <div class="more-header-line"></div>
-  </div>
-
-  <nav class="filters" aria-label="Sía eftir flokki">
-    <div class="filters-inner">
-      <span class="filter-label">Flokkur:</span>
-      <button class="filter-btn active" data-filter="all">Allir</button>
-      <button class="filter-btn" data-filter="ai-markaðssetning">AI & markaðssetning</button>
-<button class="filter-btn" data-filter="branding-auðkenni">Branding & auðkenni</button>
-<button class="filter-btn" data-filter="miðlar-platform">Miðlar & platform</button>
-<button class="filter-btn" data-filter="auglýsingar-sköpun">Auglýsingar & sköpun</button>
-    </div>
-  </nav>
-
-  <main class="main">
-    <div class="main-inner">
-      <div class="cards-grid" id="cards-grid">
+  <main>
+    <div class="content">
+      <h2 class="section-title">Ritstýrt yfirlit</h2>
+      <div class="lead-list">
         
-    <article class="card" data-category="ai-markaðssetning" data-index="0">
-
-      <div class="card-meta">
-        <span class="card-category">AI & markaðssetning</span>
-        <span class="card-date">16. júní 2026</span>
+    <article class="item">
+      <div class="item-rank">01</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span>Alþjóðlegt case</span>
+          <span>Alþjóðlegt</span>
+          <span>18. júní 2026</span>
+        </div>
+        <h2><a href="https://www.marketingbrew.com/stories/unilevers-world-cup-sponsorship-strategy?utm_source=&amp;utm_medium=syndication&amp;utm_campaign=feed" target="_blank" rel="noopener noreferrer">Inside Unilever’s World Cup sponsorship strategy</a></h2>
+        <p class="summary">The personal care giant is an official sponsor of the tournament with several pro athlete partners, but its World Cup push is largely centered around influencers. Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.</p>
+        <div class="why">
+          <strong>Af hverju þetta skiptir máli</strong>
+          <p>Atriðið er valið vegna þess að það getur haft áhrif á hvernig íslensk fyrirtæki hugsa um markaðsstarf, vörumerki eða miðlun. Lærdómurinn er að skoða hvort þróunin í &quot;Inside Unilever’s World Cup sponsorship strategy&quot; breyti forsendum fyrir eigin stefnu, skilaboð eða framkvæmd.</p>
+        </div>
+        <a class="source" href="https://www.marketingbrew.com/stories/unilevers-world-cup-sponsorship-strategy?utm_source=&amp;utm_medium=syndication&amp;utm_campaign=feed" target="_blank" rel="noopener noreferrer">Heimild: Marketing Brew</a>
       </div>
-
-      <h2 class="card-title">
-        <a href="https://www.anthropic.com/news/core-views-on-ai-safety" target="_blank" rel="noopener noreferrer">Core views on AI safety: When, why, what, and how</a>
-      </h2>
-
-      <div class="card-byline">
-        <span class="card-source-label">Heimild:</span>
-        <a class="card-source-link" href="https://www.anthropic.com/news/core-views-on-ai-safety" target="_blank" rel="noopener noreferrer">Anthropic</a>
-      </div>
-
-      
-      <div class="card-summary-block">
-        <span class="summary-label">Í stuttu máli</span>
-        <p class="card-summary">AI progress may lead to transformative AI systems in the next decade, but we do not yet understand how to make such systems safe and aligned with human values. In response, we are pursuing a variety of research directions aimed at better understanding, evaluating, and aligning AI…</p>
-      </div>
-
-      <div class="card-tags"><span class="tag">AI</span></div>
-
-      <a class="card-link" href="https://www.anthropic.com/news/core-views-on-ai-safety" target="_blank" rel="noopener noreferrer">
-        Lesa frumgrein á Anthropic →
-      </a>
-
     </article>
 
-    <article class="card" data-category="branding-auðkenni" data-index="1">
-
-      <div class="card-meta">
-        <span class="card-category">Branding & auðkenni</span>
-        <span class="card-date">16. júní 2026</span>
+    <article class="item">
+      <div class="item-rank">02</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span>AI og tækni</span>
+          <span>Alþjóðlegt</span>
+          <span>29. júní 2026</span>
+        </div>
+        <h2><a href="https://openai.com/index/mapping-ai-jobs-transition-eu" target="_blank" rel="noopener noreferrer">Mapping Europe’s AI Workforce Opportunity</a></h2>
+        <p class="summary">A new OpenAI report maps how AI could reshape jobs across the EU, highlighting which occupations may face automation, growth, or workflow changes. Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.</p>
+        <div class="why">
+          <strong>Af hverju þetta skiptir máli</strong>
+          <p>Þetta skiptir máli ef tæknin breytir hraða, kostnaði eða gæðum í efnisgerð, greiningu, leitarhegðun eða þjónustuupplifun. Íslensk fyrirtæki ættu að spyrja hvar þetta getur bætt vinnuferli án þess að veikja traust eða sérstöðu vörumerkisins.</p>
+        </div>
+        <a class="source" href="https://openai.com/index/mapping-ai-jobs-transition-eu" target="_blank" rel="noopener noreferrer">Heimild: OpenAI</a>
       </div>
-
-      <h2 class="card-title">
-        <a href="https://www.designweek.co.uk/kfc-partner-with-jkr-for-major-global-brand-identity-overhaul/" target="_blank" rel="noopener noreferrer">KFC partner with JKR for major global brand identity overhaul</a>
-      </h2>
-
-      <div class="card-byline">
-        <span class="card-source-label">Heimild:</span>
-        <a class="card-source-link" href="https://www.designweek.co.uk/kfc-partner-with-jkr-for-major-global-brand-identity-overhaul/" target="_blank" rel="noopener noreferrer">Design Week</a>
-      </div>
-
-      
-      <div class="card-summary-block">
-        <span class="summary-label">Í stuttu máli</span>
-        <p class="card-summary">KFC has launched its next global chapter, introducing a refreshed brand identity alongside menu innovations and modernised restaurant designs. Developed in close partnership with global branding agency JKR, the project is a complete visual overhaul spanning packaging, digital…</p>
-      </div>
-
-      <div class="card-tags"><span class="tag">Branding</span><span class="tag">Sköpun</span></div>
-
-      <a class="card-link" href="https://www.designweek.co.uk/kfc-partner-with-jkr-for-major-global-brand-identity-overhaul/" target="_blank" rel="noopener noreferrer">
-        Lesa frumgrein á Design Week →
-      </a>
-
     </article>
 
-    <article class="card" data-category="miðlar-platform" data-index="2">
-
-      <div class="card-meta">
-        <span class="card-category">Miðlar & platform</span>
-        <span class="card-date">15. júní 2026</span>
+    <article class="item">
+      <div class="item-rank">03</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span>AI og tækni</span>
+          <span>Alþjóðlegt</span>
+          <span>29. júní 2026</span>
+        </div>
+        <h2><a href="https://www.canva.com/newsroom/news/deep-research-integration-mcp-server/" target="_blank" rel="noopener noreferrer">AI + Product Bringing on-brand design creation to AI workflows: Create with Canva inside ChatGPT and Codex Read more</a></h2>
+        <p class="summary">Canva birtir atriði sem tengist ai og tækni. Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.</p>
+        <div class="why">
+          <strong>Af hverju þetta skiptir máli</strong>
+          <p>Þetta skiptir máli ef tæknin breytir hraða, kostnaði eða gæðum í efnisgerð, greiningu, leitarhegðun eða þjónustuupplifun. Íslensk fyrirtæki ættu að spyrja hvar þetta getur bætt vinnuferli án þess að veikja traust eða sérstöðu vörumerkisins.</p>
+        </div>
+        <a class="source" href="https://www.canva.com/newsroom/news/deep-research-integration-mcp-server/" target="_blank" rel="noopener noreferrer">Heimild: Canva</a>
       </div>
-
-      <h2 class="card-title">
-        <a href="https://www.niemanlab.org/2026/06/news-sites-are-the-new-newspapers-people-are-abandoning-them-for-social-media/" target="_blank" rel="noopener noreferrer">News sites are the new newspapers: People are abandoning them for social media</a>
-      </h2>
-
-      <div class="card-byline">
-        <span class="card-source-label">Heimild:</span>
-        <a class="card-source-link" href="https://www.niemanlab.org/2026/06/news-sites-are-the-new-newspapers-people-are-abandoning-them-for-social-media/" target="_blank" rel="noopener noreferrer">Nieman Lab</a>
-      </div>
-
-      
-      <div class="card-summary-block">
-        <span class="summary-label">Í stuttu máli</span>
-        <p class="card-summary">News sites are rapidly becoming the newspapers of the digital age. And you know what happened to newspapers. Worldwide, people in all age groups are ditching news sites and publishers’ apps in favor of social media and video networks. In fact, 18- to 34-year-olds are abandoning…</p>
-      </div>
-
-      <div class="card-tags"><span class="tag">Miðlar</span><span class="tag">Social</span></div>
-
-      <a class="card-link" href="https://www.niemanlab.org/2026/06/news-sites-are-the-new-newspapers-people-are-abandoning-them-for-social-media/" target="_blank" rel="noopener noreferrer">
-        Lesa frumgrein á Nieman Lab →
-      </a>
-
     </article>
 
-    <article class="card" data-category="auglýsingar-sköpun" data-index="3">
-
-      <div class="card-meta">
-        <span class="card-category">Auglýsingar & sköpun</span>
-        <span class="card-date">15. júní 2026</span>
+    <article class="item">
+      <div class="item-rank">04</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span>AI og tækni</span>
+          <span>Alþjóðlegt</span>
+          <span>29. júní 2026</span>
+        </div>
+        <h2><a href="https://www.canva.com/newsroom/news/perplexity/" target="_blank" rel="noopener noreferrer">AI + Product From AI research to ready-to-use creative: Canva comes to Perplexity Computer Read more</a></h2>
+        <p class="summary">Canva birtir atriði sem tengist ai og tækni. Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.</p>
+        <div class="why">
+          <strong>Af hverju þetta skiptir máli</strong>
+          <p>Þetta skiptir máli ef tæknin breytir hraða, kostnaði eða gæðum í efnisgerð, greiningu, leitarhegðun eða þjónustuupplifun. Íslensk fyrirtæki ættu að spyrja hvar þetta getur bætt vinnuferli án þess að veikja traust eða sérstöðu vörumerkisins.</p>
+        </div>
+        <a class="source" href="https://www.canva.com/newsroom/news/perplexity/" target="_blank" rel="noopener noreferrer">Heimild: Canva</a>
       </div>
-
-      <h2 class="card-title">
-        <a href="
-                https://www.marketingbrew.com/stories/base44-app-advertising-strategy-youtube-smart-tvs-superbowl?utm_source=&utm_medium=syndication&utm_campaign=feed
-            " target="_blank" rel="noopener noreferrer">Base44 is one of the most-viewed brands on YouTube. Here’s a look at its ad strategy</a>
-      </h2>
-
-      <div class="card-byline">
-        <span class="card-source-label">Heimild:</span>
-        <a class="card-source-link" href="
-                https://www.marketingbrew.com/stories/base44-app-advertising-strategy-youtube-smart-tvs-superbowl?utm_source=&utm_medium=syndication&utm_campaign=feed
-            " target="_blank" rel="noopener noreferrer">Marketing Brew</a>
-      </div>
-
-      
-      <div class="card-summary-block">
-        <span class="summary-label">Í stuttu máli</span>
-        <p class="card-summary">We chatted with Omer Shai, CMO of parent company Wix, about how the vibe-coding platform is looking to win over users in a crowded category.</p>
-      </div>
-
-      <div class="card-tags"><span class="tag">Branding</span><span class="tag">Miðlar</span><span class="tag">Stefna</span><span class="tag">Social</span></div>
-
-      <a class="card-link" href="
-                https://www.marketingbrew.com/stories/base44-app-advertising-strategy-youtube-smart-tvs-superbowl?utm_source=&utm_medium=syndication&utm_campaign=feed
-            " target="_blank" rel="noopener noreferrer">
-        Lesa frumgrein á Marketing Brew →
-      </a>
-
     </article>
 
-    <article class="card" data-category="ai-markaðssetning" data-index="4">
-
-      <div class="card-meta">
-        <span class="card-category">AI & markaðssetning</span>
-        <span class="card-date">11. júní 2026</span>
+    <article class="item">
+      <div class="item-rank">05</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span>Miðlar og platform</span>
+          <span>Alþjóðlegt</span>
+          <span>23. júní 2026</span>
+        </div>
+        <h2><a href="https://www.designweek.co.uk/futurebrand-develops-new-brand-ecosystem-for-riyadh-air/" target="_blank" rel="noopener noreferrer">FutureBrand develops new brand ecosystem for Riyadh Air</a></h2>
+        <p class="summary">Conceived as a next-generation global carrier, Riyadh Air was built from the ground up to serve as a strategic platform for long-term growth, innovation and international expansion. As such, working in close collaboration with the airline, FutureBrand shaped... Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.</p>
+        <div class="why">
+          <strong>Af hverju þetta skiptir máli</strong>
+          <p>Breytingar á miðlum og platformum geta haft bein áhrif á dreifingu, mælingar, kostnað og sýnileika. Íslensk markaðsteymi þurfa að meta hvort þetta kalli á breytingar í miðlaplani, efnisgerð eða gagnasöfnun.</p>
+        </div>
+        <a class="source" href="https://www.designweek.co.uk/futurebrand-develops-new-brand-ecosystem-for-riyadh-air/" target="_blank" rel="noopener noreferrer">Heimild: Design Week</a>
       </div>
-
-      <h2 class="card-title">
-        <a href="https://openai.com/index/supporting-eu-trustworthy-ai-ecosystem" target="_blank" rel="noopener noreferrer">Supporting Europe’s work in ensuring a trustworthy AI ecosystem</a>
-      </h2>
-
-      <div class="card-byline">
-        <span class="card-source-label">Heimild:</span>
-        <a class="card-source-link" href="https://openai.com/index/supporting-eu-trustworthy-ai-ecosystem" target="_blank" rel="noopener noreferrer">OpenAI News</a>
-      </div>
-
-      
-      <div class="card-summary-block">
-        <span class="summary-label">Í stuttu máli</span>
-        <p class="card-summary">OpenAI supports the EU Code of Practice on AI content transparency, advancing provenance standards and tools to help people understand AI-generated content.</p>
-      </div>
-
-      <div class="card-tags"><span class="tag">AI</span></div>
-
-      <a class="card-link" href="https://openai.com/index/supporting-eu-trustworthy-ai-ecosystem" target="_blank" rel="noopener noreferrer">
-        Lesa frumgrein á OpenAI News →
-      </a>
-
     </article>
 
-    <article class="card" data-category="auglýsingar-sköpun" data-index="5">
-
-      <div class="card-meta">
-        <span class="card-category">Auglýsingar & sköpun</span>
-        <span class="card-date">10. júní 2026</span>
+    <article class="item">
+      <div class="item-rank">06</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span>AI og tækni</span>
+          <span>Alþjóðlegt</span>
+          <span>25. júní 2026</span>
+        </div>
+        <h2><a href="https://www.brandingmag.com/arjan-kapteijns/agentic-lovemarks-why-emotional-brands-matter-more-when-ai-selects/" target="_blank" rel="noopener noreferrer">Agentic Lovemarks: Why Emotional Brands Matter More When AI Selects</a></h2>
+        <p class="summary">In a short period of time, we’ve seen a remarkable surge of interest in agentic branding. What started as a relatively abstract line of thinking is rapidly evolving into a field where strategy, technology, and marketing are increasingly converging. That shift... Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.</p>
+        <div class="why">
+          <strong>Af hverju þetta skiptir máli</strong>
+          <p>Þetta skiptir máli ef tæknin breytir hraða, kostnaði eða gæðum í efnisgerð, greiningu, leitarhegðun eða þjónustuupplifun. Íslensk fyrirtæki ættu að spyrja hvar þetta getur bætt vinnuferli án þess að veikja traust eða sérstöðu vörumerkisins.</p>
+        </div>
+        <a class="source" href="https://www.brandingmag.com/arjan-kapteijns/agentic-lovemarks-why-emotional-brands-matter-more-when-ai-selects/" target="_blank" rel="noopener noreferrer">Heimild: Brandingmag</a>
       </div>
-
-      <h2 class="card-title">
-        <a href="
-                https://www.marketingbrew.com/stories/att-untold-stories-tribeca-festival-brand-strategy-supporting-filmmakers?utm_source=&utm_medium=syndication&utm_campaign=feed
-            " target="_blank" rel="noopener noreferrer">Why AT&T gave $1.2 million to first-time feature filmmakers</a>
-      </h2>
-
-      <div class="card-byline">
-        <span class="card-source-label">Heimild:</span>
-        <a class="card-source-link" href="
-                https://www.marketingbrew.com/stories/att-untold-stories-tribeca-festival-brand-strategy-supporting-filmmakers?utm_source=&utm_medium=syndication&utm_campaign=feed
-            " target="_blank" rel="noopener noreferrer">Marketing Brew</a>
-      </div>
-
-      
-      <div class="card-summary-block">
-        <span class="summary-label">Í stuttu máli</span>
-        <p class="card-summary">The telecom company’s annual Untold Stories event at Tribeca Festival is designed to fund a marketable film project—and also get the brand in front of new audiences, one exec told us.</p>
-      </div>
-
-      <div class="card-tags"><span class="tag">Branding</span><span class="tag">Sköpun</span><span class="tag">Neytendur</span></div>
-
-      <a class="card-link" href="
-                https://www.marketingbrew.com/stories/att-untold-stories-tribeca-festival-brand-strategy-supporting-filmmakers?utm_source=&utm_medium=syndication&utm_campaign=feed
-            " target="_blank" rel="noopener noreferrer">
-        Lesa frumgrein á Marketing Brew →
-      </a>
-
     </article>
 
-    <article class="card" data-category="branding-auðkenni" data-index="6">
-
-      <div class="card-meta">
-        <span class="card-category">Branding & auðkenni</span>
-        <span class="card-date">10. júní 2026</span>
+    <article class="item">
+      <div class="item-rank">07</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span>Miðlar og platform</span>
+          <span>Alþjóðlegt</span>
+          <span>18. júní 2026</span>
+        </div>
+        <h2><a href="https://www.marketingbrew.com/stories/kansas-city-chiefs-youth-marketing-mascot?utm_source=&amp;utm_medium=syndication&amp;utm_campaign=feed" target="_blank" rel="noopener noreferrer">How the Kansas City Chiefs’ plan to hook the youngest sports fans</a></h2>
+        <p class="summary">The team rolled out an animated series on YouTube starring mascot KC Wolf, marking its first push into children’s content. Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.</p>
+        <div class="why">
+          <strong>Af hverju þetta skiptir máli</strong>
+          <p>Breytingar á miðlum og platformum geta haft bein áhrif á dreifingu, mælingar, kostnað og sýnileika. Íslensk markaðsteymi þurfa að meta hvort þetta kalli á breytingar í miðlaplani, efnisgerð eða gagnasöfnun.</p>
+        </div>
+        <a class="source" href="https://www.marketingbrew.com/stories/kansas-city-chiefs-youth-marketing-mascot?utm_source=&amp;utm_medium=syndication&amp;utm_campaign=feed" target="_blank" rel="noopener noreferrer">Heimild: Marketing Brew</a>
       </div>
-
-      <h2 class="card-title">
-        <a href="https://www.designweek.co.uk/deuce-studio-designs-sleep-focused-identity-for-herbal-tea-start-up-cydno/" target="_blank" rel="noopener noreferrer">Deuce Studio designs sleep-focused identity for herbal tea start-up Cydno</a>
-      </h2>
-
-      <div class="card-byline">
-        <span class="card-source-label">Heimild:</span>
-        <a class="card-source-link" href="https://www.designweek.co.uk/deuce-studio-designs-sleep-focused-identity-for-herbal-tea-start-up-cydno/" target="_blank" rel="noopener noreferrer">Design Week</a>
-      </div>
-
-      
-      <div class="card-summary-block">
-        <span class="summary-label">Í stuttu máli</span>
-        <p class="card-summary">London-based design agency Deuce Studio has created the brand strategy, visual identity, and packaging for the premium herbal tea start-up. The project seeks to position the product as an antidote to overstimulated daily routines. The studio built the brand foundation around the…</p>
-      </div>
-
-      <div class="card-tags"><span class="tag">Branding</span><span class="tag">Sköpun</span><span class="tag">Stefna</span></div>
-
-      <a class="card-link" href="https://www.designweek.co.uk/deuce-studio-designs-sleep-focused-identity-for-herbal-tea-start-up-cydno/" target="_blank" rel="noopener noreferrer">
-        Lesa frumgrein á Design Week →
-      </a>
-
     </article>
 
-    <article class="card" data-category="branding-auðkenni" data-index="7">
-
-      <div class="card-meta">
-        <span class="card-category">Branding & auðkenni</span>
-        <span class="card-date">5. júní 2026</span>
+    <article class="item">
+      <div class="item-rank">08</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span>Miðlar og platform</span>
+          <span>Alþjóðlegt</span>
+          <span>24. júní 2026</span>
+        </div>
+        <h2><a href="https://www.niemanlab.org/2026/06/overwhelmed-by-news-on-social-sayso-is-betting-a-smaller-vetted-creator-feed-is-the-answer/" target="_blank" rel="noopener noreferrer">Overwhelmed by news on social? SaySo is betting a smaller, vetted creator feed is the answer</a></h2>
+        <p class="summary">Social media is overwhelming. The amount of information, misinformation, and slop makes it hard for the average news consumer to wade through the deluge of posts and know who to trust. According to the Reuters Institute for the Study of Journalism, more and... Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.</p>
+        <div class="why">
+          <strong>Af hverju þetta skiptir máli</strong>
+          <p>Breytingar á miðlum og platformum geta haft bein áhrif á dreifingu, mælingar, kostnað og sýnileika. Íslensk markaðsteymi þurfa að meta hvort þetta kalli á breytingar í miðlaplani, efnisgerð eða gagnasöfnun.</p>
+        </div>
+        <a class="source" href="https://www.niemanlab.org/2026/06/overwhelmed-by-news-on-social-sayso-is-betting-a-smaller-vetted-creator-feed-is-the-answer/" target="_blank" rel="noopener noreferrer">Heimild: Nieman Lab</a>
       </div>
-
-      <h2 class="card-title">
-        <a href="https://www.designweek.co.uk/the-rise-of-blanding-why-brands-must-stop-designing-for-machines/" target="_blank" rel="noopener noreferrer">The Rise of ‘Blanding’: Why Brands Must Stop Designing for Machines</a>
-      </h2>
-
-      <div class="card-byline">
-        <span class="card-source-label">Heimild:</span>
-        <a class="card-source-link" href="https://www.designweek.co.uk/the-rise-of-blanding-why-brands-must-stop-designing-for-machines/" target="_blank" rel="noopener noreferrer">Design Week</a>
-      </div>
-
-      
-      <div class="card-summary-block">
-        <span class="summary-label">Í stuttu máli</span>
-        <p class="card-summary">Branding today is losing its personality. In the race to work seamlessly across digital platforms, many brands are resorting to safe sans-serifs, carefully crafted neutrality, and systems built for global scalability and algorithms. This is the rise of ‘blanding’ – clean,…</p>
-      </div>
-
-      <div class="card-tags"><span class="tag">Branding</span><span class="tag">Miðlar</span><span class="tag">Sköpun</span></div>
-
-      <a class="card-link" href="https://www.designweek.co.uk/the-rise-of-blanding-why-brands-must-stop-designing-for-machines/" target="_blank" rel="noopener noreferrer">
-        Lesa frumgrein á Design Week →
-      </a>
-
     </article>
 
-    <article class="card" data-category="miðlar-platform" data-index="8">
-
-      <div class="card-meta">
-        <span class="card-category">Miðlar & platform</span>
-        <span class="card-date">3. júní 2026</span>
+    <article class="item">
+      <div class="item-rank">09</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span>Miðlar og platform</span>
+          <span>Alþjóðlegt</span>
+          <span>23. júní 2026</span>
+        </div>
+        <h2><a href="https://www.niemanlab.org/2026/06/the-british-government-wants-to-force-more-trustworthy-news-into-your-doomscrolling/" target="_blank" rel="noopener noreferrer">The British government wants to force more trustworthy news into your doomscrolling</a></h2>
+        <p class="summary">The British government is asking social media companies to put more news — real news, produced by public service broadcasters like the BBC — high up in people’s feeds. And if companies refuse, it’ll pass laws to require it. That’s the main takeaway from a new... Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.</p>
+        <div class="why">
+          <strong>Af hverju þetta skiptir máli</strong>
+          <p>Breytingar á miðlum og platformum geta haft bein áhrif á dreifingu, mælingar, kostnað og sýnileika. Íslensk markaðsteymi þurfa að meta hvort þetta kalli á breytingar í miðlaplani, efnisgerð eða gagnasöfnun.</p>
+        </div>
+        <a class="source" href="https://www.niemanlab.org/2026/06/the-british-government-wants-to-force-more-trustworthy-news-into-your-doomscrolling/" target="_blank" rel="noopener noreferrer">Heimild: Nieman Lab</a>
       </div>
-
-      <h2 class="card-title">
-        <a href="https://www.niemanlab.org/2026/06/these-16-new-journalism-jobs-are-designed-to-help-publishers-future-proof-their-newsrooms/" target="_blank" rel="noopener noreferrer">These 16 new journalism jobs could help publishers “future-proof” their newsrooms</a>
-      </h2>
-
-      <div class="card-byline">
-        <span class="card-source-label">Heimild:</span>
-        <a class="card-source-link" href="https://www.niemanlab.org/2026/06/these-16-new-journalism-jobs-are-designed-to-help-publishers-future-proof-their-newsrooms/" target="_blank" rel="noopener noreferrer">Nieman Lab</a>
-      </div>
-
-      
-      <div class="card-summary-block">
-        <span class="summary-label">Í stuttu máli</span>
-        <p class="card-summary">Ten years ago, the phrase “chatbots with specific character voices” would not have appeared in a journalism job posting. But here we are in 2026, and The Economist — hiring for a senior AI engineer for its AI Lab — mentions that “fine-tuning [AI] models for style or persona” is a…</p>
-      </div>
-
-      <div class="card-tags"><span class="tag">AI</span><span class="tag">Miðlar</span></div>
-
-      <a class="card-link" href="https://www.niemanlab.org/2026/06/these-16-new-journalism-jobs-are-designed-to-help-publishers-future-proof-their-newsrooms/" target="_blank" rel="noopener noreferrer">
-        Lesa frumgrein á Nieman Lab →
-      </a>
-
     </article>
 
-    <article class="card" data-category="auglýsingar-sköpun" data-index="9">
-
-      <div class="card-meta">
-        <span class="card-category">Auglýsingar & sköpun</span>
-        <span class="card-date">3. júní 2026</span>
+    <article class="item">
+      <div class="item-rank">10</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span>Miðlar og platform</span>
+          <span>Alþjóðlegt</span>
+          <span>15. júní 2026</span>
+        </div>
+        <h2><a href="https://www.niemanlab.org/2026/06/news-sites-are-the-new-newspapers-people-are-abandoning-them-for-social-media/" target="_blank" rel="noopener noreferrer">News sites are the new newspapers: People are abandoning them for social media</a></h2>
+        <p class="summary">News sites are rapidly becoming the newspapers of the digital age. And you know what happened to newspapers. Worldwide, people in all age groups are ditching news sites and publishers’ apps in favor of social media and video networks. In fact, 18- to... Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.</p>
+        <div class="why">
+          <strong>Af hverju þetta skiptir máli</strong>
+          <p>Breytingar á miðlum og platformum geta haft bein áhrif á dreifingu, mælingar, kostnað og sýnileika. Íslensk markaðsteymi þurfa að meta hvort þetta kalli á breytingar í miðlaplani, efnisgerð eða gagnasöfnun.</p>
+        </div>
+        <a class="source" href="https://www.niemanlab.org/2026/06/news-sites-are-the-new-newspapers-people-are-abandoning-them-for-social-media/" target="_blank" rel="noopener noreferrer">Heimild: Nieman Lab</a>
       </div>
-
-      <h2 class="card-title">
-        <a href="
-                https://www.marketingbrew.com/stories/brands-en-pointe-why-ballet-aesthetics-and-performance-arts-are-appealing-to-audiences?utm_source=&utm_medium=syndication&utm_campaign=feed
-            " target="_blank" rel="noopener noreferrer">En pointe: Why brands are embracing the aesthetics of ballet</a>
-      </h2>
-
-      <div class="card-byline">
-        <span class="card-source-label">Heimild:</span>
-        <a class="card-source-link" href="
-                https://www.marketingbrew.com/stories/brands-en-pointe-why-ballet-aesthetics-and-performance-arts-are-appealing-to-audiences?utm_source=&utm_medium=syndication&utm_campaign=feed
-            " target="_blank" rel="noopener noreferrer">Marketing Brew</a>
-      </div>
-
-      
-      <div class="card-summary-block">
-        <span class="summary-label">Í stuttu máli</span>
-        <p class="card-summary">Timothée Chalamet may have sneered at ballet's popularity during his Oscar run—but advertising would beg to differ. Ballet aesthetics have appeared in campaigns from brands like NikeSkims x LISA and Lulu and Georgia, which could be a response to AI and digital life.</p>
-      </div>
-
-      <div class="card-tags"><span class="tag">AI</span><span class="tag">Branding</span><span class="tag">Sköpun</span><span class="tag">Auglýsingar</span></div>
-
-      <a class="card-link" href="
-                https://www.marketingbrew.com/stories/brands-en-pointe-why-ballet-aesthetics-and-performance-arts-are-appealing-to-audiences?utm_source=&utm_medium=syndication&utm_campaign=feed
-            " target="_blank" rel="noopener noreferrer">
-        Lesa frumgrein á Marketing Brew →
-      </a>
-
     </article>
-        <p class="no-results" id="no-results">Engar greinar í þessum flokki.</p>
+
+    <article class="item">
+      <div class="item-rank">11</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span>AI og tækni</span>
+          <span>Alþjóðlegt</span>
+          <span>18. júní 2026</span>
+        </div>
+        <h2><a href="https://openai.com/index/chatgpt-enterprise-spend-controls" target="_blank" rel="noopener noreferrer">New usage analytics and updated spend controls for enterprises</a></h2>
+        <p class="summary">OpenAI introduces new spend controls and usage analytics for ChatGPT Enterprise, helping organizations manage costs and scale AI with confidence. Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.</p>
+        <div class="why">
+          <strong>Af hverju þetta skiptir máli</strong>
+          <p>Þetta skiptir máli ef tæknin breytir hraða, kostnaði eða gæðum í efnisgerð, greiningu, leitarhegðun eða þjónustuupplifun. Íslensk fyrirtæki ættu að spyrja hvar þetta getur bætt vinnuferli án þess að veikja traust eða sérstöðu vörumerkisins.</p>
+        </div>
+        <a class="source" href="https://openai.com/index/chatgpt-enterprise-spend-controls" target="_blank" rel="noopener noreferrer">Heimild: OpenAI</a>
+      </div>
+    </article>
+
+    <article class="item">
+      <div class="item-rank">12</div>
+      <div class="item-body">
+        <div class="item-meta">
+          <span>AI og tækni</span>
+          <span>Alþjóðlegt</span>
+          <span>23. júní 2026</span>
+        </div>
+        <h2><a href="https://about.fb.com/news/2026/06/launch-of-metas-small-business-growth-academy-across-asia-pacific/" target="_blank" rel="noopener noreferrer">Launch of Meta’s Small Business Growth Academy Across Asia-Pacific to Boost AI Adoption and Digital Skills</a></h2>
+        <p class="summary">Meta's Small Business Growth Academy will provide practical AI tools, advertising, and cross-border growth training to help small businesses scale across Asia-Pacific. The post Launch of Meta’s Small Business Growth Academy Across Asia-Pacific to Boost AI... Atriðið er tekið með vegna þess að það sýnir þróun sem íslensk markaðsteymi geta lært af eða þurfa að fylgjast með.</p>
+        <div class="why">
+          <strong>Af hverju þetta skiptir máli</strong>
+          <p>Þetta skiptir máli ef tæknin breytir hraða, kostnaði eða gæðum í efnisgerð, greiningu, leitarhegðun eða þjónustuupplifun. Íslensk fyrirtæki ættu að spyrja hvar þetta getur bætt vinnuferli án þess að veikja traust eða sérstöðu vörumerkisins.</p>
+        </div>
+        <a class="source" href="https://about.fb.com/news/2026/06/launch-of-metas-small-business-growth-academy-across-asia-pacific/" target="_blank" rel="noopener noreferrer">Heimild: Meta</a>
+      </div>
+    </article>
       </div>
     </div>
   </main>
 
-  
-  <section class="archive-section">
-    <h3 class="archive-heading">Eldri vikur</h3>
-    <div class="archive-links"><a href="weeks/2026-W25.html" class="archive-link">Vika 25, 2026</a></div>
-  </section>
-
-  <footer class="site-footer">
+  <footer>
     <div class="footer-inner">
-      <p>Yfirlit unnið sjálfvirkt úr RSS-straumum opinberra heimilda. Tenglar vísa á upprunalegar heimildir.</p>
-      <span class="footer-logo">Í<span>MARK</span></span>
+      <span>ÍMARK Intelligence velur opinberar heimildir eftir lærdómi og vægi fyrir íslenskt markaðsfólk.</span>
+      <span>GitHub Pages</span>
     </div>
   </footer>
-
-  <script>
-    const buttons = document.querySelectorAll('.filter-btn');
-    const cards = document.querySelectorAll('.card');
-    const noResults = document.getElementById('no-results');
-
-    buttons.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const filter = btn.dataset.filter;
-        buttons.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
-        let visible = 0;
-        cards.forEach(card => {
-          const show = filter === 'all' || card.dataset.category === filter;
-          card.classList.toggle('hidden', !show);
-          if (show) visible++;
-        });
-        noResults.style.display = visible === 0 ? 'block' : 'none';
-      });
-    });
-  </script>
-
 </body>
 </html>
