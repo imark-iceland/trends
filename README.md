@@ -4,7 +4,7 @@ Vikuleg intelligence-vara fyrir félagsmenn ÍMARK:
 
 > Það sem íslenskt markaðsfólk þarf að vita í þessari viku.
 
-Live síða: https://imark-iceland.github.io/trends/
+Live síða: https://imark-iceland.github.io/imark-intelligence
 
 Þetta er ekki fréttasafn og ekki RSS-lesari. Kerfið safnar opinberu efni, metur vægi þess og birtir aðeins atriði sem hafa skýrt gildi fyrir íslenskt markaðsfólk.
 
