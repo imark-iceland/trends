@@ -63,5 +63,44 @@
     "market_relevance": "Global",
     "score": 78,
     "pinnedUntil": "2026-07-14T00:00:00.000Z"
+  },
+  {
+    "enabled": true,
+    "title": "AI bjargar ekki auglýsingum eitt og sér",
+    "source": "The Verge / Decoder",
+    "url": "https://www.theverge.com/podcast/959792/digitas-ceo-amy-lanzi-cannes-ad-industry-marketing-ai-creators",
+    "date": "2026-07-02T00:00:00.000Z",
+    "category": "AI og sköpun",
+    "summary_is": "Amy Lanzi, forstjóri Digitas North America, segir að AI muni ekki eitt og sér bjarga auglýsingaiðnaðinum. Hún leggur áherslu á að AI geti aukið skilvirkni og hraðað vinnuferlum, en leysi ekki af hólmi sterkar hugmyndir, skapandi hugsun og skýra vörumerkjastefnu.",
+    "why_it_matters_is": "Gott mótvægi við AI-hype. Fyrir íslenskar stofur og markaðsteymi er lærdómurinn að nota AI til að styrkja teymið, ekki til að sleppa hugmyndavinnunni.",
+    "market_relevance": "Global",
+    "score": 86,
+    "pinnedUntil": "2026-07-16T00:00:00.000Z"
+  },
+  {
+    "enabled": true,
+    "title": "Borg Brugghús og Kaleo setja menningu í vörumerkjasamstarf",
+    "source": "Ölgerðin",
+    "url": "https://www.olgerdin.is/um-okkur/frettir/frett/borg-brugghus-og-kaleo-kynna-nyjan-samstarfsbjor-hey-gringo",
+    "date": "2026-07-01T00:00:00.000Z",
+    "category": "ÍS vörumerki og samstarf",
+    "summary_is": "Borg Brugghús og Kaleo hafa kynnt nýjan samstarfsbjór, Hey Gringo, sem dregur nafn sitt af samnefndu lagi hljómsveitarinnar. Kaleo kom að þróun vörunnar með bruggarateymi Borgar Brugghúss.",
+    "why_it_matters_is": "Áhugavert íslenskt dæmi um vörumerkjasamstarf þar sem tónlist, menning og vara eru tengd saman. Svona samstarf getur skapað sögu, dreifingu og tilfinningatengsl umfram hefðbundna vörukynningu.",
+    "market_relevance": "Icelandic",
+    "score": 82,
+    "pinnedUntil": "2026-07-16T00:00:00.000Z"
+  },
+  {
+    "enabled": true,
+    "title": "Creator economy færist nær kjarna markaðsstarfs",
+    "source": "Business Insider",
+    "url": "https://www.businessinsider.com/cannes-lions-recap-creativity-ai-creators-2026-6",
+    "date": "2026-06-26T00:00:00.000Z",
+    "category": "Creator economy",
+    "summary_is": "Á Cannes Lions var skýr áhersla á creators og áhrif þeirra á markaðsstarf. Umræðan snerist ekki bara um áhrifavalda heldur um creators sem sjálfstæða miðla, vörumerkjasmiði og samstarfsaðila fyrirtækja.",
+    "why_it_matters_is": "Íslensk fyrirtæki þurfa að hugsa creators sem langtímasamstarfsaðila, ekki bara sem stakar birtingar. Gæði samstarfs, trúverðugleiki og vörumerkjafit skipta meira máli en fjöldi fylgjenda.",
+    "market_relevance": "Global",
+    "score": 78,
+    "pinnedUntil": "2026-07-16T00:00:00.000Z"
   }
 ]
