@@ -378,13 +378,20 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
 async function main() {
   console.log("🏗️  ÍMARK Trends – Generate HTML\n");
 
+  const intelligencePath = path.join(ROOT, "data/intelligence.json");
   const latestPath = path.join(ROOT, "data/latest.json");
   let data;
   try {
-    data = JSON.parse(await fs.readFile(latestPath, "utf-8"));
+    const raw = JSON.parse(await fs.readFile(intelligencePath, "utf-8"));
+    // intelligence.json uses topItems; normalize to items
+    data = { ...raw, items: raw.items ?? raw.topItems ?? [] };
   } catch {
-    console.error("❌ data/latest.json not found. Run `node src/fetch.js` first.");
-    process.exit(1);
+    try {
+      data = JSON.parse(await fs.readFile(latestPath, "utf-8"));
+    } catch {
+      console.error("❌ data/intelligence.json not found. Run `node src/fetch.js` first.");
+      process.exit(1);
+    }
   }
 
   const archiveWeeks = await getArchivedWeeks();
