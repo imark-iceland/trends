@@ -383,8 +383,14 @@ async function main() {
   let data;
   try {
     const raw = JSON.parse(await fs.readFile(intelligencePath, "utf-8"));
-    // intelligence.json uses topItems; normalize to items
-    data = { ...raw, items: raw.items ?? raw.topItems ?? [] };
+    // intelligence.json uses topItems + url/summary_is; normalize for generate
+    const normalizeItem = (item) => ({
+      ...item,
+      link: item.link ?? item.url,
+      summary: item.summary ?? item.summary_is,
+      whyItMatters: item.whyItMatters ?? item.why_it_matters_is,
+    });
+    data = { ...raw, items: (raw.items ?? raw.topItems ?? []).map(normalizeItem) };
   } catch {
     try {
       data = JSON.parse(await fs.readFile(latestPath, "utf-8"));
