@@ -316,28 +316,6 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
 
   ${renderTopStories(brief)}
 
-  <div class="more-header">
-    <span class="more-header-label">Fleiri fréttir</span>
-    <div class="more-header-line"></div>
-  </div>
-
-  <nav class="filters" aria-label="Sía eftir flokki">
-    <div class="filters-inner">
-      <span class="filter-label">Flokkur:</span>
-      <button class="filter-btn active" data-filter="all">Allir</button>
-      ${filterButtons}
-    </div>
-  </nav>
-
-  <main class="main">
-    <div class="main-inner">
-      <div class="cards-grid" id="cards-grid">
-        ${cards}
-        <p class="no-results" id="no-results">Engar greinar í þessum flokki.</p>
-      </div>
-    </div>
-  </main>
-
   ${renderArchiveLinks(archiveWeeks)}
 
   <footer class="site-footer">
