@@ -23,11 +23,14 @@ const TARGET_LOCAL_SHARE = 0.4;
 const CUTOFF = Date.now() - DAYS_BACK * 86400000;
 const UA = "IMARK-Intelligence/1.0 (+https://imark-iceland.github.io/trends/)";
 const EDITORIAL_ITEMS_PATH = path.join(ROOT, "config/editorial-items.json");
+const DIAGNOSTICS_PATH = path.join(ROOT, "data/diagnostics.json");
 
 const parser = new Parser({
   timeout: 12000,
   headers: { "User-Agent": UA },
 });
+
+const diagnostics = [];
 
 const SOURCES = [
   { name: "Markaðsmál", url: "https://markadsmal.is/feed/", type: "rss", market: "Icelandic", focus: "icelandic-market" },
@@ -154,6 +157,46 @@ function containsKeyword(text, keyword) {
 
 function hasAny(text, keywords) {
   return keywords.some((keyword) => containsKeyword(text, keyword));
+}
+
+function diagnosticsType(source) {
+  if (source.type === "site") return "html";
+  return source.type;
+}
+
+function createDiagnostic(source) {
+  return {
+    name: source.name,
+    url: source.url,
+    type: diagnosticsType(source),
+    status: "skipped",
+    httpStatus: null,
+    itemsFound: 0,
+    itemsAfterFilter: 0,
+    itemsRejected: 0,
+    rejectionReasons: {},
+    errorMessage: "",
+    lastChecked: new Date().toISOString(),
+  };
+}
+
+function addRejection(diag, reason) {
+  diag.itemsRejected += 1;
+  diag.rejectionReasons[reason] = (diag.rejectionReasons[reason] || 0) + 1;
+}
+
+function finishDiagnostic(diag) {
+  if (diag.status === "skipped") diag.status = "success";
+  diagnostics.push(diag);
+}
+
+function baseUrlForFallback(url) {
+  try {
+    const parsed = new URL(url);
+    return `${parsed.protocol}//${parsed.host}/`;
+  } catch {
+    return url;
+  }
 }
 
 function getIsoWeek(date = new Date()) {
