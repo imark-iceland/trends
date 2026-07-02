@@ -4,7 +4,7 @@ Vikuleg intelligence-vara fyrir félagsmenn ÍMARK:
 
 > Það sem íslenskt markaðsfólk þarf að vita í þessari viku.
 
-Live síða: https://imark-iceland.github.io/trends/
+Live síða: https://imark-iceland.github.io/imark-intelligence
 
 Þetta er ekki fréttasafn og ekki RSS-lesari. Kerfið safnar opinberu efni, metur vægi þess og birtir aðeins atriði sem hafa skýrt gildi fyrir íslenskt markaðsfólk.
 
@@ -79,6 +79,59 @@ Dashboardið sýnir eitt ritstýrt yfirlit með 8-12 mikilvægustu atriðunum í
 Ef ritstjórn veit af mikilvægu atriði sem sjálfvirka vaktin grípur ekki má setja það í `config/editorial-items.json`.
 
 Settu `enabled` í `true`, fylltu inn raunverulegan heimildartengil og hafðu `market_relevance` sem `Icelandic` eða `Global`. Slík atriði fá hátt vægi en eru samt aldrei birt án `source` og `url`.
+
+## Heimildir
+
+Heimildir eru skilgreindar í `src/fetch.js` í `SOURCES` listanum.
+
+Til að bæta við heimild:
+
+1. Bættu við færslu með `name`, `url`, `type`, `market` og `focus`.
+2. Notaðu `type: "rss"` ef feed er til, annars `type: "html"`.
+3. Fyrir íslenska RSS heimild er gott að setja `fallbackUrl` svo kerfið reyni HTML ef RSS bilar.
+4. Veldu `market: "Icelandic"` fyrir íslenskar heimildir og `market: "Global"` fyrir alþjóðlegar.
+5. Veldu `focus` eftir efninu, til dæmis `agency`, `brand`, `icelandic-market`, `ai`, `platform` eða `international-case`.
+
+HTML vaktin reynir að finna greinatengla á síðunni. Ef síðan notar mikið JavaScript eða hefur enga venjulega tengla birtist það í diagnostics.
+
+## Diagnostics
+
+Hver keyrsla skrifar `data/diagnostics.json`.
+
+Skráin sýnir fyrir hverja heimild:
+
+- `name`
+- `url`
+- `type`: `rss`, `html`, `manual` eða `api`
+- `status`: `success`, `failed` eða `skipped`
+- `httpStatus`
+- `itemsFound`
+- `itemsAfterFilter`
+- `itemsRejected`
+- `rejectionReasons`
+- `errorMessage`
+- `lastChecked`
+
+Ef engin íslensk atriði finnast setur kerfið `noIcelandicItems: true`, skrifar warning í console og birtir viðvörun á dashboardinu.
+
+Algengar ástæður í `rejectionReasons`:
+
+- `no-new-articles-in-window`: atriðið var of gamalt fyrir vikuvaktina.
+- `weak-market-relevance`: atriðið var of almennt eða ekki nógu sterkt fyrir markaðsfólk.
+- `agency-signal-missing`: agency-vakt fann efni en ekki merki um herferð, case, verðlaun, ráðningu eða svipað.
+- `hiring-not-marketing-or-communications`: ráðning var ekki nógu tengd markaðs- eða samskiptastarfi.
+- `ai-not-marketing-related`: AI frétt tengdist ekki markaðsstarfi nógu skýrt.
+- `score-below-threshold`: atriðið fékk ekki nóg intelligence-stig.
+
+## Ef 0 íslensk atriði birtast
+
+1. Opnaðu `data/diagnostics.json`.
+2. Skoðaðu `summary.icelandicSourcesWorking` og `summary.icelandicItemsSelected`.
+3. Finndu íslenskar heimildir með `status: "failed"` og lestu `errorMessage`.
+4. Finndu heimildir með `itemsFound > 0` en `itemsAfterFilter: 0` og skoðaðu `rejectionReasons`.
+5. Ef heimild er að skila réttum atriðum sem filter hafnar, þarf að laga scoring/filter í `src/fetch.js`.
+6. Ef heimild svarar ekki, þarf að laga `url`, bæta við `fallbackUrl` eða nota aðra opinbera heimild.
+7. Ef mikilvægt íslenskt atriði er vitað en vaktin nær því ekki, má setja það tímabundið í `config/editorial-items.json` með raunverulegri heimild.
 
 ## Keyrsla
 
