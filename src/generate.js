@@ -166,8 +166,8 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ÍMARK – Vikan í markaðsmálum</title>
-  <meta name="description" content="Valin frétt og þróun í markaðsmálum, branding, auglýsingum og gervigreind – fyrir ÍMARK félaga." />
+  <title>ÍMARK Intelligence</title>
+  <meta name="description" content="Það sem íslenskt markaðsfólk þarf að vita núna – ÍMARK Intelligence." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
@@ -303,15 +303,14 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
         <a class="header-logo" href="#"><img src="imark-logo.png" alt="ÍMARK" /></a>
         <span class="header-tagline">Markaðstíðindi</span>
       </div>
-      <span class="header-date">Uppfært ${formatGeneratedDate(data.generatedAt)}</span>
+      <span class="header-date">Uppfært ${formatGeneratedDate(new Date().toISOString())}</span>
     </div>
   </header>
 
   <section class="week-hero">
     <div class="week-hero-inner">
-      <span class="week-label">Vikan í markaðsmálum</span>
-      <h1 class="week-title">${formatWeekId(data.weekId)}</h1>
-      <p class="week-subtitle">${data.items.length} valdar greinar · ${formatGeneratedDate(data.generatedAt)}</p>
+      <h1 class="week-title">ÍMARK Intelligence</h1>
+      <p class="week-subtitle">Það sem íslenskt markaðsfólk þarf að vita núna</p>
     </div>
   </section>
 
