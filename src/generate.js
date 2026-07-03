@@ -168,8 +168,8 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>ÍMARK vaktinn</title>
-  <meta name="description" content="Það sem íslenskt markaðsfólk þarf að vita núna – ÍMARK vaktinn." />
+  <title>ÍMARK vaktin</title>
+  <meta name="description" content="Það sem íslenskt markaðsfólk þarf að vita núna – ÍMARK vaktin." />
   <link rel="icon" type="image/png" href="imark-logo.png" />
   <link rel="apple-touch-icon" href="imark-logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -324,7 +324,7 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
 
   <section class="week-hero">
     <div class="week-hero-inner">
-      <h1 class="week-title">ÍMARK vaktinn</h1>
+      <h1 class="week-title">ÍMARK vaktin</h1>
       <p class="week-subtitle">Það sem íslenskt markaðsfólk þarf að vita núna</p>
     </div>
   </section>
@@ -338,7 +338,7 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
       <div class="footer-top">
         <div class="footer-brand">
           <img src="imark-logo.png" alt="ÍMARK" />
-          <p>ÍMARK vaktinn er ritstjórnarlegt yfirlit yfir það sem skiptir máli í íslenskum og alþjóðlegum markaðsmálum.</p>
+          <p>ÍMARK vaktin er ritstjórnarlegt yfirlit yfir það sem skiptir máli í íslenskum og alþjóðlegum markaðsmálum.</p>
         </div>
         <nav class="footer-links">
           <a href="https://www.imark.is" target="_blank" rel="noopener">imark.is</a>
@@ -346,7 +346,7 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
       </div>
       <hr class="footer-divider" />
       <p class="footer-disclaimer">
-        Efni ÍMARK vaktinn er tekið saman úr opnum heimildum, RSS-straumum, fréttamiðlum og opinberum tilkynningum. Greinargerðir og samantektir eru unnar af ritstjórn ÍMARK að hluta til með aðstoð gervigreindar. ÍMARK ber ekki ábyrgð á nákvæmni, heildarleika eða réttmæti þeirra upplýsinga sem birtar eru og mælir með að lesendur skoði frumheimildir áður en ákvarðanir eru teknar á grundvelli efnisins.
+        Efni ÍMARK vaktin er tekið saman úr opnum heimildum, RSS-straumum, fréttamiðlum og opinberum tilkynningum. Greinargerðir og samantektir eru unnar af ritstjórn ÍMARK að hluta til með aðstoð gervigreindar. ÍMARK ber ekki ábyrgð á nákvæmni, heildarleika eða réttmæti þeirra upplýsinga sem birtar eru og mælir með að lesendur skoði frumheimildir áður en ákvarðanir eru teknar á grundvelli efnisins.
       </p>
       <div class="footer-bottom">
         <span class="footer-copy">&copy; ${new Date().getFullYear()} ÍMARK – Samtök markaðs- og auglýsingafólks</span>
