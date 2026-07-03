@@ -196,7 +196,7 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
     }
 
     html { font-size: 16px; scroll-behavior: smooth; }
-    body { font-family: var(--font); background: var(--light); color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--font); background: #0a0a0a; color: var(--text); line-height: 1.6; -webkit-font-smoothing: antialiased; }
     a { color: inherit; text-decoration: none; }
     a:hover { text-decoration: underline; }
 
