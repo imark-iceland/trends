@@ -5,6 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ÍMARK Intelligence</title>
   <meta name="description" content="Það sem íslenskt markaðsfólk þarf að vita núna – ÍMARK Intelligence." />
+  <link rel="icon" type="image/png" href="imark-logo.png" />
+  <link rel="apple-touch-icon" href="imark-logo.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
@@ -118,8 +120,18 @@
     .archive-link:hover { background: var(--dark); color: var(--white); border-color: var(--dark); text-decoration: none; }
 
     /* Footer */
-    .site-footer { background: var(--dark); color: var(--grey-3); padding: 2rem var(--gap); font-size: 0.78rem; }
-    .footer-inner { max-width: var(--max-w); margin: 0 auto; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.75rem; }
+    .site-footer { background: #0a0a0a; color: var(--grey-3); padding: 3rem var(--gap) 2rem; font-size: 0.78rem; border-top: 1px solid #222; }
+    .footer-inner { max-width: var(--max-w); margin: 0 auto; }
+    .footer-top { display: flex; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; gap: 2rem; margin-bottom: 2rem; }
+    .footer-brand img { height: 32px; width: auto; margin-bottom: 0.5rem; display: block; }
+    .footer-brand p { font-size: 0.75rem; color: var(--grey-4); max-width: 280px; line-height: 1.5; }
+    .footer-links { display: flex; flex-direction: column; gap: 0.4rem; text-align: right; }
+    .footer-links a { color: var(--grey-3); text-decoration: none; font-size: 0.78rem; }
+    .footer-links a:hover { color: var(--white); }
+    .footer-divider { border: none; border-top: 1px solid #222; margin-bottom: 1.5rem; }
+    .footer-disclaimer { font-size: 0.72rem; color: var(--grey-4); line-height: 1.6; max-width: 720px; margin-bottom: 1.5rem; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+    .footer-copy { font-size: 0.72rem; color: var(--grey-4); }
     .footer-logo { font-weight: 700; font-size: 0.85rem; color: var(--white); }
     .footer-logo span { color: var(--red); }
 
@@ -280,8 +292,24 @@
 
   <footer class="site-footer">
     <div class="footer-inner">
-      <p>undefined</p>
-      <span class="footer-logo">Í<span>MARK</span></span>
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src="imark-logo.png" alt="ÍMARK" />
+          <p>ÍMARK Intelligence er ritstjórnarlegt yfirlit yfir það sem skiptir máli í íslenskum og alþjóðlegum markaðsmálum.</p>
+        </div>
+        <nav class="footer-links">
+          <a href="https://www.imark.is" target="_blank" rel="noopener">imark.is</a>
+          <a href="https://www.imark.is/membership" target="_blank" rel="noopener">Meðlimur í ÍMARK</a>
+        </nav>
+      </div>
+      <hr class="footer-divider" />
+      <p class="footer-disclaimer">
+        Efni ÍMARK Intelligence er tekið saman úr opnum heimildum, RSS-straumum, fréttamiðlum og opinberum tilkynningum. Greinargerðir og samantektir eru unnar af ritstjórn ÍMARK að hluta til með aðstoð gervigreindar. ÍMARK ber ekki ábyrgð á nákvæmni, heildarleika eða réttmæti þeirra upplýsinga sem birtar eru og mælir með að lesendur skoði frumheimildir áður en ákvarðanir eru teknar á grundvelli efnisins.
+      </p>
+      <div class="footer-bottom">
+        <span class="footer-copy">&copy; 2026 ÍMARK – Íslenska markaðsfélagið</span>
+        <span class="footer-logo">Í<span>MARK</span></span>
+      </div>
     </div>
   </footer>
 
