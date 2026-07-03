@@ -132,10 +132,12 @@ function renderArchiveLinks(weeks) {
     .map((w) => `<a href="weeks/${w}.html" class="archive-link">${formatWeekId(w)}</a>`)
     .join("");
   return `
-  <section class="archive-section">
-    <h3 class="archive-heading">Eldri vikur</h3>
-    <div class="archive-links">${links}</div>
-  </section>`;
+  <div class="archive-wrapper">
+    <section class="archive-section">
+      <h3 class="archive-heading">Eldri vikur</h3>
+      <div class="archive-links">${links}</div>
+    </section>
+  </div>`;
 }
 
 async function getArchivedWeeks() {
@@ -276,11 +278,12 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
     .more-header-line { flex: 1; height: 1px; background: var(--grey-4); }
 
     /* Archive */
-    .archive-section { max-width: var(--max-w); margin: 0 auto 3rem; padding: 0 var(--gap); }
+    .archive-wrapper { background: #0a0a0a; border-top: 1px solid #222; }
+    .archive-section { max-width: var(--max-w); margin: 0 auto; padding: 2rem var(--gap); }
     .archive-heading { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--grey-3); margin-bottom: 0.75rem; }
     .archive-links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
-    .archive-link { font-size: 0.78rem; color: var(--text-dim); border: 1px solid var(--grey-4); padding: 0.3rem 0.7rem; transition: all 0.15s; }
-    .archive-link:hover { background: var(--dark); color: var(--white); border-color: var(--dark); text-decoration: none; }
+    .archive-link { font-size: 0.78rem; color: var(--grey-3); border: 1px solid #333; padding: 0.3rem 0.7rem; transition: all 0.15s; text-decoration: none; }
+    .archive-link:hover { background: var(--red); color: var(--white); border-color: var(--red); }
 
     /* Footer */
     .site-footer { background: #0a0a0a; color: var(--grey-3); padding: 3rem var(--gap) 2rem; font-size: 0.78rem; border-top: 1px solid #222; }
