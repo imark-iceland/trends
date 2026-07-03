@@ -339,7 +339,6 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
         </div>
         <nav class="footer-links">
           <a href="https://www.imark.is" target="_blank" rel="noopener">imark.is</a>
-          <a href="https://www.imark.is/membership" target="_blank" rel="noopener">Meðlimur í ÍMARK</a>
         </nav>
       </div>
       <hr class="footer-divider" />
@@ -348,7 +347,6 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
       </p>
       <div class="footer-bottom">
         <span class="footer-copy">&copy; ${new Date().getFullYear()} ÍMARK – Samtök markaðs- og auglýsingafólks</span>
-        <span class="footer-logo">Í<span>MARK</span></span>
       </div>
     </div>
   </footer>
