@@ -347,7 +347,7 @@ function buildHTML(data, archiveWeeks = [], brief = null) {
         Efni ÍMARK Intelligence er tekið saman úr opnum heimildum, RSS-straumum, fréttamiðlum og opinberum tilkynningum. Greinargerðir og samantektir eru unnar af ritstjórn ÍMARK að hluta til með aðstoð gervigreindar. ÍMARK ber ekki ábyrgð á nákvæmni, heildarleika eða réttmæti þeirra upplýsinga sem birtar eru og mælir með að lesendur skoði frumheimildir áður en ákvarðanir eru teknar á grundvelli efnisins.
       </p>
       <div class="footer-bottom">
-        <span class="footer-copy">&copy; ${new Date().getFullYear()} ÍMARK – Íslenska markaðsfélagið</span>
+        <span class="footer-copy">&copy; ${new Date().getFullYear()} ÍMARK – Samtök markaðs- og auglýsingafólks</span>
         <span class="footer-logo">Í<span>MARK</span></span>
       </div>
     </div>
