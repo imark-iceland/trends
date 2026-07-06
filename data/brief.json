@@ -1,6 +1,6 @@
 {
   "weekId": "2026-W27",
-  "publishedAt": "2026-07-03",
+  "publishedAt": "2026-07-06",
   "editor": "IMARK ritstjorn",
   "iceland": [
     {
@@ -8,16 +8,16 @@
       "category": "Verðlaun og íslensk sköpun",
       "source": "Vísir",
       "link": "https://www.visir.is/g/20262901885d/aldrei-fleiri-ljon-a-islandi",
-      "summary": "Ísland setti sögulegt met á Cannes Lions 2026 með þremur tilnefningum og tveimur Ljónum á einni og sömu hátíðinni. Pipar/TBWA hlaut tvö Ljón fyrir Hola! herferðina fyrir Colas og Hvíta húsið var tilnefnt fyrir Iceland: The Real Unreal fyrir Icelandair.",
-      "whyItMatters": "Þetta er eitt sterkasta proof-point ársins fyrir íslenskt auglýsinga- og markaðsfólk. Árangurinn sýnir að íslenskar hugmyndir geta keppt á stærsta alþjóðlega sviði auglýsingageirans þegar innsýn, einföld hugmynd og framkvæmd vinna vel saman."
+      "summary": "Íslenskar auglýsingastofur settu sögulegt met á Cannes Lions 2026 með þremur tilnefningum og tveimur Ljónum á einni og sömu hátíðinni. Pipar/TBWA hlaut tvö Ljón fyrir Hola! herferðina fyrir Colas og Hvíta húsið var tilnefnt fyrir Iceland: The Real Unreal fyrir Icelandair.",
+      "whyItMatters": "Þetta er eitt sterkasta proof-point ársins fyrir íslenskt auglýsinga- og markaðsfólk. Árangurinn sýnir að íslenskar hugmyndir geta keppt á stærsta alþjóðlega sviði auglýsingageirans þegar innsýn, einföld hugmynd og sterk framkvæmd vinna saman."
     },
     {
-      "title": "Hola! heldur áfram að sanna gildi einfaldrar hugmyndar",
+      "title": "Hola! sýnir hvernig einföld hugmynd getur orðið alþjóðlegt case",
       "category": "Íslensk herferð",
       "source": "Pipar/TBWA",
       "link": "https://pipar-tbwa.is/verkin/hola/",
-      "summary": "Hola! herferð Colas Ísland og Pipar/TBWA hefur nú hlotið tvenn bronsverðlaun á Cannes Lions 2026, auk fyrri verðlauna á ÍMARK-hátíðinni og PHNX. Herferðin byggir á einfaldri en áhrifaríkri hugmynd um holur í vegakerfinu og náði að virkja fjölmiðla, samfélagsmiðla og umræðu um innviði.",
-      "whyItMatters": "Sterkt dæmi um hvernig lítið markaðssvæði getur skapað alþjóðlega eftirtekt með skýrri hugmynd, húmor og góðri samþættingu miðla. Þetta er case sem íslenskt markaðsfólk ætti að læra af."
+      "summary": "Hola! herferð Pipar/TBWA fyrir Colas Ísland hófst sem leið til að vekja athygli á ástandi vegakerfisins með persónunni Nicolas og holum í vegum landsins. Herferðin virkjaði samfélagsmiðla, umhverfismiðla, fjölmiðlaumræðu og pólitíska athygli og hefur nú hlotið alþjóðleg verðlaun.",
+      "whyItMatters": "Sterkt íslenskt case um hvernig húmor, skýr innsýn og samfélagslegt samhengi geta breytt verkefni í menningarlega umræðu. Þetta er efni sem ÍMARK-félagar ættu að geta lært beint af."
     },
     {
       "title": "Borg Brugghús og Kaleo setja menningu í vörumerkjasamstarf",
@@ -38,6 +38,14 @@
   ],
   "items": [
     {
+      "title": "AI gerir orðspor vörumerkja flóknara og mikilvægara",
+      "category": "AI, orðspor og vörumerki",
+      "source": "Business Insider",
+      "link": "https://www.businessinsider.com/ai-makes-managing-a-brands-reputation-more-complex-than-ever-2026-6",
+      "summary": "Markaðs- og samskiptaleiðtogar ræddu á Cannes Lions hvernig AI-vélar breyta því hvernig vörumerki birtast, finnast og eru metin. Earned media, umsagnir, gagnsæi, samræmdar upplýsingar og vél-læsilegt efni verða sífellt mikilvægari hluti af orðspori vörumerkja.",
+      "whyItMatters": "Íslensk fyrirtæki þurfa að hugsa lengra en hefðbundið SEO. Í AI-leit skiptir máli hvað er sagt um vörumerkið víða á netinu, hversu traustar upplýsingar eru og hvort efnið sé nógu skýrt fyrir bæði fólk og vélar."
+    },
+    {
       "title": "AI bjargar ekki auglýsingum eitt og sér",
       "category": "AI og sköpun",
       "source": "The Verge / Decoder",
@@ -46,20 +54,12 @@
       "whyItMatters": "Mikilvæg áminning fyrir íslenskar stofur og markaðsteymi. AI getur flýtt ferlum og aukið framleiðslugetu, en það kemur ekki í staðinn fyrir innsýn, hugmyndavinnu, smekk og vörumerkjastefnu."
     },
     {
-      "title": "Meta færir markaðsmál nær gögnum og AI",
-      "category": "Markaðsstjórnun og AI",
-      "source": "Business Insider",
-      "link": "https://www.businessinsider.com/meta-names-a-new-cmo-denise-moreno-2026-7",
-      "summary": "Meta hefur fært Alex Schultz úr CMO-hlutverki í nýtt Chief Data Officer hlutverk og Denise Moreno tekur við sem CMO. Breytingin sýnir hvernig markaðsstarf, gögn, vöxtur og AI eru að renna saman hjá stærstu tæknifyrirtækjunum.",
-      "whyItMatters": "Þetta gefur vísbendingu um hvert hlutverk markaðsstjóra er að þróast. Markaðsleiðtogar þurfa ekki bara að hugsa um vörumerki og sköpun heldur líka gögn, mælingar, AI, tilraunir og rekstrarlegan árangur."
-    },
-    {
-      "title": "AI-umræðan færist frá hype yfir í viðskiptalegan árangur",
-      "category": "AI og markaðsárangur",
-      "source": "Business Insider",
-      "link": "https://www.businessinsider.com/bain-cmo-erika-serow-cannes-lions-2026-7",
-      "summary": "Erika Serow, CMO hjá Bain, segir að umræðan um AI sé að færast frá almennum tilraunum og hype yfir í skýrari spurningar um hvernig tæknin leysir raunveruleg viðskiptaverkefni. Hún leggur áherslu á jafnvægi milli sköpunar, mælinga og tækni.",
-      "whyItMatters": "Þetta er gagnlegt fyrir íslensk fyrirtæki sem eru að prófa AI í markaðsstarfi. Næsta skref er ekki fleiri tilraunir til að prófa tæknina, heldur skýrari markmið, mælingar og samþætting við daglegt starf."
+      "title": "ChatGPT auglýsingar gætu orðið nýtt lag í kaupferlinu",
+      "category": "AI, miðlar og auglýsingar",
+      "source": "Marketing Dive / OpenAI",
+      "link": "https://www.marketingdive.com/news/how-openai-positioning-chatgpt-ads-cannes-lions-debut/823476/",
+      "summary": "OpenAI og markaðsaðilar eru farin að staðsetja auglýsingar í ChatGPT sem hluta af rannsóknar- og samanburðarstigi kaupferlisins. Hugmyndin er að auglýsingar birtist þar sem notendur eru þegar að leita upplýsinga, bera saman valkosti og taka ákvörðun.",
+      "whyItMatters": "Þetta gæti orðið nýr miðill fyrir vörumerki, ekki bara ný SEO-áskorun. Íslensk fyrirtæki þurfa að undirbúa sig fyrir heim þar sem sýnileiki í samtalsviðmótum skiptir jafn miklu máli og Google, samfélagsmiðlar og hefðbundin birting."
     }
   ]
 }
