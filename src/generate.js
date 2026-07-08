@@ -86,13 +86,14 @@ function renderCard(item, index) {
 function renderTopStories(brief) {
   if (!brief) return "";
 
-  const icelandItems = new Set(brief.iceland || []);
-  const allItems = [...(brief.iceland || []), ...(brief.items || [])];
+  const allItems = (brief.items || [])
+    .slice()
+    .sort((a, b) => new Date(b.date || 0) - new Date(a.date || 0));
 
   if (allItems.length === 0) return "";
 
   const cards = allItems.map((item) => {
-    const isIcelandic = icelandItems.has(item);
+    const isIcelandic = item.iceland === true;
     return `
     <article class="top-card">
       <span class="top-card-flag">${isIcelandic ? "🇮🇸 " : ""}${item.category}</span>
