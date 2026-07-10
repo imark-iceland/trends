@@ -54,7 +54,7 @@ function renderCard(item, index) {
 
       <div class="card-meta">
         <span class="card-category">${item.category}</span>
-        <span class="card-date">${formatDate(item.pubDate)}</span>
+        <span class="card-date">${formatDate(item.date || item.pubDate)}</span>
       </div>
 
       <h2 class="card-title">
@@ -107,7 +107,7 @@ function renderTopStories(brief) {
         <p>${item.whyItMatters}</p>
       </div>` : ""}
       <div class="top-card-source">
-        Heimild: <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.source}</a>
+        Heimild: <a href="${item.link}" target="_blank" rel="noopener noreferrer">${item.source}</a>${item.date ? ` · <span class="top-card-date">${formatDate(item.date)}</span>` : ""}
       </div>
     </article>`;
   }).join("\n");
