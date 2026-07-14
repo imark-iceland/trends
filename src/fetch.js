@@ -39,6 +39,7 @@ const SOURCES = [
   { name: "VB", url: "https://vb.is/", type: "html", market: "Icelandic", focus: "icelandic-market" },
   { name: "Mbl Viðskipti", url: "https://www.mbl.is/feeds/vidskipti/", type: "rss", market: "Icelandic", focus: "icelandic-market", fallbackUrl: "https://www.mbl.is/vidskipti/" },
   { name: "Vísir Viðskipti", url: "https://www.visir.is/rss/section/vidskipti", type: "rss", market: "Icelandic", focus: "icelandic-market", fallbackUrl: "https://www.visir.is/vidskipti" },
+  { name: "ÍMARK", url: "https://www.imark.is/blog", type: "html", market: "Icelandic", focus: "icelandic-market", dateFromPrecedingTimeTag: true },
 
   { name: "Pipar/TBWA", url: "https://pipar-tbwa.is/", type: "html", market: "Icelandic", focus: "agency" },
   { name: "Brandenburg", url: "https://brandenburg.is/", type: "html", market: "Icelandic", focus: "agency" },
@@ -238,6 +239,14 @@ function parseDateFromText(title) {
   const named = text.match(new RegExp(`\\b(\\d{1,2})\\.\\s*(${monthNames})\\s+(20\\d{2})\\b`, "i"));
   if (named) return new Date(Date.UTC(Number(named[3]), months[named[2]], Number(named[1]), 12)).toISOString();
   return "";
+}
+
+function parseSlashDate(text) {
+  const match = String(text).trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{2,4})$/);
+  if (!match) return "";
+  const [, m, d, yRaw] = match;
+  const year = yRaw.length === 2 ? 2000 + Number(yRaw) : Number(yRaw);
+  return new Date(Date.UTC(year, Number(m) - 1, Number(d), 12)).toISOString();
 }
 
 function isBlocked(title, summary, url = "") {
@@ -525,7 +534,16 @@ async function fetchHTML(source, existingDiagnostic = null) {
     if (!response.ok) throw new Error(`HTML URL responded HTTP ${response.status}`);
     const html = await response.text();
     const links = [...html.matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)]
-      .map(([, href, label]) => ({ url: absoluteUrl(href, source.url), title: cleanText(label) }))
+      .map((match) => {
+        const [, href, label] = match;
+        const link = { url: absoluteUrl(href, source.url), title: cleanText(label) };
+        if (source.dateFromPrecedingTimeTag) {
+          const preceding = html.slice(Math.max(0, match.index - 600), match.index);
+          const timeMatches = [...preceding.matchAll(/<time[^>]*>([^<]+)<\/time>/gi)];
+          if (timeMatches.length) link.dateHint = timeMatches[timeMatches.length - 1][1].trim();
+        }
+        return link;
+      })
       .filter((link) => link.url && link.title.length >= 12)
       .filter((link) => !link.url.includes("#") && !/\.(pdf|jpg|jpeg|png|gif|svg)$/i.test(link.url));
     diag.itemsFound = links.length;
@@ -558,7 +576,7 @@ async function fetchHTML(source, existingDiagnostic = null) {
       }
       const result = evaluateCandidate(source, {
         ...link,
-        date: parseDateFromText(link.title),
+        date: (link.dateHint && parseSlashDate(link.dateHint)) || parseDateFromText(link.title),
         rawSummary: "",
       });
       if (result.item) items.push(result.item);
