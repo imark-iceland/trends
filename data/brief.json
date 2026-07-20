@@ -1,8 +1,38 @@
 {
-  "weekId": "2026-W27",
-  "publishedAt": "2026-07-06",
+  "weekId": "2026-W30",
+  "publishedAt": "2026-07-20",
   "editor": "IMARK ritstjorn",
   "items": [
+    {
+      "title": "Neutrogena setur vísindi ofar TikTok-ráðum og AI-hávaða",
+      "category": "Brand strategy, traust og neytendahegðun",
+      "source": "Marketing Dive",
+      "link": "https://www.marketingdive.com/news/neutrogena-puts-science-above-virality-with-break-the-rules-campaign/825268/",
+      "date": "2026-07-15",
+      "iceland": false,
+      "summary": "Neutrogena hefur sett af stað nýjan vörumerkjavettvang, Break the Rules, sem leggur áherslu á vísindalega studdar húðvörulausnir frekar en ráð úr samfélagsmiðlum, AI-tólum eða óformlegum jafningjaráðum. Fyrsta herferðin snýst um retinol og byggir á leitargögnum og social listening.",
+      "whyItMatters": "Mjög gott dæmi um hvernig vörumerki geta svarað upplýsingaóreiðu og AI-hávaða með sérfræðiþekkingu, trausti og skýrri afstöðu. Fyrir íslensk vörumerki er lærdómurinn að stundum er sterkasta leiðin ekki að elta viral trend, heldur að eiga trúverðuga sérstöðu í flokki þar sem neytendur eru ringlaðir."
+    },
+    {
+      "title": "AI fer úr tilraunum yfir í ábyrgð og mælanlegan árangur",
+      "category": "AI, mælingar og markaðsstjórnun",
+      "source": "Marketing Dive",
+      "link": "https://www.marketingdive.com/news/ai-is-accelerating-the-accountability-gap-heres-how-cmos-can-close-it/824338/",
+      "date": "2026-07-15",
+      "iceland": false,
+      "summary": "Marketing Dive fjallar um hvernig AI er komið úr pilot-fasa yfir í production-fasa hjá markaðsteymum. Vandinn er ekki lengur hvort AI sé spennandi, heldur hvort gögn, ábyrgð, mælingar og ákvarðanataka séu nógu skýr til að tæknin skili raunverulegum viðskiptaáhrifum.",
+      "whyItMatters": "Mjög relevant fyrir íslenska markaðsstjóra. AI mun ekki laga óskýra mælikvarða, veik gögn eða óljósa ábyrgð — það gerir veikleikana bara sýnilegri. Þetta er gott efni fyrir ÍMARK því það færir AI-umræðuna frá hype yfir í verklag, stjórnunarlega ábyrgð og árangur."
+    },
+    {
+      "title": "Dollar Shave Club notar AI til að ná aftur eigin vörumerkjarödd",
+      "category": "AI, creative production og vörumerkjarödd",
+      "source": "Marketing Dive",
+      "link": "https://www.marketingdive.com/news/how-dollar-shave-club-uses-generative-ai-to-unlock-advertising-creativity/825016/",
+      "date": "2026-07-14",
+      "iceland": false,
+      "summary": "Dollar Shave Club notar generative AI til að hraða framleiðslu, lækka kostnað og endurheimta hina kaldhæðnu og beittu vörumerkjarödd sem gerði fyrirtækið frægt. Nýleg AI-knúin vinna var unnin að stórum hluta in-house og sýnir hvernig minni teymi geta framleitt hraðar án þess að fórna karakter vörumerkisins.",
+      "whyItMatters": "Þetta er praktískt dæmi fyrir íslensk markaðsteymi með takmarkað budget. AI er ekki bara leið til að gera meira efni; rétt notað getur það hjálpað vörumerki að prófa hraðar, skerpa röddina og minnka framleiðslukostnað án þess að missa mannlega hugmyndavinnu."
+    },
     {
       "title": "The Economist svarar AI-þreytu með 'actual intelligence'",
       "category": "Vörumerkjastefna, AI og outdoor",
@@ -72,6 +102,16 @@
       "iceland": false,
       "summary": "Marketing Dive greinir bestu vörumerkjaherferðir fyrri hluta árs 2026 og bendir á skýrt mynstur: vörumerki eru að reyna að byggja traust með hreinskilni, raunverulegum tengingum og skýrari afstöðu í heimi þar sem fake news, fake feeds og AI-efni eykur vantraust.",
       "whyItMatters": "Þetta er mjög gagnlegt fyrir íslenskt markaðsfólk: í stað þess að elta bara nýjustu tækni eða framleiða meira efni, þurfa vörumerki að sýna trúverðugleika, skýra rödd og raunverulegt erindi. AI gerir þetta ekki minna mikilvægt — heldur miklu mikilvægara."
+    },
+    {
+      "title": "Íslenski auglýsinga- og fjölmiðlamarkaðurinn stendur frammi fyrir næsta AI-breytingarskeiði",
+      "category": "Íslensk markaðsmál, fjölmiðlar og AI",
+      "source": "Vísir",
+      "link": "https://varnish-8.visir.is/g/20262905430d/fjolmidla-og-auglysingabransinn-ju-ju-thad-er-alveg-ad-koma-nytt-bumm-",
+      "date": "2026-07-05",
+      "iceland": true,
+      "summary": "Vísir birtir viðtal við Þórmund Bergsson þar sem staða íslensks fjölmiðla- og auglýsingamarkaðar er sett í samhengi við næsta stóra breytingarskeið: gervigreind. Greinin rammar inn hvernig íslenskir miðlar og fyrirtæki standa frammi fyrir nýrri áskorun í auglýsinga- og markaðsmálum.",
+      "whyItMatters": "Gott íslenskt samhengi fyrir ÍMARK-vaktina. AI-umræðan er ekki bara alþjóðlegt trend heldur snertir beint íslenska miðla, auglýsendur, stofur og tekjumódel. Þetta gæti orðið gott umræðuefni fyrir félagsmenn."
     },
     {
       "title": "AI gerir orðspor vörumerkja flóknara og mikilvægara",
