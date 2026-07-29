@@ -4,6 +4,56 @@
   "editor": "IMARK ritstjorn",
   "items": [
     {
+      "title": "Connected content verður svar við auglýsingaþreytu",
+      "category": "Content, birtingar og creative effectiveness",
+      "source": "Marketing Dive",
+      "link": "https://www.marketingdive.com/news/how-marketers-can-tackle-a-new-creative-paradigm-with-connected-content/826236/",
+      "date": "2026-07-27",
+      "iceland": false,
+      "summary": "Marketing Dive fjallar um connected content sem nýtt skapandi viðmið þar sem efni, samhengi, commerce, creators og gögn vinna saman sem eitt kerfi. Samkvæmt Omnicom-rannsókn telja 80% neytenda að slæm auglýsing sé verri en engin auglýsing, og fólk bregst betur við efni sem birtist á réttum stað og réttu augnabliki.",
+      "whyItMatters": "Þetta er mjög praktískt fyrir íslenskt markaðsfólk. Vandinn er ekki að framleiða meira efni, heldur að tengja betur saman skilaboð, rásir, samhengi og upplifun. Minni teymi geta náð meiri árangri með betri samhæfingu heldur en meira magni."
+    },
+    {
+      "title": "AI-fyrirtæki eru komin í varnarstöðu með eigin auglýsingar",
+      "category": "AI, traust og vörumerkjasamskipti",
+      "source": "Business Insider",
+      "link": "https://www.businessinsider.com/meta-anthropic-ads-trust-us-defensive-2026-7",
+      "date": "2026-07-25",
+      "iceland": false,
+      "summary": "Business Insider fjallar um nýjar auglýsingaherferðir frá Meta og Anthropic sem reyna að byggja upp traust á AI. Greinin bendir á að AI-fyrirtækin séu farin að svara vaxandi gagnrýni með tilfinningadrifnum og varnarkenndum auglýsingum, en að traust vinnist ekki með fallegum skilaboðum einum saman.",
+      "whyItMatters": "Þetta er gott dæmi um trust gap í AI. Íslensk fyrirtæki sem ætla að tala um AI þurfa að passa að skilaboðin séu ekki bara bjartsýn eða tæknileg, heldur trúverðug, gagnsæ og studd raunverulegri ábyrgð."
+    },
+    {
+      "title": "AI-kolefnisspor verður nýtt ábyrgðarmál markaðsstjóra",
+      "category": "AI, sjálfbærni og markaðsstjórnun",
+      "source": "Marketing Dive",
+      "link": "https://www.marketingdive.com/news/marketers-latest-ai-conundrum-an-environmental-footprint-left-unmeasured/826137/",
+      "date": "2026-07-24",
+      "iceland": false,
+      "summary": "Marketing Dive fjallar um nýja rannsókn frá 51toCarbonZero sem sýnir að meirihluti markaðsleiðtoga telur AI auka losun og kolefnisspor markaðsstarfs, en aðeins minnihluti er að mæla heildaráhrifin. AI er því ekki bara framleiðni- eða tæknimál, heldur líka ábyrgðar-, governance- og sjálfbærnimál.",
+      "whyItMatters": "Mjög mikilvægt fyrir íslensk markaðsteymi sem eru að prófa AI í auknum mæli. Næsta skref er ekki bara að spyrja hvernig AI sparar tíma, heldur líka hvaða áhrif notkunin hefur á orkunotkun, gagnaver, birgja, stefnu og trúverðugleika vörumerkisins."
+    },
+    {
+      "title": "Vörumerki þurfa að blandast menningu, ekki bara kaupa athygli",
+      "category": "Brand strategy, menning og samfélag",
+      "source": "Axios",
+      "link": "https://www.axios.com/2026/07/23/brand-campaign-culture-connection-communicators-ai",
+      "date": "2026-07-23",
+      "iceland": false,
+      "summary": "Axios fjallar um hvernig vörumerki eru að reyna að brjótast í gegnum AI-samleitni með skýrari tengingu við menningu og samfélög. Dæmi eru um herferðir sem sækja í graffiti, tónlist, anime, sport og staðbundin communities í stað þess að byggja eingöngu á hefðbundnum auglýsingakaupum.",
+      "whyItMatters": "Gott trend fyrir minni markaði. Íslensk vörumerki þurfa ekki alltaf stærsta budgetið; þau þurfa skýra tengingu við menningu, samfélag eða samtal sem passar raunverulega við vörumerkið. Það getur skapað meiri trúverðugleika en stór en almenn birting."
+    },
+    {
+      "title": "Happy Hydrate fer í næsta fasa sem íslenskt creator-brand",
+      "category": "Íslensk vörumerki og creator economy",
+      "source": "Vísir",
+      "link": "https://www.visir.is/g/20262910876d/ahrifavaldur-losar-sig-vid-steinefni",
+      "date": "2026-07-18",
+      "iceland": true,
+      "summary": "Vísir fjallar um að Happy Hydrate hafi verið selt til hóps fjárfesta. Vörumerkið hefur verið mjög sýnilegt á íslenskum neytendamarkaði og tengist áhrifavaldi, samfélagsmiðlum og steinefnabylgjunni sem hefur vakið mikla athygli síðustu ár.",
+      "whyItMatters": "Þetta er áhugavert íslenskt dæmi um creator-drifið neytendavörumerki sem fer í næsta fasa. Fyrir ÍMARK skiptir þetta máli út frá áhrifavaldamarkaðssetningu, vörumerkjauppbyggingu, trausti, vöruflokkaþróun og því hvernig samfélagsmiðlavinsældir geta þróast yfir í raunverulegt viðskiptavirði."
+    },
+    {
       "title": "The Economist svarar AI-þreytu með 'actual intelligence'",
       "category": "Vörumerkjastefna, AI og outdoor",
       "source": "Creative Bloq",
