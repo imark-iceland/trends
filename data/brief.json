@@ -4,6 +4,46 @@
   "editor": "IMARK ritstjorn",
   "items": [
     {
+      "title": "EU AI Act gerir AI-merkingar að nýju traust- og compliance-máli",
+      "category": "AI, reglur og gagnsæi",
+      "source": "European Commission / The Verge",
+      "link": "https://digital-strategy.ec.europa.eu/en/news/commission-publishes-guidelines-transparency-obligations-providers-and-deployers-certain-ai-systems",
+      "date": "2026-08-02",
+      "iceland": false,
+      "summary": "Gagnsæisreglur EU AI Act tóku gildi 2. ágúst 2026. Reglurnar krefjast meðal annars þess að notendur viti þegar þeir eru í samskiptum við AI-kerfi og að AI-myndir, -hljóð og -myndbönd sem geta virst raunveruleg séu merkt sem AI-efni. Þetta setur nýjar kröfur á fyrirtæki sem nota gervigreind í efnisgerð, þjónustu, auglýsingum eða samskiptum.",
+      "whyItMatters": "Þetta er mjög mikilvægt fyrir íslenskt markaðsfólk, sérstaklega fyrirtæki sem vinna með AI í auglýsingagerð, myndbandi, þjónustuveri, samfélagsmiðlum eða fyrir erlenda markaði. AI verður ekki bara creative tool heldur líka compliance-, trausts- og orðsporsmál."
+    },
+    {
+      "title": "Monzo setur af stað fyrsta alþjóðlega brand platformið sitt",
+      "category": "Brand platform, fintech og sonic branding",
+      "source": "Marketing Week",
+      "link": "https://www.marketingweek.com/monzo-first-global-brand-platform/",
+      "date": "2026-07-28",
+      "iceland": false,
+      "summary": "Monzo hefur sett af stað sitt fyrsta alþjóðlega vörumerkjakerfi, Get busy living. Herferðin sameinar brand-building, sonic branding, influencer marketing og podcasting, og markar fyrsta skipti sem bankinn kynnir sérstaka sonic identity fyrir vörumerkið.",
+      "whyItMatters": "Gott dæmi um fintech-vörumerki sem fer úr performance- og growth-hugsun yfir í stærri brand-building nálgun. Þetta er relevant fyrir íslensk fyrirtæki sem eru að vaxa út fyrir heimamarkað eða þurfa að samhæfa brand, hljóð, creators og content í einu kerfi."
+    },
+    {
+      "title": "Floridana fær nýtt útlit",
+      "category": "Íslensk vörumerki, umbúðir og FMCG",
+      "source": "Ölgerðin",
+      "link": "https://www.olgerdin.is/",
+      "date": "2026-07-24",
+      "iceland": true,
+      "summary": "Ölgerðin segir að fersku Floridana safarnir í plastflöskum hafi fengið splunkunýtt og ferskt útlit. Um er að ræða uppfærslu á ásýnd íslensks neytendavörumerkis í daglegum vöruflokki.",
+      "whyItMatters": "Þetta er lítið en gott íslenskt vörumerkjaatriði fyrir vaktina. Umbúðir og ásýnd skipta miklu máli í daglegum neytendavörum, þar sem kaupákvörðun er oft hröð og sýnileiki í hillu skiptir miklu."
+    },
+    {
+      "title": "Hvíta húsið og VIRK sýna hvernig mæla má áhrif almannahagsmunaherferðar",
+      "category": "Íslensk herferð, mælingar og almannahagsmunir",
+      "source": "Hvíta húsið",
+      "link": "https://www.hvitahusid.is/verkefnin/er-brjalad-ad-gera",
+      "date": "2026-07-22",
+      "iceland": true,
+      "summary": "Hvíta húsið birtir case um Er brjálað að gera? fyrir VIRK. Herferðin fjallar um álag, vinnumenningu og jafnvægi milli vinnu og einkalífs, og byggir á húmor og kunnuglegum aðstæðum frekar en prédikun. Niðurstöður könnunar sýndu að 86% svarenda höfðu séð auglýsingarnar og 76% sögðu þær hafa vakið sig til umhugsunar.",
+      "whyItMatters": "Mjög gott íslenskt case um hvernig hægt er að tengja menningarlega innsýn, húmor og samfélagslegt málefni við mælanleg áhrif. Þetta er gagnlegt fyrir ÍMARK-fólk sem vill sjá íslensk dæmi um creative effectiveness, ekki bara alþjóðleg trend."
+    },
+    {
       "title": "Connected content verður svar við auglýsingaþreytu",
       "category": "Content, birtingar og creative effectiveness",
       "source": "Marketing Dive",
