@@ -4,6 +4,16 @@
   "editor": "IMARK ritstjorn",
   "items": [
     {
+      "title": "Ads for AI agents: ný auglýsingaleið rekst strax á traustsvanda",
+      "category": "AI, auglýsingar og gagnsæi",
+      "source": "Business Insider",
+      "link": "https://www.businessinsider.com/perplexity-thwarts-times-ads-for-ai-bots-experiment-2026-8",
+      "date": "2026-08-12",
+      "iceland": false,
+      "summary": "Business Insider fjallar um tilraun þar sem vörumerki eins og Ally Bank og Project Management Institute prófuðu auglýsingar á vef Time sem voru sérstaklega hannaðar til að vera lesnar af AI-bottum frekar en fólki. Perplexity hafnaði nálguninni og flokkaði hana sem 'cloaking', þar sem bottaumferð fengi annað efni en venjulegir notendur. Málið hefur kveikt umræðu um hvort auglýsingar til AI-agents geti orðið ný rás eða hvort AI-platformar muni loka á slíkar tilraunir.",
+      "whyItMatters": "Þetta er mjög mikilvægt framhald af umræðunni um AI-sýnileika. Fyrirtæki munu vilja hafa áhrif á hvernig þau birtast í AI-leit, chatbot-svörum og agentum, en mörkin milli SEO, PR, gagnagæða og manipúleringar verða viðkvæmari. Fyrir íslenskt markaðsfólk er spurningin ekki bara 'hvernig komumst við inn í AI-svör?' heldur líka 'hvernig gerum við það á trúverðugan hátt?'."
+    },
+    {
       "title": "AI shopping assistants opna nýtt tímabil í retail media",
       "category": "AI, retail media og kauphegðun",
       "source": "The Drum",
@@ -44,6 +54,26 @@
       "whyItMatters": "Þetta er gagnlegt fyrir íslenskt markaðsfólk, sérstaklega í tengslum við umræðu um minni budget. Lærdómurinn er ekki bara að stór vörumerki eyða miklu, heldur að þau virkja stór móment með skýrri hugsun, staðbundinni innsýn og mörgum litlum snertiflötum. Minni fyrirtæki geta líka nýtt sér stærri menningarviðburði ef þau velja rétt sjónarhorn og tengja það við sinn markhóp."
     },
     {
+      "title": "Smásalar vilja AI-umferðina — en ekki missa viðskiptavinagögnin",
+      "category": "AI shopping, retail og customer data",
+      "source": "Reuters",
+      "link": "https://www.reuters.com/business/retail-consumer/retailers-tap-ai-shopping-traffic-fight-keep-customer-data-2026-08-07/",
+      "date": "2026-08-07",
+      "iceland": false,
+      "summary": "Reuters fjallar um að smásalar á borð við Walmart, Ulta Beauty og Wayfair séu að laga vefi, vörugögn og efni til að birtast betur í AI shopping recommendations. Samhliða því vilja þeir tryggja að viðskiptin klárist áfram á eigin vefjum svo þeir haldi í customer data, loyalty samband og beint samband við viðskiptavininn. Adobe Analytics gögn sem Reuters vísar í sýna að 41% bandarískra neytenda notuðu generative AI við netverslun í júní og að AI-referrals skiluðu hærri revenue per visit en hefðbundnar rásir.",
+      "whyItMatters": "Þetta er mjög praktískt fyrir íslenska smásölu, ferðaþjónustu, DTC-vörumerki og netverslanir. Það er ekki nóg að 'finnast í AI' — fyrirtæki þurfa líka að hugsa um hvar kaupin klárast, hvaða gögn þau halda eftir og hvernig þau byggja sambandið áfram. AI discovery getur aukið sýnileika, en ef salan færist alfarið til milliliða getur vörumerkið misst verðmæt tengsl."
+    },
+    {
+      "title": "Gravity fær $30,5m til að setja auglýsingar inn í AI-platforma",
+      "category": "AI advertising, adtech og media buying",
+      "source": "Business Insider",
+      "link": "https://www.businessinsider.com/ai-chatbot-ad-platform-gravity-raises-series-a-2026-8",
+      "date": "2026-08-06",
+      "iceland": false,
+      "summary": "Business Insider fjallar um Gravity, adtech startup sem sérhæfir sig í auglýsingum inni í AI-assistants og AI-platformum. Fyrirtækið hefur safnað $30,5 milljónum í Series A fjármögnun og hefur unnið með vörumerkjum eins og Best Buy og Target. Þetta sýnir að AI advertising er að verða að sjálfstæðum markaði, ekki bara aukafítus hjá Google, Meta eða hefðbundnum leitarmiðlum.",
+      "whyItMatters": "Þetta tengist beint birtingaumræðunni hjá ÍMARK. Ef AI-assistants verða ný auglýsingarás þarf markaðsfólk að skilja hvernig birtingar, mælingar, traust og kaupferli breytast. Fyrir minni markaði eins og Ísland er þetta líka áminning um að fylgjast snemma með þróuninni áður en platformin og reglurnar verða fastmótuð."
+    },
+    {
       "title": "EU AI Act gerir AI-merkingar að nýju traust- og compliance-máli",
       "category": "AI, reglur og gagnsæi",
       "source": "European Commission / The Verge",
@@ -52,6 +82,16 @@
       "iceland": false,
       "summary": "Gagnsæisreglur EU AI Act tóku gildi 2. ágúst 2026. Reglurnar krefjast meðal annars þess að notendur viti þegar þeir eru í samskiptum við AI-kerfi og að AI-myndir, -hljóð og -myndbönd sem geta virst raunveruleg séu merkt sem AI-efni. Þetta setur nýjar kröfur á fyrirtæki sem nota gervigreind í efnisgerð, þjónustu, auglýsingum eða samskiptum.",
       "whyItMatters": "Þetta er mjög mikilvægt fyrir íslenskt markaðsfólk, sérstaklega fyrirtæki sem vinna með AI í auglýsingagerð, myndbandi, þjónustuveri, samfélagsmiðlum eða fyrir erlenda markaði. AI verður ekki bara creative tool heldur líka compliance-, trausts- og orðsporsmál."
+    },
+    {
+      "title": "Marketing's effectiveness gap: mælingar eru ekki það sama og lærdómur",
+      "category": "Effectiveness, mælingar og markaðsstjórnun",
+      "source": "Marketing Week",
+      "link": "https://www.marketingweek.com/marketings-effectiveness-gap/",
+      "date": "2026-07-29",
+      "iceland": false,
+      "summary": "Marketing Week fjallar um 'effectiveness gap' í markaðsstarfi: fyrirtæki mæla sífellt meira, en ná ekki alltaf að breyta mælingum í raunverulegan lærdóm, betri ákvarðanir og skýrari fjárfestingu í markaðsstarfi. Greinin bendir á að campaign reporting endi oft í því að telja birtingar, engagement og views, án þess að tengja nægilega við viðskiptaleg áhrif, tímabil endurgreiðslu eða langtímagildi.",
+      "whyItMatters": "Þetta er mjög gott mótvægi við AI-fréttirnar og passar vel við ÍMARK. Fyrir minni fyrirtæki og lítil markaðsteymi skiptir effectiveness ekki síður máli — en það þarf að vera praktískt. Spurningin er ekki bara 'hvernig gekk herferðin?' heldur 'hvað lærðum við, hvað breytum við næst og hvernig útskýrum við virði markaðsstarfs fyrir stjórnendum?'."
     },
     {
       "title": "Monzo setur af stað fyrsta alþjóðlega brand platformið sitt",
