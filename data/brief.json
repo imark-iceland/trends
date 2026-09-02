@@ -4,6 +4,46 @@
   "editor": "IMARK ritstjorn",
   "items": [
     {
+      "title": "Dyson fer inn á tannburstamarkað með $499 AI-tannbursta",
+      "category": "Brand extension, nýsköpun og vörumerkjastaðsetning",
+      "source": "WSJ CMO Today",
+      "link": "https://www.wsj.com/cmo-today/how-to-spend-six-years-inventing-a-499-toothbrush-with-no-idea-of-the-market-afe11d76",
+      "date": "2026-09-02",
+      "iceland": false,
+      "summary": "Dyson hefur kynnt CameraJet, $499 AI-knúinn tannbursta sem einnig á að nota vatnsþráð. Þetta er fyrsta innkoma Dyson á oral care markaðinn og dæmi um mjög djarfa brand extension inn í mettaðan og samkeppnisharðan flokk. James Dyson hefur lýst verkefninu sem nýrri áskorun, þrátt fyrir óvissu um markaðsstærð og sölumöguleika.",
+      "whyItMatters": "Þetta er gott umræðuefni fyrir ÍMARK um vörumerkjaútvíkkun: hversu langt getur sterkt vörumerki teygt sig? Dyson hefur credibility í hönnun, verkfræði og premium vörum, en oral care er allt annar neytendaflokkur. Fyrir íslensk fyrirtæki er lærdómurinn að brand extension þarf bæði sterka vörumerkjaröksemd og skýra neytendaástæðu — ekki bara tæknilega nýjung."
+    },
+    {
+      "title": "WPP sker niður þegar AI endurmótar auglýsingaiðnaðinn",
+      "category": "Agency transformation, AI og rekstur",
+      "source": "Reuters",
+      "link": "https://www.reuters.com/business/world-at-work/wpp-cutting-up-1000-more-jobs-by-year-end-ft-reports-2026-09-01/",
+      "date": "2026-09-01",
+      "iceland": false,
+      "summary": "Reuters greinir frá því að WPP hyggist skera niður allt að 1.000 störf til viðbótar fyrir árslok, samkvæmt umfjöllun Financial Times. Niðurskurðurinn kemur í kjölfar umfangsmikillar endurskipulagningar þar sem WPP hefur meðal annars sameinað creative agencies undir WPP Creative og lagt áherslu á einföldun, AI og aukna skilvirkni. WPP hefur þegar fækkað starfsfólki um um 11.000 frá byrjun árs 2025.",
+      "whyItMatters": "Þetta er stórt merki um að AI og breytt rekstrarhagfræði séu farin að hafa raunveruleg áhrif á auglýsinga- og ráðgjafariðnaðinn. Fyrir íslenskar stofur og markaðsteymi er spurningin ekki bara hvaða AI-tól á að nota, heldur hvernig skipulag, hlutverk, verðmódel og virði skapandi vinnu breytast þegar viðskiptavinir geta gert meira sjálfir."
+    },
+    {
+      "title": "The Information stækkar video-strategíu með vikulegum AI live show",
+      "category": "Owned media, B2B content og AI",
+      "source": "Axios",
+      "link": "https://www.axios.com/2026/09/01/the-information-ai-live-show",
+      "date": "2026-09-01",
+      "iceland": false,
+      "summary": "Axios fjallar um að The Information sé að stækka video-stefnu sína með nýjum vikulegum live þætti um AI, AI Deep Dive. Þátturinn verður ókeypis og er hluti af stærri stefnu miðilsins um að byggja upp tekjur, ná til fagfólks og lengja líftíma sérhæfðs efnis út fyrir hefðbundnar greinar og newsletters.",
+      "whyItMatters": "Þetta er relevant fyrir ÍMARK og íslensk B2B vörumerki. Professional content er að færast úr því að vera bara greinar og fréttabréf yfir í lifandi format: live video, sérhæfða þætti, samfélag og endurnýtingu efnis. Fyrir minni teymi er þetta áminning um að gott efni má nýta oftar og betur — ekki bara birta einu sinni og gleyma."
+    },
+    {
+      "title": "Gotti tekinn úr loftinu eftir AI-umræðu og viðbrögð neytenda",
+      "category": "Íslensk auglýsing, AI og vörumerkjatraust",
+      "source": "Vísir",
+      "link": "https://openad01.visir.is/g/20262926013d/nyr-og-umdeildur-gotti-tekinn-ur-loftinu",
+      "date": "2026-08-25",
+      "iceland": true,
+      "summary": "Nýjar Gotta-auglýsingar Mjólkursamsölunnar voru teknar úr birtingu eftir gagnrýni og umræðu á samfélagsmiðlum, meðal annars vegna meintrar notkunar gervigreindar við gerð efnisins. Málið sýnir hversu hratt neytendur geta brugðist við þegar þeim finnst vörumerki eða auglýsing fara yfir mörk — sérstaklega þegar AI, nostalgia og þekkt íslensk vörumerkjaeign blandast saman.",
+      "whyItMatters": "Þetta er mjög mikilvægt íslenskt case fyrir ÍMARK. Það sýnir að AI í auglýsingagerð er ekki bara framleiðslu- eða kostnaðarmál, heldur líka trausts-, smekks- og menningarmál. Þegar vörumerki vinna með þekktar persónur, táknmyndir eða nostalgíu þarf að huga sérstaklega að væntingum neytenda, gagnsæi og tilfinningalegu eignarhaldi almennings á vörumerkjaeigninni."
+    },
+    {
       "title": "Influencers verða að aðal brand-building rás hjá fleiri vörumerkjum",
       "category": "Influencer marketing, brand-building og effectiveness",
       "source": "Marketing Week",
