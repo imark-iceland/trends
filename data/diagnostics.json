@@ -1,12 +1,12 @@
 {
-  "generatedAt": "2026-11-09T17:33:14.611Z",
+  "generatedAt": "2026-11-13T11:40:41.659Z",
   "noIcelandicItems": false,
   "summary": {
     "totalSources": 37,
     "totalSourcesSuccessful": 26,
     "icelandicSources": 22,
     "icelandicSourcesWorking": 15,
-    "icelandicItemsSelected": 9
+    "icelandicItemsSelected": 8
   },
   "sources": [
     {
@@ -17,22 +17,39 @@
       "focus": "editorial",
       "status": "success",
       "httpStatus": null,
-      "itemsFound": 17,
-      "itemsAfterFilter": 14,
-      "itemsRejected": 3,
+      "itemsFound": 22,
+      "itemsAfterFilter": 17,
+      "itemsRejected": 5,
       "rejectionReasons": {
-        "ai-not-marketing-related": 2,
-        "hiring-not-marketing-or-communications": 1
+        "weak-market-relevance": 2,
+        "hiring-not-marketing-or-communications": 1,
+        "ai-not-marketing-related": 2
       },
       "rejectedItems": [
         {
-          "title": "ChatGPT auglýsingar gætu orðið nýtt lag í kaupferlinu",
-          "url": "https://www.marketingdive.com/news/how-openai-positioning-chatgpt-ads-cannes-lions-debut/823476/",
+          "title": "Old Navy setur frægt fólk um borð í Jingle Jet",
+          "url": "https://www.gapinc.com/it-it/articles/2026/11/all-aboard-the-jingle-jet-introducing-old-navy-s-h",
           "score": 105,
-          "rejectionReason": "ai-not-marketing-related",
+          "rejectionReason": "weak-market-relevance",
+          "matchedKeywords": []
+        },
+        {
+          "title": "Gap byggir áfram á fjölára vörumerkjastefnu með Give Your Gift",
+          "url": "https://www.gapinc.com/en-gb/articles/2026/11/gap-kicks-off-holiday-season-with-give-your-gift%E2%80%9D-",
+          "score": 105,
+          "rejectionReason": "weak-market-relevance",
           "matchedKeywords": [
-            "cannes",
-            "cannes"
+            "miðla"
+          ]
+        },
+        {
+          "title": "Bryndís Thelma nýr vörumerkjastjóri Pepsi á Íslandi",
+          "url": "https://www.olgerdin.is/um-okkur/frettir/frett/bryndis-nyr-vorumerkjastjori-pepsi-a-islandi",
+          "score": 170,
+          "rejectionReason": "hiring-not-marketing-or-communications",
+          "matchedKeywords": [
+            "ráðin",
+            "ráðin"
           ]
         },
         {
@@ -45,18 +62,18 @@
           ]
         },
         {
-          "title": "Bryndís Thelma nýr vörumerkjastjóri Pepsi á Íslandi",
-          "url": "https://www.olgerdin.is/um-okkur/frettir/frett/bryndis-nyr-vorumerkjastjori-pepsi-a-islandi",
-          "score": 170,
-          "rejectionReason": "hiring-not-marketing-or-communications",
+          "title": "ChatGPT auglýsingar gætu orðið nýtt lag í kaupferlinu",
+          "url": "https://www.marketingdive.com/news/how-openai-positioning-chatgpt-ads-cannes-lions-debut/823476/",
+          "score": 105,
+          "rejectionReason": "ai-not-marketing-related",
           "matchedKeywords": [
-            "ráðin",
-            "ráðin"
+            "cannes",
+            "cannes"
           ]
         }
       ],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.588Z"
+      "lastChecked": "2026-11-13T11:40:31.638Z"
     },
     {
       "name": "VB",
@@ -72,7 +89,7 @@
       "rejectionReasons": {},
       "rejectedItems": [],
       "errorMessage": "HTML URL responded HTTP 403",
-      "lastChecked": "2026-11-09T17:33:04.604Z"
+      "lastChecked": "2026-11-13T11:40:31.653Z"
     },
     {
       "name": "Mbl Viðskipti",
@@ -83,51 +100,51 @@
       "status": "success",
       "httpStatus": 200,
       "itemsFound": 20,
-      "itemsAfterFilter": 1,
-      "itemsRejected": 19,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 20,
       "rejectionReasons": {
-        "weak-market-relevance": 17,
-        "hiring-not-marketing-or-communications": 2
+        "weak-market-relevance": 19,
+        "ai-not-marketing-related": 1
       },
       "rejectedItems": [
         {
-          "title": "Daði boðar afhendingu gagna um Landsvirkjun",
-          "url": "https://www.mbl.is/frettir/innlent/2026/11/09/dadi_bodar_afhendingu_gagna_um_landsvirkjun/",
+          "title": "Ógilda samþykki fyrir olíuvinnslu í Norðursjó",
+          "url": "https://www.mbl.is/frettir/erlent/2026/11/13/ogilda_samthykki_fyrir_oliuvinnslu_i_nordursjo/",
           "score": 54,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": []
         },
         {
-          "title": "Engar áhyggjur af aðkomu ESA",
-          "url": "https://www.mbl.is/frettir/innlent/2026/11/09/engar_ahyggjur_af_adkomu_esa/",
+          "title": "Ekki séð svona víðtæka bilun í langan tíma",
+          "url": "https://www.mbl.is/frettir/innlent/2026/11/13/ekki_sed_svona_vidtaeka_bilun_i_langan_tima/",
           "score": 54,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": []
         },
         {
-          "title": "Verðmætasköpunarhaustið náði ekki í Skútuvoginn",
-          "url": "https://www.mbl.is/vidskipti/frettir/2026/11/09/verdmaetaskopunarhaustid_nadi_ekki_i_skutuvoginn/",
+          "title": "Persónuvernd með Creditinfo til skoðunar",
+          "url": "https://www.mbl.is/vidskipti/frettir/2026/11/13/personuvernd_med_creditinfo_til_skodunar/",
           "score": 54,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": []
         },
         {
-          "title": "Hefst nýtt tímabil á mörkuðum?",
-          "url": "https://www.mbl.is/vidskipti/frettir/2026/11/09/hefst_nytt_timabil_a_morkudum/",
+          "title": "Þetta vitum við um Microsoft-bilunina",
+          "url": "https://www.mbl.is/frettir/erlent/2026/11/13/thetta_vitum_vid_um_microsoft_bilunina/",
           "score": 54,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": []
         },
         {
-          "title": "Minigarðurinn lokar og óskar eftir gjaldþrotaskiptum",
-          "url": "https://www.mbl.is/vidskipti/frettir/2026/11/09/minigardurinn_lokar_og_oskar_eftir_gjaldthrotaskipt/",
+          "title": "Laufey og Collab unnu til alþjóðlegra verðlauna",
+          "url": "https://www.mbl.is/vidskipti/frettir/2026/11/13/laufey_og_collab_unnu_til_althjodlegra_verdlauna/",
           "score": 54,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": []
         }
       ],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.605Z"
+      "lastChecked": "2026-11-13T11:40:31.654Z"
     },
     {
       "name": "Pipar/TBWA",
@@ -149,7 +166,7 @@
         {
           "title": "Sjáðu framtíðina með okkur",
           "url": "https://pipar-tbwa.is/piparmedia/",
-          "score": 59,
+          "score": 55,
           "rejectionReason": "agency-case-signal-missing",
           "matchedKeywords": [
             "pipar",
@@ -160,7 +177,7 @@
         {
           "title": "Viltu vera samferða?",
           "url": "https://pipar-tbwa.is/Ceedr/",
-          "score": 59,
+          "score": 55,
           "rejectionReason": "agency-case-signal-missing",
           "matchedKeywords": [
             "pipar",
@@ -171,7 +188,7 @@
         {
           "title": "Viltu vera samferða?",
           "url": "https://pipar-tbwa.is/piparengine/",
-          "score": 59,
+          "score": 55,
           "rejectionReason": "agency-case-signal-missing",
           "matchedKeywords": [
             "pipar",
@@ -203,7 +220,23 @@
         }
       ],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.606Z"
+      "lastChecked": "2026-11-13T11:40:31.655Z"
+    },
+    {
+      "name": "Icelandair",
+      "url": "https://www.icelandair.com/blog/",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "brand",
+      "status": "failed",
+      "httpStatus": 403,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "rejectedItems": [],
+      "errorMessage": "HTML URL responded HTTP 403",
+      "lastChecked": "2026-11-13T11:40:31.660Z"
     },
     {
       "name": "Hvíta húsið",
@@ -221,7 +254,7 @@
       },
       "rejectedItems": [],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.608Z"
+      "lastChecked": "2026-11-13T11:40:31.657Z"
     },
     {
       "name": "Vísir Viðskipti",
@@ -237,7 +270,7 @@
       "rejectionReasons": {},
       "rejectedItems": [],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.605Z"
+      "lastChecked": "2026-11-13T11:40:31.654Z"
     },
     {
       "name": "Markaðsmál",
@@ -263,23 +296,23 @@
         }
       ],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.589Z"
+      "lastChecked": "2026-11-13T11:40:31.638Z"
     },
     {
-      "name": "Icelandair",
-      "url": "https://www.icelandair.com/blog/",
+      "name": "Cirkus",
+      "url": "https://cirkus.is/",
       "type": "html",
       "market": "Icelandic",
-      "focus": "brand",
-      "status": "failed",
-      "httpStatus": 403,
+      "focus": "agency",
+      "status": "success",
+      "httpStatus": 200,
       "itemsFound": 0,
       "itemsAfterFilter": 0,
       "itemsRejected": 0,
       "rejectionReasons": {},
       "rejectedItems": [],
-      "errorMessage": "HTML URL responded HTTP 403",
-      "lastChecked": "2026-11-09T17:33:04.611Z"
+      "errorMessage": "HTML fetched, but no article links matched; page may rely on JavaScript or unsupported selectors.",
+      "lastChecked": "2026-11-13T11:40:31.658Z"
     },
     {
       "name": "Markaðsmál",
@@ -318,13 +351,13 @@
         {
           "title": "Reglufylgni og upplýsingagjöf",
           "url": "https://markadsmal.is/contact/",
-          "score": 50,
+          "score": 54,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": []
         }
       ],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.601Z"
+      "lastChecked": "2026-11-13T11:40:31.651Z"
     },
     {
       "name": "Nova",
@@ -340,23 +373,7 @@
       "rejectionReasons": {},
       "rejectedItems": [],
       "errorMessage": "HTML URL responded HTTP 404",
-      "lastChecked": "2026-11-09T17:33:04.612Z"
-    },
-    {
-      "name": "Cirkus",
-      "url": "https://cirkus.is/",
-      "type": "html",
-      "market": "Icelandic",
-      "focus": "agency",
-      "status": "success",
-      "httpStatus": 200,
-      "itemsFound": 0,
-      "itemsAfterFilter": 0,
-      "itemsRejected": 0,
-      "rejectionReasons": {},
-      "rejectedItems": [],
-      "errorMessage": "HTML fetched, but no article links matched; page may rely on JavaScript or unsupported selectors.",
-      "lastChecked": "2026-11-09T17:33:04.609Z"
+      "lastChecked": "2026-11-13T11:40:31.661Z"
     },
     {
       "name": "Krónan",
@@ -366,11 +383,11 @@
       "focus": "brand",
       "status": "success",
       "httpStatus": 200,
-      "itemsFound": 209,
+      "itemsFound": 210,
       "itemsAfterFilter": 0,
-      "itemsRejected": 209,
+      "itemsRejected": 210,
       "rejectionReasons": {
-        "source-item-limit": 49,
+        "source-item-limit": 50,
         "no-new-articles-in-window": 146,
         "weak-market-relevance": 12,
         "duplicate-url": 2
@@ -438,7 +455,23 @@
         }
       ],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.613Z"
+      "lastChecked": "2026-11-13T11:40:31.662Z"
+    },
+    {
+      "name": "Bláa lónið",
+      "url": "https://www.bluelagoon.com/news",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "brand",
+      "status": "failed",
+      "httpStatus": 404,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "rejectedItems": [],
+      "errorMessage": "HTML URL responded HTTP 404",
+      "lastChecked": "2026-11-13T11:40:31.663Z"
     },
     {
       "name": "The Drum",
@@ -454,74 +487,7 @@
       "rejectionReasons": {},
       "rejectedItems": [],
       "errorMessage": "RSS URL responded HTTP 403",
-      "lastChecked": "2026-11-09T17:33:04.617Z"
-    },
-    {
-      "name": "Design Week",
-      "url": "https://www.designweek.co.uk/feed/",
-      "type": "rss",
-      "market": "Global",
-      "focus": "branding-design",
-      "status": "failed",
-      "httpStatus": 403,
-      "itemsFound": 0,
-      "itemsAfterFilter": 0,
-      "itemsRejected": 0,
-      "rejectionReasons": {},
-      "rejectedItems": [],
-      "errorMessage": "RSS URL responded HTTP 403",
-      "lastChecked": "2026-11-09T17:33:04.617Z"
-    },
-    {
-      "name": "Campaign",
-      "url": "https://www.campaignlive.co.uk/rss",
-      "type": "rss",
-      "market": "Global",
-      "focus": "global-marketing",
-      "status": "failed",
-      "httpStatus": 403,
-      "itemsFound": 0,
-      "itemsAfterFilter": 0,
-      "itemsRejected": 0,
-      "rejectionReasons": {},
-      "rejectedItems": [],
-      "errorMessage": "RSS URL responded HTTP 403",
-      "lastChecked": "2026-11-09T17:33:04.616Z"
-    },
-    {
-      "name": "Canva",
-      "url": "https://www.canva.com/newsroom/news/",
-      "type": "html",
-      "market": "Global",
-      "focus": "ai-platform",
-      "status": "failed",
-      "httpStatus": 403,
-      "itemsFound": 0,
-      "itemsAfterFilter": 0,
-      "itemsRejected": 0,
-      "rejectionReasons": {},
-      "rejectedItems": [],
-      "errorMessage": "HTML URL responded HTTP 403",
-      "lastChecked": "2026-11-09T17:33:04.622Z"
-    },
-    {
-      "name": "Adweek",
-      "url": "https://www.adweek.com/feed/",
-      "type": "rss",
-      "market": "Global",
-      "focus": "global-marketing",
-      "status": "success",
-      "httpStatus": 200,
-      "itemsFound": 10,
-      "itemsAfterFilter": 5,
-      "itemsRejected": 5,
-      "rejectionReasons": {
-        "weak-market-relevance": 4,
-        "score-below-threshold": 1
-      },
-      "rejectedItems": [],
-      "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.615Z"
+      "lastChecked": "2026-11-13T11:40:31.666Z"
     },
     {
       "name": "Creative Review",
@@ -537,7 +503,7 @@
       "rejectionReasons": {},
       "rejectedItems": [],
       "errorMessage": "RSS URL responded HTTP 403",
-      "lastChecked": "2026-11-09T17:33:04.618Z"
+      "lastChecked": "2026-11-13T11:40:31.667Z"
     },
     {
       "name": "Marketing Week",
@@ -553,7 +519,120 @@
       "rejectionReasons": {},
       "rejectedItems": [],
       "errorMessage": "RSS URL responded HTTP 403",
-      "lastChecked": "2026-11-09T17:33:04.616Z"
+      "lastChecked": "2026-11-13T11:40:31.665Z"
+    },
+    {
+      "name": "Campaign",
+      "url": "https://www.campaignlive.co.uk/rss",
+      "type": "rss",
+      "market": "Global",
+      "focus": "global-marketing",
+      "status": "failed",
+      "httpStatus": 403,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "rejectedItems": [],
+      "errorMessage": "RSS URL responded HTTP 403",
+      "lastChecked": "2026-11-13T11:40:31.665Z"
+    },
+    {
+      "name": "Design Week",
+      "url": "https://www.designweek.co.uk/feed/",
+      "type": "rss",
+      "market": "Global",
+      "focus": "branding-design",
+      "status": "failed",
+      "httpStatus": 403,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "rejectedItems": [],
+      "errorMessage": "RSS URL responded HTTP 403",
+      "lastChecked": "2026-11-13T11:40:31.667Z"
+    },
+    {
+      "name": "Adweek",
+      "url": "https://www.adweek.com/feed/",
+      "type": "rss",
+      "market": "Global",
+      "focus": "global-marketing",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 10,
+      "itemsAfterFilter": 5,
+      "itemsRejected": 5,
+      "rejectionReasons": {
+        "weak-market-relevance": 4,
+        "blocked-keyword-or-topic": 1
+      },
+      "rejectedItems": [],
+      "errorMessage": "",
+      "lastChecked": "2026-11-13T11:40:31.664Z"
+    },
+    {
+      "name": "Nieman Lab",
+      "url": "https://www.niemanlab.org/feed/",
+      "type": "rss",
+      "market": "Global",
+      "focus": "media-platform",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 30,
+      "itemsAfterFilter": 4,
+      "itemsRejected": 26,
+      "rejectionReasons": {
+        "weak-market-relevance": 6,
+        "ai-not-marketing-related": 2,
+        "score-below-threshold": 2,
+        "blocked-keyword-or-topic": 2,
+        "no-new-articles-in-window": 14
+      },
+      "rejectedItems": [],
+      "errorMessage": "",
+      "lastChecked": "2026-11-13T11:40:31.669Z"
+    },
+    {
+      "name": "Canva",
+      "url": "https://www.canva.com/newsroom/news/",
+      "type": "html",
+      "market": "Global",
+      "focus": "ai-platform",
+      "status": "failed",
+      "httpStatus": 403,
+      "itemsFound": 0,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 0,
+      "rejectionReasons": {},
+      "rejectedItems": [],
+      "errorMessage": "HTML URL responded HTTP 403",
+      "lastChecked": "2026-11-13T11:40:31.671Z"
+    },
+    {
+      "name": "Anthropic",
+      "url": "https://www.anthropic.com/news",
+      "type": "html",
+      "market": "Global",
+      "focus": "ai-platform",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 150,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 150,
+      "rejectionReasons": {
+        "source-item-limit": 70,
+        "ai-not-marketing-related": 18,
+        "duplicate-url": 57,
+        "score-below-threshold": 1,
+        "hiring-not-marketing-or-communications": 1,
+        "blocked-keyword-or-topic": 1,
+        "weak-market-relevance": 2
+      },
+      "rejectedItems": [],
+      "errorMessage": "",
+      "lastChecked": "2026-11-13T11:40:31.670Z"
     },
     {
       "name": "Síminn",
@@ -563,20 +642,29 @@
       "focus": "brand",
       "status": "success",
       "httpStatus": 200,
-      "itemsFound": 24,
+      "itemsFound": 25,
       "itemsAfterFilter": 0,
-      "itemsRejected": 24,
+      "itemsRejected": 25,
       "rejectionReasons": {
-        "weak-market-relevance": 3,
-        "no-new-articles-in-window": 10,
+        "weak-market-relevance": 5,
+        "no-new-articles-in-window": 9,
         "navigation-or-non-article-link": 10,
         "duplicate-url": 1
       },
       "rejectedItems": [
         {
+          "title": "10. nóvember 2026 Strand Eldhamars GK – 35 árum eftir eitt mannskæðasta sjóslys síðustu áratuga",
+          "url": "https://www.siminn.is/frettir/eldhamar-35-arum-eftir-eitt-mannskaedasta-sjoslys-sidustu-aratuga",
+          "score": 40,
+          "rejectionReason": "weak-market-relevance",
+          "matchedKeywords": [
+            "siminn"
+          ]
+        },
+        {
           "title": "08. nóvember 2026 Töfrarnir byrja löngu fyrir jól í Sjónvarpi Símans Premium",
           "url": "https://www.siminn.is/frettir/tofrarnir-byrja-fyrir-jol",
-          "score": 44,
+          "score": 40,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": [
             "siminn"
@@ -585,7 +673,7 @@
         {
           "title": "05. nóvember 2026 Frá ritsíma til 5G: 120 ára saga Símans",
           "url": "https://www.siminn.is/frettir/120-ara-saga-simans",
-          "score": 40,
+          "score": 44,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": [
             "siminn"
@@ -608,19 +696,10 @@
           "matchedKeywords": [
             "siminn"
           ]
-        },
-        {
-          "title": "04. október 2026 Gömul leyndar­mál koma upp á yfir­borðið",
-          "url": "https://www.siminn.is/frettir/gomul-leyndarmal-koma-upp-a-yfirbordid",
-          "score": 0,
-          "rejectionReason": "no-new-articles-in-window",
-          "matchedKeywords": [
-            "siminn"
-          ]
         }
       ],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.612Z"
+      "lastChecked": "2026-11-13T11:40:31.661Z"
     },
     {
       "name": "VB",
@@ -636,69 +715,88 @@
       "rejectionReasons": {},
       "rejectedItems": [],
       "errorMessage": "RSS URL responded HTTP 403; attempted HTML fallback https://vb.is/; HTML URL responded HTTP 403",
-      "lastChecked": "2026-11-09T17:33:04.602Z"
+      "lastChecked": "2026-11-13T11:40:31.652Z"
     },
     {
-      "name": "Nieman Lab",
-      "url": "https://www.niemanlab.org/feed/",
+      "name": "Marketing Brew",
+      "url": "https://www.marketingbrew.com/feed.xml",
+      "type": "rss",
+      "market": "Global",
+      "focus": "global-marketing",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 40,
+      "itemsAfterFilter": 18,
+      "itemsRejected": 22,
+      "rejectionReasons": {
+        "hiring-not-marketing-or-communications": 1,
+        "blocked-keyword-or-topic": 1,
+        "no-new-articles-in-window": 20
+      },
+      "rejectedItems": [],
+      "errorMessage": "",
+      "lastChecked": "2026-11-13T11:40:31.668Z"
+    },
+    {
+      "name": "Meta",
+      "url": "https://about.fb.com/news/feed/",
       "type": "rss",
       "market": "Global",
       "focus": "media-platform",
       "status": "success",
       "httpStatus": 200,
-      "itemsFound": 30,
-      "itemsAfterFilter": 4,
-      "itemsRejected": 26,
+      "itemsFound": 10,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 10,
       "rejectionReasons": {
-        "weak-market-relevance": 3,
-        "score-below-threshold": 5,
-        "blocked-keyword-or-topic": 3,
-        "ai-not-marketing-related": 2,
-        "no-new-articles-in-window": 13
+        "blocked-keyword-or-topic": 1,
+        "ai-not-marketing-related": 1,
+        "score-below-threshold": 3,
+        "no-new-articles-in-window": 5
       },
       "rejectedItems": [],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.620Z"
+      "lastChecked": "2026-11-13T11:40:31.671Z"
     },
     {
-      "name": "Bláa lónið",
-      "url": "https://www.bluelagoon.com/news",
-      "type": "html",
-      "market": "Icelandic",
-      "focus": "brand",
-      "status": "failed",
-      "httpStatus": 404,
-      "itemsFound": 0,
-      "itemsAfterFilter": 0,
-      "itemsRejected": 0,
-      "rejectionReasons": {},
-      "rejectedItems": [],
-      "errorMessage": "HTML URL responded HTTP 404",
-      "lastChecked": "2026-11-09T17:33:04.614Z"
-    },
-    {
-      "name": "Anthropic",
-      "url": "https://www.anthropic.com/news",
+      "name": "Adobe",
+      "url": "https://blog.adobe.com/en/topics/creative-cloud",
       "type": "html",
       "market": "Global",
       "focus": "ai-platform",
       "status": "success",
       "httpStatus": 200,
-      "itemsFound": 150,
+      "itemsFound": 1,
       "itemsAfterFilter": 0,
-      "itemsRejected": 150,
+      "itemsRejected": 1,
       "rejectionReasons": {
-        "source-item-limit": 70,
-        "ai-not-marketing-related": 18,
-        "score-below-threshold": 1,
-        "duplicate-url": 57,
-        "hiring-not-marketing-or-communications": 1,
-        "blocked-keyword-or-topic": 1,
-        "weak-market-relevance": 2
+        "weak-market-relevance": 1
       },
       "rejectedItems": [],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.621Z"
+      "lastChecked": "2026-11-13T11:40:31.670Z"
+    },
+    {
+      "name": "OpenAI",
+      "url": "https://openai.com/blog/rss.xml",
+      "type": "rss",
+      "market": "Global",
+      "focus": "ai-platform",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 1385,
+      "itemsAfterFilter": 8,
+      "itemsRejected": 1377,
+      "rejectionReasons": {
+        "hiring-not-marketing-or-communications": 1,
+        "score-below-threshold": 2,
+        "ai-not-marketing-related": 30,
+        "weak-market-relevance": 1,
+        "no-new-articles-in-window": 1343
+      },
+      "rejectedItems": [],
+      "errorMessage": "",
+      "lastChecked": "2026-11-13T11:40:31.669Z"
     },
     {
       "name": "Brandingmag",
@@ -716,7 +814,25 @@
       },
       "rejectedItems": [],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.619Z"
+      "lastChecked": "2026-11-13T11:40:31.668Z"
+    },
+    {
+      "name": "Kontor",
+      "url": "https://kontor.is/",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "agency",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 11,
+      "itemsAfterFilter": 6,
+      "itemsRejected": 5,
+      "rejectionReasons": {
+        "navigation-or-non-article-link": 5
+      },
+      "rejectedItems": [],
+      "errorMessage": "",
+      "lastChecked": "2026-11-13T11:40:31.659Z"
     },
     {
       "name": "Google News - íslenskar auglýsingastofur",
@@ -726,19 +842,18 @@
       "focus": "agency-search",
       "status": "success",
       "httpStatus": 200,
-      "itemsFound": 33,
+      "itemsFound": 31,
       "itemsAfterFilter": 1,
-      "itemsRejected": 32,
+      "itemsRejected": 30,
       "rejectionReasons": {
-        "blocked-keyword-or-topic": 1,
-        "no-new-articles-in-window": 31
+        "no-new-articles-in-window": 30
       },
       "rejectedItems": [
         {
           "title": "Meet Michigan's governor candidates in 2026 election: Donna Brandenburg - Michigan Public",
           "url": "https://news.google.com/rss/articles/CBMiywFBVV95cUxNd3c2alVxRXJ6RlVhdGRDX19HdTBpSl9DYXlrajNPTWRST1NZczZUOHhOV0c4UnJXeGRkeFFtVG5KVm1uaHc5TXFsc2JoZmlsYVpEbGxpdmc4ZThCSmxsRlhmTkJBZUNpNlc5dlBvX1c3VFJDZm45aDhwdExKbnBVTGJIU3AxWG02Q3R0RndxYVowcGIwOUxmMHNIMjd6UXRGeUJCbzc0OEJScno1WTVkVnNycDc0N3hTTkVhOHg0OFlpdDlNQThzOFNHbw?oc=5",
           "score": 0,
-          "rejectionReason": "blocked-keyword-or-topic",
+          "rejectionReason": "no-new-articles-in-window",
           "matchedKeywords": [
             "brandenburg"
           ]
@@ -764,15 +879,6 @@
           ]
         },
         {
-          "title": "SGP rally at Brandenburg Gate: Stop the war in Ukraine! Freedom for Bogdan Syrotiuk! - World Socialist Web Site",
-          "url": "https://news.google.com/rss/articles/CBMiaEFVX3lxTE1fUm5uZDVBRl9vU05CUFFxcGxZOGlHWnJjal92SndDV3hMOVBxUHd3TExicm1yS3NtaVVpN2V3REpuQ3BYWURJdlM0c0VfYmhRT1Z0Z2ZhalhFemhKRWM0Mzl2VW95Z20x?oc=5",
-          "score": 0,
-          "rejectionReason": "no-new-articles-in-window",
-          "matchedKeywords": [
-            "brandenburg"
-          ]
-        },
-        {
           "title": "Germany: First case of ASF in wild boar in Cottbus, Brandenburg - Swine news - pig333, pig to pork community - 3tres3.com",
           "url": "https://news.google.com/rss/articles/CBMisgFBVV95cUxQb2lxWGphd281bmtQVTUxcF8zaDQwYkZmQjZYUnhYb1lJQV9iX2lxZERZMmlsYm82Y3I1YUNxcU9VS3RlajFpbFRyZWJGTmFMS0JxX2NDZzVTcHQ2NENvUTQ1bkEyTFNxTlFMbWhKUTdEbUFBZV8tUnNYOXR3VTFURVdEcjBGeVcwakxHQ0Fqcmw0d0J4bTNpTEJUdWY1WTR2NkkzaGNVcDFJWTVQN09RN0Rn?oc=5",
           "score": 0,
@@ -783,156 +889,19 @@
             "brandenburg",
             "case"
           ]
-        }
-      ],
-      "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.611Z"
-    },
-    {
-      "name": "Meta",
-      "url": "https://about.fb.com/news/feed/",
-      "type": "rss",
-      "market": "Global",
-      "focus": "media-platform",
-      "status": "success",
-      "httpStatus": 200,
-      "itemsFound": 10,
-      "itemsAfterFilter": 0,
-      "itemsRejected": 10,
-      "rejectionReasons": {
-        "ai-not-marketing-related": 4,
-        "score-below-threshold": 4,
-        "no-new-articles-in-window": 2
-      },
-      "rejectedItems": [],
-      "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.623Z"
-    },
-    {
-      "name": "Marketing Brew",
-      "url": "https://www.marketingbrew.com/feed.xml",
-      "type": "rss",
-      "market": "Global",
-      "focus": "global-marketing",
-      "status": "success",
-      "httpStatus": 200,
-      "itemsFound": 40,
-      "itemsAfterFilter": 20,
-      "itemsRejected": 20,
-      "rejectionReasons": {
-        "blocked-keyword-or-topic": 1,
-        "no-new-articles-in-window": 19
-      },
-      "rejectedItems": [],
-      "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.619Z"
-    },
-    {
-      "name": "Kontor",
-      "url": "https://kontor.is/",
-      "type": "html",
-      "market": "Icelandic",
-      "focus": "agency",
-      "status": "success",
-      "httpStatus": 200,
-      "itemsFound": 11,
-      "itemsAfterFilter": 6,
-      "itemsRejected": 5,
-      "rejectionReasons": {
-        "navigation-or-non-article-link": 5
-      },
-      "rejectedItems": [],
-      "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.610Z"
-    },
-    {
-      "name": "Adobe",
-      "url": "https://blog.adobe.com/en/topics/creative-cloud",
-      "type": "html",
-      "market": "Global",
-      "focus": "ai-platform",
-      "status": "success",
-      "httpStatus": 200,
-      "itemsFound": 1,
-      "itemsAfterFilter": 0,
-      "itemsRejected": 1,
-      "rejectionReasons": {
-        "weak-market-relevance": 1
-      },
-      "rejectedItems": [],
-      "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.621Z"
-    },
-    {
-      "name": "Landsbankinn",
-      "url": "https://www.landsbankinn.is/frettir",
-      "type": "html",
-      "market": "Icelandic",
-      "focus": "brand",
-      "status": "success",
-      "httpStatus": 200,
-      "itemsFound": 61,
-      "itemsAfterFilter": 0,
-      "itemsRejected": 61,
-      "rejectionReasons": {
-        "hiring-not-marketing-or-communications": 2,
-        "weak-market-relevance": 34,
-        "navigation-or-non-article-link": 22,
-        "duplicate-url": 3
-      },
-      "rejectedItems": [
-        {
-          "title": "Ella Gränz ráðin mannauðsstjóri Landsbankans",
-          "url": "https://www.landsbankinn.is/frettir/2026/10/23/ella-granz-radin-mannaudsstjori-landsbankans",
-          "score": 80,
-          "rejectionReason": "hiring-not-marketing-or-communications",
-          "matchedKeywords": [
-            "ráðin",
-            "landsbankinn",
-            "ráðin"
-          ]
         },
         {
-          "title": "Laufey Rún Ketilsdóttir ráðin til Landsbankans",
-          "url": "https://www.landsbankinn.is/frettir/2026/06/19/laufey-run-ketilsdottir-radin-til-landsbankans",
-          "score": 84,
-          "rejectionReason": "hiring-not-marketing-or-communications",
+          "title": "Brandenburg v. Ohio (1969) - The National Constitution Center",
+          "url": "https://news.google.com/rss/articles/CBMimAFBVV95cUxOc0t3MGQ0UkdKYnVSMzlTTTVieVM2QXczRWF6VW4wT1hGV3RzcVVLRGwycWhZNnBUV1hRRmdRTHdpT2UzeTdOa0pQQ3g4MXRXU1ZvY25Xekt1bTNYbFE2WkhJXzNHbWc5RjRxbXNCeHBDX3doRTQtdXF2ajZqdGJEbEp1OUxlRm5lcUZROVlBM2hkenlURkpYaQ?oc=5",
+          "score": 0,
+          "rejectionReason": "no-new-articles-in-window",
           "matchedKeywords": [
-            "ráðin",
-            "landsbankinn",
-            "ráðin"
-          ]
-        },
-        {
-          "title": "Landsbankinn 140 ára og TM 70 ára – komdu í afmælisveislu!",
-          "url": "https://www.landsbankinn.is/frettir/2026/08/18/landsbankinn-140-ara-og-tm-70-ara",
-          "score": 44,
-          "rejectionReason": "weak-market-relevance",
-          "matchedKeywords": [
-            "landsbankinn"
-          ]
-        },
-        {
-          "title": "Aftur opið fyrir umsóknir um séreignarsparnað inn á húsnæðislán",
-          "url": "https://www.landsbankinn.is/frettir/2026/10/13/aftur-opid-fyrir-umsoknir-um-sereignarsparnad-inn-a-husnaedislan",
-          "score": 40,
-          "rejectionReason": "weak-market-relevance",
-          "matchedKeywords": [
-            "landsbankinn"
-          ]
-        },
-        {
-          "title": "Landsbréf skila góðum árangri á fyrri hluta ársins 2026",
-          "url": "https://www.landsbankinn.is/frettir/2026/08/27/landsbref-skila-godum-arangri-a-fyrri-hluta-arsins-2026",
-          "score": 40,
-          "rejectionReason": "weak-market-relevance",
-          "matchedKeywords": [
-            "landsbankinn"
+            "brandenburg"
           ]
         }
       ],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.613Z"
+      "lastChecked": "2026-11-13T11:40:31.660Z"
     },
     {
       "name": "Brandenburg",
@@ -951,27 +920,7 @@
       },
       "rejectedItems": [],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.607Z"
-    },
-    {
-      "name": "Google",
-      "url": "https://blog.google/technology/ai/rss/",
-      "type": "rss",
-      "market": "Global",
-      "focus": "ai-platform",
-      "status": "success",
-      "httpStatus": 200,
-      "itemsFound": 20,
-      "itemsAfterFilter": 0,
-      "itemsRejected": 20,
-      "rejectionReasons": {
-        "score-below-threshold": 1,
-        "ai-not-marketing-related": 1,
-        "no-new-articles-in-window": 18
-      },
-      "rejectedItems": [],
-      "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.622Z"
+      "lastChecked": "2026-11-13T11:40:31.656Z"
     },
     {
       "name": "Íslandsstofa",
@@ -1004,7 +953,7 @@
         {
           "title": "Green by Iceland",
           "url": "https://www.islandsstofa.is/verkefni-green-by-iceland",
-          "score": 40,
+          "score": 44,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": [
             "verkefni",
@@ -1016,7 +965,7 @@
         {
           "title": "Work in Iceland",
           "url": "https://www.islandsstofa.is/work-in-iceland",
-          "score": 44,
+          "score": 40,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": [
             "work",
@@ -1028,7 +977,7 @@
         {
           "title": "Þéttsetinn bás í London",
           "url": "https://www.islandsstofa.is/frettir/islandsbasinn-thettsetinn-a-wtm-i-london",
-          "score": 44,
+          "score": 40,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": [
             "islandsstofa"
@@ -1037,7 +986,7 @@
         {
           "title": "Orka og grænar lausnir",
           "url": "https://www.islandsstofa.is/orka-og-graenar-lausnir",
-          "score": 40,
+          "score": 44,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": [
             "islandsstofa"
@@ -1045,28 +994,27 @@
         }
       ],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.614Z"
+      "lastChecked": "2026-11-13T11:40:31.663Z"
     },
     {
-      "name": "OpenAI",
-      "url": "https://openai.com/blog/rss.xml",
+      "name": "Google",
+      "url": "https://blog.google/technology/ai/rss/",
       "type": "rss",
       "market": "Global",
       "focus": "ai-platform",
       "status": "success",
       "httpStatus": 200,
-      "itemsFound": 1368,
-      "itemsAfterFilter": 6,
-      "itemsRejected": 1362,
+      "itemsFound": 20,
+      "itemsAfterFilter": 2,
+      "itemsRejected": 18,
       "rejectionReasons": {
-        "ai-not-marketing-related": 31,
-        "score-below-threshold": 2,
-        "weak-market-relevance": 2,
-        "no-new-articles-in-window": 1327
+        "score-below-threshold": 6,
+        "ai-not-marketing-related": 1,
+        "no-new-articles-in-window": 11
       },
       "rejectedItems": [],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.620Z"
+      "lastChecked": "2026-11-13T11:40:31.671Z"
     },
     {
       "name": "Sýn",
@@ -1087,7 +1035,7 @@
         {
           "title": "Fréttir KKÍ TV - Bylting í útsendingum frá íslenskum körfubolta",
           "url": "https://syn.is/frettir/kki-tv-bylting-i-utsendingum-fra-islenskum-koerfubolta",
-          "score": 40,
+          "score": 44,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": []
         },
@@ -1110,7 +1058,7 @@
         {
           "title": "Sýn Afkoma annars ársfjórðungs og hálfsársuppgjör 2026",
           "url": "https://syn.is/frettir/afkoma-annars-arsfjordungs-og-halfsarsuppgjoer-2026",
-          "score": 40,
+          "score": 44,
           "rejectionReason": "weak-market-relevance",
           "matchedKeywords": [
             "sýn"
@@ -1127,7 +1075,76 @@
         }
       ],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.615Z"
+      "lastChecked": "2026-11-13T11:40:31.664Z"
+    },
+    {
+      "name": "Landsbankinn",
+      "url": "https://www.landsbankinn.is/frettir",
+      "type": "html",
+      "market": "Icelandic",
+      "focus": "brand",
+      "status": "success",
+      "httpStatus": 200,
+      "itemsFound": 61,
+      "itemsAfterFilter": 0,
+      "itemsRejected": 61,
+      "rejectionReasons": {
+        "hiring-not-marketing-or-communications": 1,
+        "weak-market-relevance": 35,
+        "navigation-or-non-article-link": 22,
+        "duplicate-url": 3
+      },
+      "rejectedItems": [
+        {
+          "title": "Ella Gränz ráðin mannauðsstjóri Landsbankans",
+          "url": "https://www.landsbankinn.is/frettir/2026/10/23/ella-granz-radin-mannaudsstjori-landsbankans",
+          "score": 80,
+          "rejectionReason": "hiring-not-marketing-or-communications",
+          "matchedKeywords": [
+            "ráðin",
+            "landsbankinn",
+            "ráðin"
+          ]
+        },
+        {
+          "title": "Landsbankinn 140 ára og TM 70 ára – komdu í afmælisveislu!",
+          "url": "https://www.landsbankinn.is/frettir/2026/08/18/landsbankinn-140-ara-og-tm-70-ara",
+          "score": 40,
+          "rejectionReason": "weak-market-relevance",
+          "matchedKeywords": [
+            "landsbankinn"
+          ]
+        },
+        {
+          "title": "Aftur opið fyrir umsóknir um séreignarsparnað inn á húsnæðislán",
+          "url": "https://www.landsbankinn.is/frettir/2026/10/13/aftur-opid-fyrir-umsoknir-um-sereignarsparnad-inn-a-husnaedislan",
+          "score": 44,
+          "rejectionReason": "weak-market-relevance",
+          "matchedKeywords": [
+            "landsbankinn"
+          ]
+        },
+        {
+          "title": "Landsbréf skila góðum árangri á fyrri hluta ársins 2026",
+          "url": "https://www.landsbankinn.is/frettir/2026/08/27/landsbref-skila-godum-arangri-a-fyrri-hluta-arsins-2026",
+          "score": 44,
+          "rejectionReason": "weak-market-relevance",
+          "matchedKeywords": [
+            "landsbankinn"
+          ]
+        },
+        {
+          "title": "Tólf hlutu styrk úr Gleðigöngupotti Hinsegin daga og Landsbankans",
+          "url": "https://www.landsbankinn.is/frettir/2026/08/05/tolf-hlutu-styrk-ur-gledigongupotti-hinsegin-daga-og-landsbankans",
+          "score": 40,
+          "rejectionReason": "weak-market-relevance",
+          "matchedKeywords": [
+            "landsbankinn"
+          ]
+        }
+      ],
+      "errorMessage": "",
+      "lastChecked": "2026-11-13T11:40:31.662Z"
     },
     {
       "name": "Arion banki",
@@ -1137,24 +1154,15 @@
       "focus": "brand",
       "status": "success",
       "httpStatus": 200,
-      "itemsFound": 140,
+      "itemsFound": 126,
       "itemsAfterFilter": 0,
-      "itemsRejected": 140,
+      "itemsRejected": 126,
       "rejectionReasons": {
-        "weak-market-relevance": 44,
-        "duplicate-url": 20,
-        "navigation-or-non-article-link": 76
+        "weak-market-relevance": 38,
+        "duplicate-url": 11,
+        "navigation-or-non-article-link": 77
       },
       "rejectedItems": [
-        {
-          "title": "Arion banki styrkir Reykjalund um þrjár milljónir króna",
-          "url": "https://www.arionbanki.is/frettir/arion-banki-styrkir-reykjalund-um-thrjar-milljonir-krona",
-          "score": 40,
-          "rejectionReason": "weak-market-relevance",
-          "matchedKeywords": [
-            "arion"
-          ]
-        },
         {
           "title": "Fjármál og tryggingar á einum stað",
           "url": "https://www.arionbanki.is/einstaklingar/einfaldadu-lifid/fjarmal-og-tryggingar",
@@ -1163,35 +1171,36 @@
           "matchedKeywords": []
         },
         {
-          "title": "Erlendir vísitölusjóðir nú í Arion appinu",
-          "url": "https://www.arionbanki.is/einstaklingar/sparnadur/sjodir/erlendir-visitoelusjodir",
+          "title": "50 ára og eldri",
+          "url": "https://www.arionbanki.is/einstaklingar/fjolskyldan/50-ara-og-eldri",
           "score": 40,
           "rejectionReason": "weak-market-relevance",
-          "matchedKeywords": [
-            "arion"
-          ]
+          "matchedKeywords": []
         },
         {
-          "title": "Arion banki ráðgjafi við sölu Fjarðarkaupa",
-          "url": "https://www.arionbanki.is/frettir/arion-banki-radgjafi-vid-soelu-fjardarkaupa",
-          "score": 44,
-          "rejectionReason": "weak-market-relevance",
-          "matchedKeywords": [
-            "arion"
-          ]
-        },
-        {
-          "title": "Arion banki og Kardio í samstarf",
-          "url": "https://www.arionbanki.is/frettir/arion-banki-og-kardio-i-samstarf",
+          "title": "Settu sparnaðinn í áskrift",
+          "url": "https://www.arionbanki.is/einstaklingar/einfaldadu-lifid/sparnadur-i-askrift",
           "score": 40,
           "rejectionReason": "weak-market-relevance",
-          "matchedKeywords": [
-            "arion"
-          ]
+          "matchedKeywords": []
+        },
+        {
+          "title": "Að skipta um starf",
+          "url": "https://www.arionbanki.is/einstaklingar/a-timamotum/ad-skipta-um-starf",
+          "score": 40,
+          "rejectionReason": "weak-market-relevance",
+          "matchedKeywords": []
+        },
+        {
+          "title": "Að fara á eftirlaun",
+          "url": "https://www.arionbanki.is/einstaklingar/a-timamotum/ad-fara-a-eftirlaun",
+          "score": 40,
+          "rejectionReason": "weak-market-relevance",
+          "matchedKeywords": []
         }
       ],
       "errorMessage": "",
-      "lastChecked": "2026-11-09T17:33:04.613Z"
+      "lastChecked": "2026-11-13T11:40:31.662Z"
     }
   ]
 }
