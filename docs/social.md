@@ -1,20 +1,20 @@
-# IMARK vaktin — samfélagsmiðlaefni 2026-11-13
+# IMARK vaktin — samfélagsmiðlaefni 2026-11-23
 
 ## Story 1
-**💄 Maybelline breytir 35 ára slagorði**
+**🔎 Auglýsingar í gervigreindarleit**
 
-"Maybe. We're born with it. Maybe. It's Maybelline." Eitt orð fær nýja merkingu og nýjan vörumerkjapall með Miley Cyrus. Hvaða gamla vörumerkjaeign mætti endurvekja hjá þér?
+Microsoft birtir nú auglýsingar í AI Overviews og AI Mode í Bing, líka í framhaldsspurningum. Leitin er að breytast í samtal. Hefur þú hugsað um hvernig vörumerkið þitt birtist þar?
 
 ---
 
 ## Story 2
-**🍝 Rao's selur tíma, ekki sósu**
+**🛒 Gervigreind að versla fyrir okkur?**
 
-Sósuframleiðandinn gaf fólki krukku með tölu: hversu margar máltíðir eiga þau eftir með ástvinum? Sterk innsýn slær vöruskot út. Hvað segir varan ykkar um líf viðskiptavinarins?
+Visa prófaði 22 gervigreindarlíkön sem kaupendur og þau féllu í 42,8% tilvika. Skýrar vöruupplýsingar skipta því sífellt meira máli. Eru þínar tilbúnar?
 
 ---
 
 ## Story 3
-**⚠️ AI-auglýsingar Meta bættu við afsláttum**
+**📊 Hver er arðsemin af gervigreindinni?**
 
-Sjálfvirk tól Meta drógu afslætti inn í auglýsingar þó slökkt væri á tilboðum. Hvenær fórstu síðast yfir birtar auglýsingar?
+89% markaðsfólks jók útgjöld til gervigreindarleitar en aðeins 24% sjá hvað það skilar. Hvernig mælið þið árangur?
